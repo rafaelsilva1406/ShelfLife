@@ -20,6 +20,18 @@ namespace ShelfLifeApp.Droid
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 
 			LoadApplication (new App ());
+
+			ActionBar.SetHomeButtonEnabled (true);
+		}
+
+		public override bool OnOptionsItemSelected (IMenuItem item)
+		{
+			switch (item.ItemId) {
+			case Android.Resource.Id.Home:
+				OpenOptionsMenu ();
+				break;
+			}
+			return base.OnOptionsItemSelected (item);
 		}
 	}
 }
