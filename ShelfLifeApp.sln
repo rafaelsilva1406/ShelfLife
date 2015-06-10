@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShelfLifeApp", "ShelfLifeApp\ShelfLifeApp.csproj", "{363A4352-967D-45C2-90BC-1DDF42EF4313}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShelfLifeApp.Droid", "Droid\ShelfLifeApp.Droid.csproj", "{6814E16B-433B-45E7-A8AC-D24A650561E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShelfLifeApp.UITests", "UITests\ShelfLifeApp.UITests.csproj", "{10DCE8F4-01B6-4600-99C1-3FDBEDCB90DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10DCE8F4-01B6-4600-99C1-3FDBEDCB90DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10DCE8F4-01B6-4600-99C1-3FDBEDCB90DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10DCE8F4-01B6-4600-99C1-3FDBEDCB90DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10DCE8F4-01B6-4600-99C1-3FDBEDCB90DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{363A4352-967D-45C2-90BC-1DDF42EF4313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{363A4352-967D-45C2-90BC-1DDF42EF4313}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{363A4352-967D-45C2-90BC-1DDF42EF4313}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{363A4352-967D-45C2-90BC-1DDF42EF4313}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6814E16B-433B-45E7-A8AC-D24A650561E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6814E16B-433B-45E7-A8AC-D24A650561E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6814E16B-433B-45E7-A8AC-D24A650561E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6814E16B-433B-45E7-A8AC-D24A650561E2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
