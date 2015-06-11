@@ -3,7 +3,7 @@
 	using System;
 	using System.ComponentModel;
 
-	public sealed class UserDetailsViewModel : INotifyPropertyChanged
+	public sealed class UserDetailsViewModel : BaseViewModel
 	{
 		UserDetailsViewModel()
 		{
