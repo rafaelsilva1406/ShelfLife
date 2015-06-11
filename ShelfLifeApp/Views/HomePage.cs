@@ -7,7 +7,7 @@
 	public class HomePage : ContentPage
 	{
 		private string[] userMsg = {"Welcome"};
-		private string[] appMsg = {"Loading..","Home"};
+		private string[] appMsg = {"Loading..","Home","Add/Edit Sample","Inspect"};
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
 		public ActivityIndicator loading;
@@ -43,21 +43,42 @@
 		private void init()
 		{
 			this.BindingContext = this.userDetails;
-
-			var _label1 = new Label {
-				XAlign = TextAlignment.Center,
+			var _button1 = new Button {
+				Text = this.appMsg [2],
 				HeightRequest = 60,
-				Text = this.userMsg[0] + ' '+ this.userDetails.UserName,
 				TextColor = Color.White,
+				BackgroundColor = Color.Transparent,
+				BorderColor = Color.Gray,
+				BorderWidth = 4,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
 				),
-				FontSize = 40,
+				FontSize = 40
 			};
-
-			this.layout.Children.Add (_label1);
+			_button1.Clicked += (sender, e) => {
+				Navigation.PushAsync(new AddEditPage(this.userDetails));
+			};
+			var _button2 = new Button {
+				Text = this.appMsg [3],
+				HeightRequest = 60,
+				TextColor = Color.White,
+				BackgroundColor = Color.Transparent,
+				BorderColor = Color.Gray,
+				BorderWidth = 4,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				FontSize = 40
+			}; 
+			_button2.Clicked += (sender, e) =>{
+				Navigation.PushAsync(new InspectPage(this.userDetails));
+			};
+			this.layout.Children.Add (_button1);
+			this.layout.Children.Add (_button2);
 			this.Content = this.layout;
 		}
 	}

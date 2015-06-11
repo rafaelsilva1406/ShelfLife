@@ -12,7 +12,7 @@
 		{
 			var _button1 = new Button {
 				Text = this.appMsg[1],
-				HeightRequest = 80,
+				HeightRequest = 60,
 				TextColor = Color.White,
 				BackgroundColor = Color.Transparent,
 				BorderColor = Color.Gray,
@@ -22,6 +22,7 @@
 					Android: "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
 				),
+				FontSize = 40
 			};
 			_button1.Clicked += (sender, e) => {
 				this.Navigation.PopModalAsync();
