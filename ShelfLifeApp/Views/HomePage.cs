@@ -7,7 +7,7 @@
 	public class HomePage : ContentPage
 	{
 		private string[] userMsg = {"Welcome"};
-		private string[] appMsg = {"Loading..","Home","Add/Edit Sample","Inspect"};
+		private string[] appMsg = {"Loading..","Home","Start New Sample"};
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
 		public ActivityIndicator loading;
@@ -60,25 +60,8 @@
 			_button1.Clicked += (sender, e) => {
 				Navigation.PushAsync(new AddEditPage(this.userDetails));
 			};
-			var _button2 = new Button {
-				Text = this.appMsg [3],
-				HeightRequest = 60,
-				TextColor = Color.White,
-				BackgroundColor = Color.Transparent,
-				BorderColor = Color.Gray,
-				BorderWidth = 4,
-				FontFamily = Device.OnPlatform (
-					iOS:      "MarkerFelt-Thin",
-					Android:  "Droid Sans Mono",
-					WinPhone: "Comic Sans MS"
-				),
-				FontSize = 40
-			}; 
-			_button2.Clicked += (sender, e) =>{
-				Navigation.PushAsync(new InspectPage(this.userDetails));
-			};
+
 			this.layout.Children.Add (_button1);
-			this.layout.Children.Add (_button2);
 			this.Content = this.layout;
 		}
 	}

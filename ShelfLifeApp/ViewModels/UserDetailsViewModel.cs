@@ -5,6 +5,7 @@
 
 	public sealed class UserDetailsViewModel : BaseViewModel
 	{
+		
 		UserDetailsViewModel()
 		{
 			

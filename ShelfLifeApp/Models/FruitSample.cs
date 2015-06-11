@@ -4,13 +4,14 @@ namespace ShelfLifeApp
 {
 	public class FruitSample
 	{
-		public FruitSample (int id, CountryOfOrigin origin, string packer, DateTime packdate, string size)
+		public FruitSample (int id, CountryOfOrigin origin, string packer, DateTime packdate, string size, int age)
 		{
 			ID = id;
 			Origin = origin;
 			Packer = packer;
 			PackDate = packdate;
 			Size = size;
+			Age = age;
 		}
 
 		public int ID {get; set;}
@@ -23,7 +24,9 @@ namespace ShelfLifeApp
 
 		public String Size { get; set;}
 
-		public string SamepleID {
+		public int Age { get; set;}
+
+		public string SampleID {
 			get{
 				return ID.ToString ();
 			}
