@@ -22,8 +22,8 @@
 			this.loading.IsVisible = true;
 			this.layout = new StackLayout 
 			{
-				VerticalOptions = LayoutOptions.Center,
-				HorizontalOptions = LayoutOptions.CenterAndExpand,
+				VerticalOptions = LayoutOptions.StartAndExpand,
+				HorizontalOptions = LayoutOptions.StartAndExpand,
 				Orientation = StackOrientation.Vertical,
 				Padding = new Thickness(10, 0),
 				BackgroundColor = Color.Transparent
@@ -43,6 +43,19 @@
 		private void init()
 		{
 			this.BindingContext = this.userDetails;
+			Label caliCountLabel = new Label () {
+				Text = string.Format( "{0} California Inspections", userDetails.CaliCount),
+				//Scale = 1.5
+			};
+			Label mexicoCountLabel = new Label () {
+				Text = string.Format( "{0} Mexico Inspections ", userDetails.MexCount),
+				//Scale = 1.5
+			};
+			Label peruCountLabel = new Label () {
+				Text = string.Format( "{0} Peru Inspections", userDetails.PeruCount),
+				//Scale = 1.5
+			};
+
 			var _button1 = new Button {
 				Text = this.appMsg [2],
 				HeightRequest = 60,
@@ -61,6 +74,9 @@
 				Navigation.PushAsync(new AddEditPage(this.userDetails));
 			};
 
+			this.layout.Children.Add (caliCountLabel);
+			this.layout.Children.Add (mexicoCountLabel);
+			this.layout.Children.Add (peruCountLabel);
 			this.layout.Children.Add (_button1);
 			this.Content = this.layout;
 		}

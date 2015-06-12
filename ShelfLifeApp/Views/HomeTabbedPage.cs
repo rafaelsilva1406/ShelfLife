@@ -33,7 +33,7 @@
 			this.Title = this.appMsg[3];
 			this.userDetails = userDetails;
 			this.Children.Add(new HomePage (this.userDetails));
-			this.Children.Add (new QAction1Page(this.userDetails));
+			this.Children.Add (new InspectableItemsPage(this.userDetails));
 			this.ToolbarItems.Add (_settings);
 			this.ToolbarItems.Add (_logOut);
 		}

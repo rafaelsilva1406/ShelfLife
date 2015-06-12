@@ -1,4 +1,7 @@
-﻿namespace ShelfLifeApp.ViewModels
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+
+namespace ShelfLifeApp.ViewModels
 {
 	using System;
 	using System.ComponentModel;
@@ -12,23 +15,24 @@
 		}
 
 		private static readonly object padLock = new object ();
-
-		private static UserDetailsViewModel _instance = null;
+		public ObservableCollection<FruitSample> _FruitList = new ObservableCollection<FruitSample>();
+		private static UserDetailsViewModel _Instance = null;
 		public static UserDetailsViewModel Instance
 		{
 			get
 			{ 
-				if(_instance == null)
+				if(_Instance == null)
 				{
 					lock(padLock)
 					{
-						if(_instance == null)
+						if(_Instance == null)
 						{
-							_instance = new UserDetailsViewModel();
+							_Instance = new UserDetailsViewModel();
+							_Instance._FruitList = InitSamples ();
 						}
 					}
 				}
-				return _instance;
+				return _Instance;
 			}
 		}
 
@@ -99,6 +103,38 @@
 			this._userPassword = "";
 			this._currentFacility = -1;
 			this._isUserAuth = false;
+		}
+
+		public int CaliCount{
+			get{
+				return _FruitList.Where (f => f.Origin.ID == 0).Count();
+			}
+		}
+		public int MexCount{
+			get{
+				return _FruitList.Where (f => f.Origin.ID == 1).Count ();
+			}
+		}
+		public int PeruCount{
+			get{
+				return _FruitList.Where (f => f.Origin.ID == 2).Count ();
+			}
+		}
+
+		private static ObservableCollection<FruitSample> InitSamples(){
+			var _VarFruitList = new  ObservableCollection<FruitSample>
+			{
+				new FruitSample(0, new CountryOfOrigin(){Description = "Cali", ID = 0}, "Camino del Sol", new DateTime(1975, 1, 15), 
+					"Large", 13, DateTime.Now),
+				new FruitSample(1, new CountryOfOrigin(){Description = "Mexico", ID = 1}, "Mission de Mexico", new DateTime(1975, 1, 15), 
+					"Small", 10, DateTime.Now),
+				new FruitSample(2, new CountryOfOrigin(){Description = "Peru", ID = 2}, "Camposol", new DateTime(1975, 1, 15), 
+					"Medium", 16, DateTime.Now),
+				new FruitSample(3, new CountryOfOrigin(){Description = "Cali", ID = 0}, "Camino del Sol", new DateTime(2015, 1, 15), 
+					"Medium", 16, DateTime.Now.AddDays(-1)),
+
+			};
+			return _VarFruitList;
 		}
 	}
 }

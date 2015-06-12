@@ -1,4 +1,4 @@
-﻿namespace ShelfLifeApp.Views
+namespace ShelfLifeApp.Views
 {
 	using System;
 	using System.Reflection;
@@ -44,6 +44,7 @@
 		private void init()
 		{
 			this.BindingContext = this.userDetails;
+<<<<<<< Upstream, based on origin/master
 			SearchBar _searchBar1 = new SearchBar 
 			{
 				Placeholder = this.appMsg[2]	
@@ -187,6 +188,10 @@
 			this.layout.Children.Add (_picker5);
 			this.layout.Children.Add (_entry2);
 			this.layout.Children.Add (_button1);
+=======
+
+
+>>>>>>> 7e50c2b Remodeling the UI
 			this.Content = this.layout;
 		}
 	}

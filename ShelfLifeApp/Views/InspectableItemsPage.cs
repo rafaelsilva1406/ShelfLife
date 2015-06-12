@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ShelfLifeApp;
 using System.Collections.Generic;
 using System.Collections;
@@ -11,7 +11,7 @@ namespace ShelfLifeApp.Views
 	using Xamarin.Forms;
 	using ShelfLifeApp.ViewModels;
 
-	public class QAction1Page : ContentPage
+	public class InspectableItemsPage : ContentPage
 	{
 		private string[] userMsg = {};
 		private string[] appMsg = {"Loading..","Inspectable Items","QA Action Page 1."};
@@ -19,7 +19,7 @@ namespace ShelfLifeApp.Views
 		public UserDetailsViewModel userDetails;
 		public ActivityIndicator loading;
 		private ListView _ListView = new ListView();
-		public QAction1Page (UserDetailsViewModel userDetails)
+		public InspectableItemsPage (UserDetailsViewModel userDetails)
 		{
 			this.userDetails = userDetails;
 			this.Title = this.appMsg[1];
@@ -37,7 +37,7 @@ namespace ShelfLifeApp.Views
 			};
 
 			this.layout.Children.Add(this.loading);
-			if(this.userDetails.isUserAuth == false){
+			if(this.userDetails.UserAuth == false){
 				this.Navigation.PopModalAsync ();
 				this.Navigation.PushModalAsync (new LoginPage(this.userDetails));
 			} else {
@@ -53,6 +53,12 @@ namespace ShelfLifeApp.Views
 			cooList.Add ("Cali");
 			cooList.Add ("Mexico");
 			cooList.Add ("Peru");
+			Label dateLabel = new Label (){ 
+				Text = DateTime.Now.ToString("d"),
+				VerticalOptions = LayoutOptions.Center,
+				HorizontalOptions = LayoutOptions.EndAndExpand,
+				XAlign = TextAlignment.End
+			};
 			Picker picker = new Picker
 			{
 				Title = "Country Of Origin",
@@ -65,38 +71,39 @@ namespace ShelfLifeApp.Views
 				picker.Items.Add(colorName);
 			}
 
-			List<FruitSample> samples = new List<FruitSample>
-			{
-				new FruitSample(0, new CountryOfOrigin(){Description = "Cali", ID = 0}, "Camino del Sol", new DateTime(1975, 1, 15), 
-					"Large", 13),
-				new FruitSample(1, new CountryOfOrigin(){Description = "Mexico", ID = 1}, "Mission de Mexico", new DateTime(1975, 1, 15), 
-					"Small", 10),
-				new FruitSample(2, new CountryOfOrigin(){Description = "Peru", ID = 2}, "Camposol", new DateTime(1975, 1, 15), 
-					"Medium", 16),
-				new FruitSample(3, new CountryOfOrigin(){Description = "Cali", ID = 0}, "Camino del Sol", new DateTime(2015, 1, 15), 
-					"Medium", 16),
-				
-			};
+
 			picker.SelectedIndexChanged += (object sender, EventArgs e) => {
 				this.layout.Children.Remove(_ListView);
-				var originSamples = samples.Where( s => s.Origin.ID == picker.SelectedIndex ).ToList();
+				var originSamples = UserDetailsViewModel.Instance._FruitList.Where( s => s.Origin.ID == picker.SelectedIndex ).ToList();
 				_ListView =	CreateListView (originSamples.OrderBy(c => c.SampleID).ToList());
 				this.layout.Children.Add(_ListView);
 			};
+
+
+
 			this.BindingContext = this.userDetails;
 
 			var label = new Label (){
 				Text = "Samples to Inspect",
-				VerticalOptions = LayoutOptions.CenterAndExpand,
+				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
 				Scale = 1.5
 					
 			};
 
-			this.layout.Children.Add (picker);
+			var hStack = new StackLayout(){
+				Orientation = StackOrientation.Horizontal,
+				VerticalOptions = LayoutOptions.StartAndExpand,
+				HorizontalOptions = LayoutOptions.CenterAndExpand
+			};
+			hStack.Children.Add(picker);
+			hStack.Children.Add(dateLabel);
+
+			this.layout.Children.Add(hStack);
 			this.layout.Children.Add (label);
 			this.layout.Children.Add (_ListView);
 			this.Content = this.layout;
+			picker.SelectedIndex = 0;
 		}
 
 		private ListView CreateListView(IEnumerable itemSource){
@@ -112,19 +119,25 @@ namespace ShelfLifeApp.Views
 				ItemTemplate = new DataTemplate(() =>
 					{
 						// Create views with bindings for displaying each property.
-						Label sampleIDLabel = new Label(){Scale = 1.2, HorizontalOptions = LayoutOptions.Start};
+						Label sampleIDLabel = new Label(){ HorizontalOptions = LayoutOptions.Start};
 						sampleIDLabel.SetBinding(Label.TextProperty,
 							new Binding("SampleID", BindingMode.OneWay, 
 								null, null, @" Sample ID: {0}"));
-						Label ageLabel = new Label(){Scale = 1.2,HorizontalOptions = LayoutOptions.End };
+
+						Label ageLabel = new Label(){HorizontalOptions = LayoutOptions.FillAndExpand, XAlign = TextAlignment.End };
 						ageLabel.SetBinding(Label.TextProperty,
 							new Binding("Age", BindingMode.OneWay, 
-								null, null, @"  Age: {0} days"));
+								null, null, @"Age: {0} days"));
 
-						Label packDateLabel = new Label(){Scale = 1.2, HorizontalOptions = LayoutOptions.Center};
+						Label packDateLabel = new Label(){ HorizontalOptions = LayoutOptions.Center};
 						packDateLabel.SetBinding(Label.TextProperty,
 							new Binding("PackDate", BindingMode.OneWay, 
-								null, null, @"  Packed {0:d}"));
+								null, null, @" Packed {0:d}"));
+
+						Label inspectOnOrByDateLabel = new Label(){ HorizontalOptions = LayoutOptions.Center};
+						inspectOnOrByDateLabel.SetBinding(Label.TextProperty,
+							new Binding("InspectionOnOrAfter", BindingMode.OneWay, 
+								null, null, @" Inspect On {0:d}"));
 						
 						// Return an assembled ViewCell.
 						return new ViewCell
@@ -158,6 +171,7 @@ namespace ShelfLifeApp.Views
 										{
 											
 											packDateLabel,
+											inspectOnOrByDateLabel
 										}
 										}
 								}
