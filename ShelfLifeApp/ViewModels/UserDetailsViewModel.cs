@@ -33,7 +33,7 @@
 
 		private string _userName;
 		private string _userPassword;
-		private int _currentFacility = 0;
+		private int _currentFacility = -1;
 		private bool _isUserAuth = false;
 			
 		public string UserName
@@ -96,7 +96,7 @@
 		{
 			this._userName = "";
 			this._userPassword = "";
-			this._currentFacility = 0;
+			this._currentFacility = -1;
 			this._isUserAuth = false;
 		}
 	}
