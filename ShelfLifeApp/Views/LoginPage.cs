@@ -3,14 +3,17 @@
 	using System;
 	using System.Threading.Tasks;
 	using System.Reflection;
+	using System.Collections.Generic;
+	using System.Collections;
+	using System.Linq;
 	using Xamarin.Forms;
 	using ShelfLifeApp.Models;
 	using ShelfLifeApp.ViewModels;
 
 	public partial class LoginPage : ContentPage
 	{
-		private string[] userMsg = {"UserName","Welcome","Empty Username or Password.","Password"};
-		private string[] appMsg = {"Loading..","MissionPro Sign In","Start","Login","Error","Failed","OK"};
+		private string[] userMsg = {"UserName","Welcome","Empty Username/Password or Location not Selected.","Password"};
+		private string[] appMsg = {"Loading..","MissionPro Sign In","Start","Login","Error","Failed","OK","Location"};
 		private StackLayout layout;
 		public UserDetailsViewModel userDetails;
 		public ActivityIndicator loading;
@@ -32,7 +35,7 @@
 			this.layout.Children.Add (this.loading);
 			this.Content = this.layout;
 		
-			if (this.userDetails.UserAuth == false) {
+			if (this.userDetails.isUserAuth == false) {
 				this.loading.IsRunning = false;
 				this.loading.IsEnabled = false;
 				this.loading.IsVisible = false;
@@ -69,6 +72,25 @@
 				TextColor = Color.White
 			};
 			entry2.SetBinding (Entry.TextProperty,"UserPassword");
+			var locationList = new List<String> ();
+			locationList.Add ("CD");
+			locationList.Add ("NJ");
+			locationList.Add ("TX");
+			locationList.Add ("MX");
+			locationList.Add ("AP");
+			Picker picker1 = new Picker
+			{
+				Title = this.appMsg[7],
+				VerticalOptions = LayoutOptions.StartAndExpand,
+				HorizontalOptions = LayoutOptions.FillAndExpand
+			};
+
+			foreach(string locationName in locationList)
+			{
+				picker1.Items.Add (locationName);
+			}
+				
+			picker1.SetBinding (Picker.SelectedIndexProperty, "CurrentFacility");
 			var button1 = new Button {
 				Text = this.appMsg [2],
 				HeightRequest = 60,
@@ -83,7 +105,7 @@
 				),
 			};
 			button1.Clicked += (sender, ea) => {
-				if(string.IsNullOrEmpty(this.userDetails.UserName) || string.IsNullOrEmpty(this.userDetails.UserPassword)){
+				if(string.IsNullOrEmpty(this.userDetails.UserName) || string.IsNullOrEmpty(this.userDetails.UserPassword) || this.userDetails.CurrentFacility < 0){
 					DisplayAlert (this.appMsg[4], this.userMsg[2], this.appMsg[6]);
 				}else{
 					this.loading.IsRunning = true;
@@ -100,6 +122,7 @@
 			this.layout.Children.Add (label1);
 			this.layout.Children.Add (entry1);
 			this.layout.Children.Add (entry2);
+			this.layout.Children.Add (picker1);
 			this.layout.Children.Add (button1);
 			this.Content = this.layout;
 
@@ -110,7 +133,7 @@
 			this.loading.IsEnabled = false;
 			this.loading.IsVisible = false;
 			this.layout.Children.Clear ();
-			this.userDetails.UserAuth = true;
+			this.userDetails.isUserAuth = true;
 			this.Navigation.PopModalAsync();
 			App.Current.MainPage = new NavigationPage(new HomeTabbedPage(this.userDetails));
 		}
