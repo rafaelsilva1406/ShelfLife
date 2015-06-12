@@ -12,7 +12,7 @@
 		{
 			this.userDetails = UserDetailsViewModel.Instance;
 
-			if(this.userDetails.UserAuth == false){
+			if(this.userDetails.isUserAuth == false){
 				MainPage = new LoginPage(this.userDetails);
 			}else{
 				// The root page of your application
