@@ -33,7 +33,8 @@
 
 		private string _userName;
 		private string _userPassword;
-		private bool _userAuth = false;
+		private int _currentFacility = 0;
+		private bool _isUserAuth = false;
 			
 		public string UserName
 		{
@@ -62,10 +63,22 @@
 			}
 		}
 
-		public bool UserAuth
+		public int CurrentFacility
 		{
-			get{ return _userAuth; }
-			set{ _userAuth = value; }
+			get{ return _currentFacility; }
+			set{ 
+				if(_currentFacility == value){
+					return;
+				}
+				_currentFacility = value;
+				OnPropertyChanged ();
+			}
+		}
+
+		public bool isUserAuth
+		{
+			get{ return _isUserAuth; }
+			set{ _isUserAuth = value; }
 		}
 
 		//the view will register to this event when the DataContext is set
@@ -83,7 +96,8 @@
 		{
 			this._userName = "";
 			this._userPassword = "";
-			this._userAuth = false;
+			this._currentFacility = 0;
+			this._isUserAuth = false;
 		}
 	}
 }
