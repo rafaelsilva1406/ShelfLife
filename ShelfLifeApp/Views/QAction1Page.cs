@@ -37,7 +37,7 @@ namespace ShelfLifeApp.Views
 			};
 
 			this.layout.Children.Add(this.loading);
-			if(this.userDetails.UserAuth == false){
+			if(this.userDetails.isUserAuth == false){
 				this.Navigation.PopModalAsync ();
 				this.Navigation.PushModalAsync (new LoginPage(this.userDetails));
 			} else {
