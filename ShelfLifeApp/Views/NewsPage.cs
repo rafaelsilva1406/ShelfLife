@@ -30,7 +30,7 @@
 				BackgroundColor = Color.Transparent
 			};
 			this.layout.Children.Add (loading);
-			if(this.userDetails.UserAuth == false){
+			if(this.userDetails.isUserAuth == false){
 				this.Navigation.PopModalAsync();
 				this.Navigation.PushModalAsync (new LoginPage(this.userDetails));
 			}else{
