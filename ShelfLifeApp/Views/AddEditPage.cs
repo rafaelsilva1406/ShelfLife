@@ -11,7 +11,7 @@ namespace ShelfLifeApp.Views
 	public class AddEditPage : ContentPage
 	{
 		private string[] userMsg = { };
-		private string[] appMsg = {"Loading..","Adding/Editing Sample","Sample #","COO","Packers","Growers","Regions","Size","Pallet #","Save"};
+		private string[] appMsg = {"Loading..","New Sample","Sample #","COO","Packers","Growers","Regions","Size","Pallet #","Save"};
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
 		public ActivityIndicator loading;
@@ -44,10 +44,35 @@ namespace ShelfLifeApp.Views
 		private void init()
 		{
 			this.BindingContext = this.userDetails;
-<<<<<<< Upstream, based on origin/master
+
+			var _grid1 = new Grid {
+				Padding = 4,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				RowDefinitions = 
+				{
+					new RowDefinition { Height = GridLength.Auto },
+					new RowDefinition { Height = GridLength.Auto },
+					new RowDefinition { Height = GridLength.Auto },
+					new RowDefinition { Height = GridLength.Auto },
+					new RowDefinition { Height = GridLength.Auto },
+					new RowDefinition { Height = GridLength.Auto }
+				},
+				ColumnDefinitions = 
+				{
+					new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+					new ColumnDefinition { Width = GridLength.Auto },
+					new ColumnDefinition { Width = GridLength.Auto },
+					new ColumnDefinition { Width = GridLength.Auto },
+					new ColumnDefinition { Width = GridLength.Auto },
+					new ColumnDefinition { Width = GridLength.Auto }
+				},
+				BackgroundColor = Color.Transparent
+			};
+
 			SearchBar _searchBar1 = new SearchBar 
 			{
-				Placeholder = this.appMsg[2]	
+				Placeholder = this.appMsg[2],
+				BackgroundColor = Color.Transparent
 			};
 			var _cooList = new List<String> ();
 			_cooList.Add ("CALI");
@@ -58,27 +83,32 @@ namespace ShelfLifeApp.Views
 			Picker _picker1 = new Picker
 			{
 				Title = this.appMsg[3],
+				HeightRequest = 60,
 				VerticalOptions = LayoutOptions.StartAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				BackgroundColor = Color.Transparent
 			};
 
 			foreach(string cooName in _cooList)
 			{
 				_picker1.Items.Add (cooName);
 			}
-
+				
 			var _packerList1 = new List<String> ();
 			Picker _picker2 = new Picker {
 				Title = this.appMsg[4],
+				HeightRequest = 60,
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
-				IsVisible = false
+				IsVisible = false,
+				BackgroundColor = Color.Transparent
 			};
 			var _entry1 = new Entry{ 
 				Placeholder = this.appMsg[5],
 				HeightRequest = 60,
 				TextColor = Color.White,
-				IsVisible = false
+				IsVisible = false,
+				BackgroundColor = Color.Transparent
 			};
 			var _regionList = new List<String> ();
 			_regionList.Add ("North");
@@ -86,9 +116,11 @@ namespace ShelfLifeApp.Views
 			_regionList.Add ("South");
 			Picker _picker3 = new Picker{ 
 				Title = this.appMsg[6],
+				HeightRequest = 60,
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
-				IsVisible = false
+				IsVisible = false,
+				BackgroundColor = Color.Transparent
 			};
 
 			foreach(string regionName in _regionList)
@@ -100,7 +132,8 @@ namespace ShelfLifeApp.Views
 				Placeholder = this.appMsg[8],
 				HeightRequest = 60,
 				TextColor = Color.White,
-				IsVisible = false
+				IsVisible = false,
+				BackgroundColor = Color.Transparent
 			};
 
 			_picker1.SelectedIndexChanged += (sender, e) => {
@@ -149,50 +182,52 @@ namespace ShelfLifeApp.Views
 			DatePicker _datePicker1 = new DatePicker
 			{
 				Format = "D",
-				VerticalOptions = LayoutOptions.CenterAndExpand
+				VerticalOptions = LayoutOptions.CenterAndExpand,
+				HeightRequest = 60,
+				BackgroundColor = Color.Transparent
 			};
 			var _sizeList = new List<String> ();
 			_sizeList.Add ("Small");
 			_sizeList.Add ("Medium");
 			_sizeList.Add ("Large");
-			Picker _picker5 = new Picker{ 
+			Picker _picker4 = new Picker{ 
 				Title = this.appMsg[7],
+				HeightRequest = 60,
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
+				BackgroundColor = Color.Transparent
 			};
 
 			foreach(string sizeName in _sizeList)
 			{
-				_picker5.Items.Add(sizeName);
+				_picker4.Items.Add(sizeName);
 			}
 
 			var _button1 = new Button {
 				Text = this.appMsg[9],
-				HeightRequest = 60,
+				HeightRequest = 80,
 				TextColor = Color.White,
-				BackgroundColor = Color.Transparent,
+				BackgroundColor = Color.Black,
 				BorderColor = Color.Gray,
 				BorderWidth = 4,
+				FontSize = 40,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
-				),
+				)
 			};
-			this.layout.Children.Add (_searchBar1);
-			this.layout.Children.Add (_picker1);
-			this.layout.Children.Add (_picker2);
-			this.layout.Children.Add (_entry1);
-			this.layout.Children.Add (_picker3);
-			this.layout.Children.Add (_datePicker1);
-			this.layout.Children.Add (_picker5);
-			this.layout.Children.Add (_entry2);
-			this.layout.Children.Add (_button1);
-=======
 
-
->>>>>>> 7e50c2b Remodeling the UI
-			this.Content = this.layout;
+			_grid1.Children.Add (_searchBar1,0, 3, 0, 1);
+			_grid1.Children.Add (_picker1,0,1);
+			_grid1.Children.Add (_datePicker1,1,1);
+			_grid1.Children.Add (_picker4,0,2);
+			_grid1.Children.Add (_entry1,0,3);
+			_grid1.Children.Add (_picker2,1,2);
+			_grid1.Children.Add (_picker3,1,3);
+			_grid1.Children.Add (_entry2,1,4);
+			_grid1.Children.Add (_button1,0,6,5,6);
+			this.Content = _grid1;
 		}
 	}
 }
