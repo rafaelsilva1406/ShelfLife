@@ -5,6 +5,9 @@ namespace ShelfLifeApp.Views
 	using System.Collections.Generic;
 	using System.Collections;
 	using System.Linq;
+	using System.Resources;
+	using System.Globalization;
+
 	using Xamarin.Forms;
 	using ShelfLifeApp.ViewModels;
 	using ShelfLifeApp.Views;
@@ -71,8 +74,10 @@ namespace ShelfLifeApp.Views
 
 			SearchBar _searchBar1 = new SearchBar 
 			{
-				Placeholder = this.appMsg[2],
-				BackgroundColor = Color.Transparent
+				//Placeholder = this.appMsg[2],
+				Placeholder = ShelfLifeApp.Language.AppResources.SearchBar1,
+				BackgroundColor = Color.Transparent,
+				HeightRequest = 40
 			};
 			var _cooList = new List<String> ();
 			_cooList.Add ("CALI");
@@ -170,6 +175,7 @@ namespace ShelfLifeApp.Views
 						_entry2.IsVisible = true;
 					break;
 					default:
+						//throw exception
 					break;
 				}
 
