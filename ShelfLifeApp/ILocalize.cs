@@ -5,6 +5,8 @@ namespace ShelfLifeApp
 	public interface ILocalize
 	{
 		CultureInfo GetCurrentCultureInfo ();
+
+		void SetLocale ();
 	}
 }
 
