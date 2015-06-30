@@ -1,15 +1,23 @@
-﻿namespace ShelfLifeApp
-{
-	using System;
+﻿using System;
+using Xamarin.Forms;
+using ShelfLifeApp.ViewModels;
+using ShelfLifeApp.Views;
+using System.Reflection;
+using ShelfLifeApp;
 
-	using Xamarin.Forms;
-	using ShelfLifeApp.ViewModels;
-	using ShelfLifeApp.Views;
+namespace ShelfLifeApp
+{
 	public class App : Application
 	{
 		public UserDetailsViewModel userDetails;
 		public App ()
 		{
+			if(Device.OS != TargetPlatform.WinPhone)
+			{
+				DependencyService.Get<ILocalize> ().SetLocale();
+				//AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
+			}
+
 			this.userDetails = UserDetailsViewModel.Instance;
 
 			if(this.userDetails.isUserAuth == false){
@@ -30,16 +38,19 @@
 		protected override void OnStart ()
 		{
 			// Handle when your app starts
+			System.Diagnostics.Debug.WriteLine("OnStart");
 		}
 
 		protected override void OnSleep ()
 		{
 			// Handle when your app sleeps
+			System.Diagnostics.Debug.WriteLine("OnSleep");
 		}
 
 		protected override void OnResume ()
 		{
 			// Handle when your app resumes
+			System.Diagnostics.Debug.WriteLine("OnResume");
 		}
 	}
 }
