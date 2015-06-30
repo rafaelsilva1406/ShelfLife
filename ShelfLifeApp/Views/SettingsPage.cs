@@ -6,12 +6,11 @@
 
 	public class SettingsPage : ContentPage
 	{
-		private string[] appMsg = {"Loading..","Back Home","Settings Page"};
 		public StackLayout layout;
 		public SettingsPage ()
 		{
 			var _button1 = new Button {
-				Text = this.appMsg[1],
+				Text = AppResources.SettingsPageButton1,
 				HeightRequest = 60,
 				TextColor = Color.White,
 				BackgroundColor = Color.Transparent,
@@ -27,7 +26,7 @@
 			_button1.Clicked += (sender, e) => {
 				this.Navigation.PopModalAsync();
 			};
-			this.Title = this.appMsg [2];
+			this.Title = AppResources.SettingsPageTitle;
 			this.layout = new StackLayout {
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
