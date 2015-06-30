@@ -6,8 +6,6 @@
 
 	public class HomePage : ContentPage
 	{
-		private string[] userMsg = {"Welcome"};
-		private string[] appMsg = {"Loading..","Home","Start New Sample"};
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
 		public ActivityIndicator loading;
@@ -15,7 +13,7 @@
 		public HomePage (UserDetailsViewModel userDetails)
 		{	
 			this.userDetails = userDetails;
-			this.Title = this.appMsg[1];
+			this.Title = AppResources.HomePageTitle;
 			this.loading = new ActivityIndicator ();
 			this.loading.IsRunning = true;
 			this.loading.IsEnabled = true;
@@ -57,7 +55,7 @@
 			};
 
 			var _button1 = new Button {
-				Text = this.appMsg [2],
+				Text = AppResources.HomePageButton1,
 				HeightRequest = 60,
 				TextColor = Color.White,
 				BackgroundColor = Color.Transparent,
