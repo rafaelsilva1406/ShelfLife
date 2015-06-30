@@ -1,27 +1,27 @@
+using System;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using System.Resources;
+using System.Globalization;
+
+using Xamarin.Forms;
+using ShelfLifeApp.ViewModels;
+using ShelfLifeApp.Views;
+using ShelfLifeApp;
+
 namespace ShelfLifeApp.Views
 {
-	using System;
-	using System.Reflection;
-	using System.Collections.Generic;
-	using System.Collections;
-	using System.Linq;
-	using System.Resources;
-	using System.Globalization;
-
-	using Xamarin.Forms;
-	using ShelfLifeApp.ViewModels;
-	using ShelfLifeApp.Views;
 	public class AddEditPage : ContentPage
 	{
-		private string[] userMsg = { };
-		private string[] appMsg = {"Loading..","New Sample","Sample #","COO","Packers","Growers","Regions","Size","Pallet #","Save"};
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
 		public ActivityIndicator loading;
 		public AddEditPage (UserDetailsViewModel userDetails)
 		{
 			this.userDetails = userDetails;
-			this.Title = this.appMsg [1];
+			this.Title = AppResources.AddEditPageTitle;
 			this.loading = new ActivityIndicator ();
 			this.loading.IsRunning = true;
 			this.loading.IsEnabled = true;
@@ -31,7 +31,6 @@ namespace ShelfLifeApp.Views
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
 				Orientation = StackOrientation.Vertical,
-				//Padding = new Thickness(10, 0),
 				BackgroundColor = Color.Transparent
 			};
 			this.layout.Children.Add (loading);
@@ -71,11 +70,9 @@ namespace ShelfLifeApp.Views
 				},
 				BackgroundColor = Color.Transparent
 			};
-
 			SearchBar _searchBar1 = new SearchBar 
 			{
-				//Placeholder = this.appMsg[2],
-				Placeholder = ShelfLifeApp.Language.AppResources.SearchBar1,
+				Placeholder = AppResources.SearchBar1,
 				BackgroundColor = Color.Transparent,
 				HeightRequest = 40
 			};
@@ -87,7 +84,7 @@ namespace ShelfLifeApp.Views
 			_cooList.Add ("NZ");
 			Picker _picker1 = new Picker
 			{
-				Title = this.appMsg[3],
+				Title = AppResources.AddEditPagePicker1,
 				HeightRequest = 60,
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -101,7 +98,7 @@ namespace ShelfLifeApp.Views
 				
 			var _packerList1 = new List<String> ();
 			Picker _picker2 = new Picker {
-				Title = this.appMsg[4],
+				Title = AppResources.AddEditPagePicker2,
 				HeightRequest = 60,
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -109,7 +106,7 @@ namespace ShelfLifeApp.Views
 				BackgroundColor = Color.Transparent
 			};
 			var _entry1 = new Entry{ 
-				Placeholder = this.appMsg[5],
+				Placeholder = AppResources.AddEditPageEntry1,
 				HeightRequest = 60,
 				TextColor = Color.White,
 				IsVisible = false,
@@ -120,7 +117,7 @@ namespace ShelfLifeApp.Views
 			_regionList.Add ("Far North");
 			_regionList.Add ("South");
 			Picker _picker3 = new Picker{ 
-				Title = this.appMsg[6],
+				Title = AppResources.AddEditPagePicker3,
 				HeightRequest = 60,
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -134,7 +131,7 @@ namespace ShelfLifeApp.Views
 			}
 
 			var _entry2 = new Entry{ 
-				Placeholder = this.appMsg[8],
+				Placeholder = AppResources.AddEditPageEntry2,
 				HeightRequest = 60,
 				TextColor = Color.White,
 				IsVisible = false,
@@ -197,7 +194,7 @@ namespace ShelfLifeApp.Views
 			_sizeList.Add ("Medium");
 			_sizeList.Add ("Large");
 			Picker _picker4 = new Picker{ 
-				Title = this.appMsg[7],
+				Title = AppResources.AddEditPagePicker4,
 				HeightRequest = 60,
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -210,7 +207,7 @@ namespace ShelfLifeApp.Views
 			}
 
 			var _button1 = new Button {
-				Text = this.appMsg[9],
+				Text = AppResources.AddEditPageButton1,
 				HeightRequest = 80,
 				TextColor = Color.White,
 				BackgroundColor = Color.Black,
