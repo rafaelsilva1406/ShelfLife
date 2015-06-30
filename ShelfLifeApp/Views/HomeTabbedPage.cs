@@ -6,21 +6,20 @@
 
 	public class HomeTabbedPage : TabbedPage
 	{
-		private string[] appMsg = { "Settings", "Accounts", "LogOut", "MissionPro" };
 		public UserDetailsViewModel userDetails;
 
 		public HomeTabbedPage (UserDetailsViewModel userDetails)
 		{
 			var _settings = new ToolbarItem
 			{
-				Name = this.appMsg[0],
+				Name = AppResources.HomeTabbedPageToolbarItem1,
 				Order = ToolbarItemOrder.Secondary,
 				Command = new Command(() => this.Navigation.PushModalAsync(new SettingsTabbedPage(this.userDetails))),
 				Priority = 1
 			};
 			var _logOut = new ToolbarItem
 			{ 
-				Name = this.appMsg[2],
+				Name = AppResources.HomeTabbedPageToolbarItem2,
 				Order = ToolbarItemOrder.Secondary,
 				Priority = 2
 			};
@@ -30,7 +29,7 @@
 				App.Current.MainPage = new NavigationPage(new LoginPage(this.userDetails));
 			};
 
-			this.Title = this.appMsg[3];
+			this.Title = AppResources.HomeTabbedPageTitle;
 			this.userDetails = userDetails;
 			this.Children.Add(new HomePage (this.userDetails));
 			this.Children.Add (new InspectableItemsPage(this.userDetails));
