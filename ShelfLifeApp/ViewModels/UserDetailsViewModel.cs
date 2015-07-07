@@ -19,6 +19,11 @@ namespace ShelfLifeApp.ViewModels
 		private static UserDetailsViewModel _Instance = null;
 		public ObservableCollection<FruitSample> _FruitList = new ObservableCollection<FruitSample>();
 		public List<CurrentFacility> _CurrentFacilityList = new List<CurrentFacility>();
+		private string _userName;
+		private string _userPassword;
+		private int _currentFacility = -1;
+		private bool _isUserAuth = false;
+
 		public static UserDetailsViewModel Instance
 		{
 			get
@@ -37,12 +42,7 @@ namespace ShelfLifeApp.ViewModels
 				return _Instance;
 			}
 		}
-
-		private string _userName;
-		private string _userPassword;
-		private int _currentFacility = -1;
-		 private bool _isUserAuth = false;
-			
+						
 		public string UserName
 		{
 			get{ return _userName; }
@@ -87,24 +87,13 @@ namespace ShelfLifeApp.ViewModels
 			get{ return _isUserAuth; }
 			set{ _isUserAuth = value; }
 		}
-
-		//the view will register to this event when the DataContext is set
-		public event PropertyChangedEventHandler PropertyChanged;
 			
-		protected void OnPropertyChanged(string propertyName = null)
-		{
-			if (PropertyChanged != null)
-			{
-				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-
 		public void destroyUser()
 		{
-			this._userName = "";
-			this._userPassword = "";
-			this._currentFacility = -1;
-			this._isUserAuth = false;
+			_userName = "";
+			_userPassword = "";
+			_currentFacility = -1;
+			_isUserAuth = false;
 		}
 
 		public int CaliCount{
