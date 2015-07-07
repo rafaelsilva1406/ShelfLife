@@ -1,11 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Linq;
+using ShelfLifeApp.Models;
 
 namespace ShelfLifeApp.ViewModels
 {
-	using System;
-	using System.ComponentModel;
-
 	public sealed class UserDetailsViewModel : BaseViewModel
 	{
 		
@@ -15,8 +16,9 @@ namespace ShelfLifeApp.ViewModels
 		}
 
 		private static readonly object padLock = new object ();
-		public ObservableCollection<FruitSample> _FruitList = new ObservableCollection<FruitSample>();
 		private static UserDetailsViewModel _Instance = null;
+		public ObservableCollection<FruitSample> _FruitList = new ObservableCollection<FruitSample>();
+		public List<CurrentFacility> _CurrentFacilityList = new List<CurrentFacility>();
 		public static UserDetailsViewModel Instance
 		{
 			get
@@ -39,7 +41,7 @@ namespace ShelfLifeApp.ViewModels
 		private string _userName;
 		private string _userPassword;
 		private int _currentFacility = -1;
-		private bool _isUserAuth = false;
+		 private bool _isUserAuth = false;
 			
 		public string UserName
 		{
@@ -135,6 +137,16 @@ namespace ShelfLifeApp.ViewModels
 
 			};
 			return _VarFruitList;
+		}
+			
+		public List<CurrentFacility> GetDefaultCurrentFacilities()
+		{
+			_CurrentFacilityList.Add(new CurrentFacility(0,"CD"));
+			_CurrentFacilityList.Add (new CurrentFacility(1, "NJ"));
+			_CurrentFacilityList.Add (new CurrentFacility(2, "TX"));
+			_CurrentFacilityList.Add (new CurrentFacility (3, "MX"));
+			_CurrentFacilityList.Add (new CurrentFacility (4, "AP"));
+			return _CurrentFacilityList;
 		}
 	}
 }
