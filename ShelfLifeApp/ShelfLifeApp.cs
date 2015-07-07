@@ -18,12 +18,11 @@ namespace ShelfLifeApp
 				//AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
 			}
 
-			this.userDetails = UserDetailsViewModel.Instance;
+			userDetails = UserDetailsViewModel.Instance;
 
-			if(this.userDetails.isUserAuth == false){
-				MainPage = new LoginPage(this.userDetails);
+			if(userDetails.isUserAuth == false){
+				MainPage = new LoginPage(userDetails);
 			}else{
-				// The root page of your application
 				MainPage = getMainPage();	
 			}
 		}
@@ -32,7 +31,7 @@ namespace ShelfLifeApp
 		{
 			// Replace the ExamplePage with whatever page is appropriate to start off your app
 			//  - Like your login page, or home screen, or whatever
-			return new NavigationPage(new HomeTabbedPage (this.userDetails));
+			return new NavigationPage(new HomeTabbedPage (userDetails));
 		}
 
 		protected override void OnStart ()
