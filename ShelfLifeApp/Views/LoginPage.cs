@@ -1,15 +1,15 @@
-﻿namespace ShelfLifeApp.Views
-{
-	using System;
-	using System.Threading.Tasks;
-	using System.Reflection;
-	using System.Collections.Generic;
-	using System.Collections;
-	using System.Linq;
-	using Xamarin.Forms;
-	using ShelfLifeApp.Models;
-	using ShelfLifeApp.ViewModels;
+﻿using System;
+using System.Threading.Tasks;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using Xamarin.Forms;
+using ShelfLifeApp.Models;
+using ShelfLifeApp.ViewModels;
 
+namespace ShelfLifeApp.Views
+{
 	public partial class LoginPage : ContentPage
 	{
 		private StackLayout layout;
@@ -70,24 +70,19 @@
 				TextColor = Color.White
 			};
 			entry2.SetBinding (Entry.TextProperty,"UserPassword");
-			var locationList = new List<String> ();
-			locationList.Add ("CD");
-			locationList.Add ("NJ");
-			locationList.Add ("TX");
-			locationList.Add ("MX");
-			locationList.Add ("AP");
+
 			Picker picker1 = new Picker
 			{
 				Title = AppResources.LoginPagePicker1,
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand
 			};
-
-			foreach(string locationName in locationList)
+					
+			foreach(CurrentFacility facility in userDetails.GetDefaultCurrentFacilities ())
 			{
-				picker1.Items.Add (locationName);
+				picker1.Items.Add (facility.Name);
 			}
-				
+
 			picker1.SetBinding (Picker.SelectedIndexProperty, "CurrentFacility");
 			var button1 = new Button {
 				Text = AppResources.LoginPageButton1,
@@ -125,7 +120,7 @@
 			this.Content = this.layout;
 
 		}
-
+			
 		private void OnSuccessFullLogin(){
 			this.loading.IsRunning = false;
 			this.loading.IsEnabled = false;
