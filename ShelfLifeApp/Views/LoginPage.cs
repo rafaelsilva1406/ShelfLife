@@ -16,35 +16,35 @@ namespace ShelfLifeApp.Views
 		public UserDetailsViewModel userDetails;
 		public ActivityIndicator loading;
 
-		public LoginPage (UserDetailsViewModel userDetails)
+		public LoginPage (UserDetailsViewModel userdetails)
 		{
-			this.userDetails = userDetails;
-			this.Title = AppResources.LoginPageTitle;
-			this.layout = new StackLayout {
+			userDetails = userdetails;
+			Title = AppResources.LoginPageTitle;
+			layout = new StackLayout {
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
 				BackgroundColor = Color.Transparent
 			};
 
-			this.loading = new ActivityIndicator ();
-			this.loading.IsRunning = true;
-			this.loading.IsEnabled = true;
-			this.loading.IsVisible = true;
-			this.layout.Children.Add (this.loading);
-			this.Content = this.layout;
+			loading = new ActivityIndicator ();
+			loading.IsRunning = true;
+			loading.IsEnabled = true;
+			loading.IsVisible = true;
+			layout.Children.Add (loading);
+			Content = layout;
 		
-			if (this.userDetails.isUserAuth == false) {
-				this.loading.IsRunning = false;
-				this.loading.IsEnabled = false;
-				this.loading.IsVisible = false;
-				this.layout.Children.Clear ();
+			if (userDetails.isUserAuth == false) {
+				loading.IsRunning = false;
+				loading.IsEnabled = false;
+				loading.IsVisible = false;
+				layout.Children.Clear ();
 				init ();
 			} 
 		}
 
 		private void init()
 		{
-			this.BindingContext = this.userDetails;
+			BindingContext = userDetails;
 			var label1 = new Label {
 				XAlign = TextAlignment.Center,
 				HeightRequest = 60,
@@ -98,13 +98,13 @@ namespace ShelfLifeApp.Views
 				),
 			};
 			button1.Clicked += (sender, ea) => {
-				if(string.IsNullOrEmpty(this.userDetails.UserName) || string.IsNullOrEmpty(this.userDetails.UserPassword) || this.userDetails.CurrentFacility < 0){
+				if(string.IsNullOrEmpty(userDetails.UserName) || string.IsNullOrEmpty(userDetails.UserPassword) || userDetails.CurrentFacility < 0){
 					DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, AppResources.LoginPageDisplayAlertMsg2, AppResources.LoginPageDisplayAlertMsg3);
 				}else{
-					this.loading.IsRunning = true;
-					this.loading.IsEnabled = true;
-					this.loading.IsVisible = true;
-					this.layout.Children.Add (this.loading);
+					loading.IsRunning = true;
+					loading.IsEnabled = true;
+					loading.IsVisible = true;
+					layout.Children.Add (loading);
 
 					Task.Factory.StartNew( () => {
 						Login(OnSuccessFullLogin, OnFailedLogin);
@@ -112,32 +112,31 @@ namespace ShelfLifeApp.Views
 
 				}
 			};
-			this.layout.Children.Add (label1);
-			this.layout.Children.Add (entry1);
-			this.layout.Children.Add (entry2);
-			this.layout.Children.Add (picker1);
-			this.layout.Children.Add (button1);
-			this.Content = this.layout;
+			layout.Children.Add (label1);
+			layout.Children.Add (entry1);
+			layout.Children.Add (entry2);
+			layout.Children.Add (picker1);
+			layout.Children.Add (button1);
+			Content = layout;
 
 		}
 			
 		private void OnSuccessFullLogin(){
-			this.loading.IsRunning = false;
-			this.loading.IsEnabled = false;
-			this.loading.IsVisible = false;
-			this.layout.Children.Clear ();
-			this.userDetails.isUserAuth = true;
-			this.Navigation.PopModalAsync();
-			App.Current.MainPage = new NavigationPage(new HomeTabbedPage(this.userDetails));
+			loading.IsRunning = false;
+			loading.IsEnabled = false;
+			loading.IsVisible = false;
+			layout.Children.Clear ();
+			userDetails.isUserAuth = true;
+			Navigation.PopModalAsync();
+			App.Current.MainPage = new NavigationPage(new HomeTabbedPage(userDetails));
 		}
 
 		private void OnFailedLogin(Exception e){
-			this.loading.IsRunning = false;
-			this.loading.IsEnabled = false;
-			this.loading.IsVisible = false;
+			loading.IsRunning = false;
+			loading.IsEnabled = false;
+			loading.IsVisible = false;
 			string error = AppResources.LoginPageDisplayAlertMsg1+":"+e.Message;
 			DisplayAlert(AppResources.LoginPageDisplayAlertMsg1, error, AppResources.LoginPageDisplayAlertMsg3);
-
 		}
 
 		private void OnFail(Exception e){
