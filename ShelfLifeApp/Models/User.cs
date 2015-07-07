@@ -1,7 +1,7 @@
-﻿namespace ShelfLifeApp.Models
-{
-	using System;
+﻿using System;
 
+namespace ShelfLifeApp.Models
+{
 	public class User
 	{
 		public User ()
