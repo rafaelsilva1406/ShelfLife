@@ -232,6 +232,7 @@ namespace ShelfLifeApp.Views
 				System.Diagnostics.Debug.WriteLine("Pallet: {0}",addEdit.Pallet);
 				System.Diagnostics.Debug.WriteLine("Date: {0}",addEdit.Date);
 				System.Diagnostics.Debug.WriteLine("Size: {0}",addEdit.Size);
+				addEdit.GetService();
 			};
 			_grid1.Children.Add (_searchBar1,0, 3, 0, 1);
 			_grid1.Children.Add (_picker1,0,1);
