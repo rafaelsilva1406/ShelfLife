@@ -8,12 +8,12 @@ namespace ShelfLifeApp.Models
 	public class Earthquake
 	{
 		public string eqid { get; set; }
-		public float magnitude { get; set; }
-		public float lng { get; set; }
+		public string magnitude { get; set; }
+		public string lng { get; set; }
 		public string src { get; set; }
 		public string datetime { get; set; }
-		public float depth { get; set; }
-		public float lat { get; set; }
+		public string depth { get; set; }
+		public string lat { get; set; }
 	}
 }
 
