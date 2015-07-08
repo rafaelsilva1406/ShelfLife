@@ -147,12 +147,12 @@ namespace ShelfLifeApp.Views
 		public void Login(Action OnSuccess, Action<Exception> OnFail){
 			try{
 				Xamarin.Forms.Device.BeginInvokeOnMainThread( () => { 
-					this.OnSuccessFullLogin ();
+					OnSuccessFullLogin ();
 				});
 		
 			} catch(Exception e){
 				Xamarin.Forms.Device.BeginInvokeOnMainThread (() => { 
-					this.OnFail (e);
+					OnFail (e);
 				});
 			}
 		}
