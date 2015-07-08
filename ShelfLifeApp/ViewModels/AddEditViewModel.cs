@@ -3,7 +3,10 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using ShelfLifeApp.Models;
+using ShelfLifeApp.Services;
 
 namespace ShelfLifeApp.ViewModels
 {
@@ -193,6 +196,17 @@ namespace ShelfLifeApp.ViewModels
 			_SizeList.Add (new Sizes(1,"Medium"));
 			_SizeList.Add (new Sizes(2,"Large"));
 			return _SizeList;
+		}
+
+		public async void GetService()
+		{
+			var s = new BaseService ();
+			var sResponse = await s.GetAsync ("http://api.geonames.org/earthquakesJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&username=bertt");
+			List<Earthquake> earthquakes = JObject.Parse (sResponse).SelectToken ("earthquakes").ToObject<List<Earthquake>>();
+			foreach(var t in earthquakes)
+			{
+				System.Diagnostics.Debug.WriteLine (t.src);
+			}
 		}
 
 		public void destroyAddEdit()
