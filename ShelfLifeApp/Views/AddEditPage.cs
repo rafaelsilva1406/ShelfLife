@@ -224,16 +224,7 @@ namespace ShelfLifeApp.Views
 					WinPhone: "Comic Sans MS"
 				)
 			};
-			_button1.Clicked += (sender, e) => {
-				System.Diagnostics.Debug.WriteLine("Coo: {0}",addEdit.Coo);
-				System.Diagnostics.Debug.WriteLine("Grower: {0}",addEdit.Grower);
-				System.Diagnostics.Debug.WriteLine("Region: {0}",addEdit.Region);
-				System.Diagnostics.Debug.WriteLine("Packer: {0}",addEdit.Packer);
-				System.Diagnostics.Debug.WriteLine("Pallet: {0}",addEdit.Pallet);
-				System.Diagnostics.Debug.WriteLine("Date: {0}",addEdit.Date);
-				System.Diagnostics.Debug.WriteLine("Size: {0}",addEdit.Size);
-				addEdit.GetService();
-			};
+			_button1.Clicked += Button1Submit;
 			_grid1.Children.Add (_searchBar1,0, 3, 0, 1);
 			_grid1.Children.Add (_picker1,0,1);
 			_grid1.Children.Add (_datePicker1,1,1);
@@ -244,6 +235,21 @@ namespace ShelfLifeApp.Views
 			_grid1.Children.Add (_entry2,1,4);
 			_grid1.Children.Add (_button1,0,6,5,6);
 			Content = _grid1;
+		}
+
+		public async void Button1Submit(object sender, EventArgs ea)
+		{
+			//				System.Diagnostics.Debug.WriteLine("Coo: {0}",addEdit.Coo);
+			//				System.Diagnostics.Debug.WriteLine("Grower: {0}",addEdit.Grower);
+			//				System.Diagnostics.Debug.WriteLine("Region: {0}",addEdit.Region);
+			//				System.Diagnostics.Debug.WriteLine("Packer: {0}",addEdit.Packer);
+			//				System.Diagnostics.Debug.WriteLine("Pallet: {0}",addEdit.Pallet);
+			//				System.Diagnostics.Debug.WriteLine("Date: {0}",addEdit.Date);
+			//				System.Diagnostics.Debug.WriteLine("Size: {0}",addEdit.Size);
+			List<Earthquake> items = await addEdit.GetService();
+			Navigation.PopModalAsync();
+			App.Current.MainPage = new NavigationPage(new NewsPage(userDetails,items));
+			addEdit.destroyAddEdit ();
 		}
 	}
 }
