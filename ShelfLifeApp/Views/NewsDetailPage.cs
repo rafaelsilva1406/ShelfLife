@@ -7,9 +7,9 @@
 	public class NewsDetailPage:ContentPage
 	{
 		public StackLayout layout;
-		public NewsDetailPage (News news)
+		public NewsDetailPage (Earthquake earthquake)
 		{
-			this.Title = news.Headline;
+			Title = earthquake.datetime;
 			this.layout = new StackLayout 
 			{
 				VerticalOptions = LayoutOptions.Center,
@@ -20,7 +20,7 @@
 			};
 
 			var detailText = new Label{ 
-				Text = news.Story
+				Text = earthquake.src
 			};
 			this.layout.Children.Add (detailText);
 			this.Content = this.layout;
