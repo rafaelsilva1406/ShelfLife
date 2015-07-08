@@ -1,6 +1,7 @@
 ﻿namespace ShelfLifeApp.Views
 {
 	using System;
+	using System.Collections.Generic;
 	using Xamarin.Forms;
 	using ShelfLifeApp.ViewModels;
 	using ShelfLifeApp.Models;
@@ -11,17 +12,19 @@
 		private string[] appMsg = {"Loading..","News"};
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
+		public List<Earthquake> earthQuakes;
 		public ActivityIndicator loading;
 
-		public NewsPage (UserDetailsViewModel userDetails)
+		public NewsPage (UserDetailsViewModel userdetails, List<Earthquake> earthquake)
 		{
-			this.userDetails = userDetails;
-			this.Title = this.appMsg[1];
-			this.loading = new ActivityIndicator ();
-			this.loading.IsRunning = true;
-			this.loading.IsEnabled = true;
-			this.loading.IsVisible = true;
-			this.layout = new StackLayout 
+			userDetails = userdetails;
+			earthQuakes = earthquake;
+			Title = appMsg[1];
+			loading = new ActivityIndicator ();
+			loading.IsRunning = true;
+			loading.IsEnabled = true;
+			loading.IsVisible = true;
+			layout = new StackLayout 
 			{
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
@@ -29,35 +32,53 @@
 				Padding = new Thickness(10, 0),
 				BackgroundColor = Color.Transparent
 			};
-			this.layout.Children.Add (loading);
-			if(this.userDetails.isUserAuth == false){
-				this.Navigation.PopModalAsync();
-				this.Navigation.PushModalAsync (new LoginPage(this.userDetails));
+			layout.Children.Add (loading);
+			if(userDetails.isUserAuth == false){
+				Navigation.PopModalAsync();
+				Navigation.PushModalAsync (new LoginPage(userDetails));
 			}else{
-				this.layout.Children.Clear ();
+				layout.Children.Clear ();
 				init ();	
 			}
 		}
 
 		private void init()
 		{
-			this.BindingContext = this.userDetails;
-			var viewModel = new NewsViewModel ();
-			var list = new ListView ();
-			list.ItemsSource = viewModel.NewsList;
-			var cell = new DataTemplate(typeof(ImageCell));
-			cell.SetBinding (ImageCell.TextProperty, "Headline");
-			cell.SetBinding (ImageCell.DetailProperty, "Story");
-			list.ItemTemplate = cell;
-			list.ItemTapped += (sender, e) => {
-				var news = e.Item as News;
-				if(news == null)
-					return;
-				Navigation.PushAsync(new NewsDetailPage(news));
-				list.SelectedItem = null;
+//			list.ItemTapped += (sender, e) => {
+//				var news = e.Item as News;
+//				if(news == null)
+//					return;
+//				Navigation.PushAsync(new NewsDetailPage(news));
+//				list.SelectedItem = null;
+//			};
+
+			Label header = new Label
+			{
+				Text = "ListView",
+				Font = Font.BoldSystemFontOfSize(40),
+				HorizontalOptions = LayoutOptions.Center
 			};
-			this.layout.Children.Add (list);
-			this.Content = this.layout;
+	
+			var cell = new DataTemplate(typeof(TextCell));
+			cell.SetBinding (TextCell.TextProperty, "datetime");
+			cell.SetBinding (TextCell.DetailProperty, new Binding ("eqid", stringFormat: "{0}"));
+			ListView listView = new ListView {
+				RowHeight = 60,
+				ItemsSource = earthQuakes,
+				ItemTemplate = cell
+			};
+
+			listView.ItemTapped += (sender, e) => {
+				var earthQuake = e.Item as Earthquake;
+				if(earthQuake == null)
+					return;
+				Navigation.PushAsync(new NewsDetailPage(earthQuake));
+				listView.SelectedItem = null;
+			};
+					
+			layout.Children.Add (header);
+			layout.Children.Add (listView);
+			Content = layout;
 		}
 	}
 }
