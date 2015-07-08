@@ -198,22 +198,23 @@ namespace ShelfLifeApp.ViewModels
 			return _SizeList;
 		}
 
-		public async void GetService()
+		public async Task<List<Earthquake>> GetService()
 		{
 			var s = new BaseService ();
 			var sResponse = await s.GetAsync ("http://api.geonames.org/earthquakesJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&username=bertt");
 			List<Earthquake> earthquakes = JObject.Parse (sResponse).SelectToken ("earthquakes").ToObject<List<Earthquake>>();
-			foreach(var t in earthquakes)
-			{
-				System.Diagnostics.Debug.WriteLine (t.src);
-			}
+			return earthquakes;
 		}
 
 		public void destroyAddEdit()
 		{
+			_CooList.Clear ();
 			_coo = -1;
+			_RegionList.Clear ();
 			_region = -1;
+			_PackerList.Cast ();
 			_packer = -1;
+			_SizeList.Clear ();
 			_size = -1;
 		}
 	}
