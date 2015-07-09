@@ -14,11 +14,13 @@ namespace ShelfLifeApp.Views
 	{
 		private StackLayout layout;
 		public UserDetailsViewModel userDetails;
+		public LoginViewModel login;
 		public ActivityIndicator loading;
 
 		public LoginPage (UserDetailsViewModel userdetails)
 		{
 			userDetails = userdetails;
+			login = LoginViewModel.Instance;
 			Title = AppResources.LoginPageTitle;
 			layout = new StackLayout {
 				VerticalOptions = LayoutOptions.Center,
@@ -97,21 +99,7 @@ namespace ShelfLifeApp.Views
 					WinPhone: "Comic Sans MS"
 				),
 			};
-			button1.Clicked += (sender, ea) => {
-				if(string.IsNullOrEmpty(userDetails.UserName) || string.IsNullOrEmpty(userDetails.UserPassword) || userDetails.CurrentFacility < 0){
-					DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, AppResources.LoginPageDisplayAlertMsg2, AppResources.LoginPageDisplayAlertMsg3);
-				}else{
-					loading.IsRunning = true;
-					loading.IsEnabled = true;
-					loading.IsVisible = true;
-					layout.Children.Add (loading);
-
-					Task.Factory.StartNew( () => {
-						Login(OnSuccessFullLogin, OnFailedLogin);
-					});
-
-				}
-			};
+			button1.Clicked += Button1Submit;
 			layout.Children.Add (label1);
 			layout.Children.Add (entry1);
 			layout.Children.Add (entry2);
@@ -120,7 +108,25 @@ namespace ShelfLifeApp.Views
 			Content = layout;
 
 		}
-			
+
+		public async void Button1Submit(object sender, EventArgs ea)
+		{
+			await login.PostService();
+			if(string.IsNullOrEmpty(userDetails.UserName) || string.IsNullOrEmpty(userDetails.UserPassword) || userDetails.CurrentFacility < 0){
+				DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, AppResources.LoginPageDisplayAlertMsg2, AppResources.LoginPageDisplayAlertMsg3);
+			}else{
+				loading.IsRunning = true;
+				loading.IsEnabled = true;
+				loading.IsVisible = true;
+				layout.Children.Add (loading);
+
+				Task.Factory.StartNew( () => {
+					Login(OnSuccessFullLogin, OnFailedLogin);
+				});
+
+			}
+		}
+
 		private void OnSuccessFullLogin(){
 			loading.IsRunning = false;
 			loading.IsEnabled = false;
