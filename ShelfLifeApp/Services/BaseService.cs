@@ -18,6 +18,15 @@ namespace ShelfLifeApp.Services
 			string content = await response.Content.ReadAsStringAsync ();
 			return content;
 		}
+
+		public async Task<string> PostAsync(string uri, string data)
+		{
+			var httpClient = new HttpClient ();
+			var response = await httpClient.PostAsync (uri, new StringContent (data));
+			response.EnsureSuccessStatusCode ();
+			string content = await response.Content.ReadAsStringAsync ();
+			return content;
+		}
 	}
 }
 
