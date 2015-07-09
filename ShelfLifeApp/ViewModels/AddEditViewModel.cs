@@ -212,7 +212,7 @@ namespace ShelfLifeApp.ViewModels
 			_coo = -1;
 			_RegionList.Clear ();
 			_region = -1;
-			_PackerList.Cast ();
+			_PackerList.Clear ();
 			_packer = -1;
 			_SizeList.Clear ();
 			_size = -1;
