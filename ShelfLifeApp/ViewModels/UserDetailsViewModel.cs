@@ -23,6 +23,8 @@ namespace ShelfLifeApp.ViewModels
 		private string _userPassword;
 		private int _currentFacility = -1;
 		private bool _isUserAuth = false;
+		private int _domain = 0;
+		public List<string> _Domains = new List<string>();
 
 		public static UserDetailsViewModel Instance
 		{
@@ -87,6 +89,24 @@ namespace ShelfLifeApp.ViewModels
 			get{ return _isUserAuth; }
 			set{ _isUserAuth = value; }
 		}
+
+		public int Domain
+		{
+			get{ return _domain; }
+			set{ 
+				if(_domain == value){
+					return;
+				}
+				_domain = value;
+				OnPropertyChanged ();
+			}
+		}
+
+		public List<string> GetDomains()
+		{
+			_Domains.Add ("MISSIONPRO");
+			return _Domains;
+		}
 			
 		public void destroyUser()
 		{
@@ -94,6 +114,8 @@ namespace ShelfLifeApp.ViewModels
 			_userPassword = "";
 			_currentFacility = -1;
 			_isUserAuth = false;
+			_domain = 0;
+			//_Domains.Clear ();
 		}
 
 		public int CaliCount{
