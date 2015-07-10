@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 using Xamarin.Forms;
 using ShelfLifeApp.Models;
 using ShelfLifeApp.ViewModels;
@@ -16,6 +17,7 @@ namespace ShelfLifeApp.Views
 		public UserDetailsViewModel userDetails;
 		public LoginViewModel login;
 		public ActivityIndicator loading;
+		private Button button1;
 
 		public LoginPage (UserDetailsViewModel userdetails)
 		{
@@ -86,7 +88,7 @@ namespace ShelfLifeApp.Views
 			}
 
 			picker1.SetBinding (Picker.SelectedIndexProperty, "CurrentFacility");
-			var button1 = new Button {
+			button1 = new Button {
 				Text = AppResources.LoginPageButton1,
 				HeightRequest = 60,
 				TextColor = Color.White,
@@ -111,7 +113,6 @@ namespace ShelfLifeApp.Views
 
 		public async void Button1Submit(object sender, EventArgs ea)
 		{
-			await login.PostService();
 			if(string.IsNullOrEmpty(userDetails.UserName) || string.IsNullOrEmpty(userDetails.UserPassword) || userDetails.CurrentFacility < 0){
 				DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, AppResources.LoginPageDisplayAlertMsg2, AppResources.LoginPageDisplayAlertMsg3);
 			}else{
@@ -119,47 +120,26 @@ namespace ShelfLifeApp.Views
 				loading.IsEnabled = true;
 				loading.IsVisible = true;
 				layout.Children.Add (loading);
-
-				Task.Factory.StartNew( () => {
-					Login(OnSuccessFullLogin, OnFailedLogin);
-				});
-
-			}
-		}
-
-		private void OnSuccessFullLogin(){
-			loading.IsRunning = false;
-			loading.IsEnabled = false;
-			loading.IsVisible = false;
-			layout.Children.Clear ();
-			userDetails.isUserAuth = true;
-			Navigation.PopModalAsync();
-			App.Current.MainPage = new NavigationPage(new HomeTabbedPage(userDetails));
-		}
-
-		private void OnFailedLogin(Exception e){
-			loading.IsRunning = false;
-			loading.IsEnabled = false;
-			loading.IsVisible = false;
-			string error = AppResources.LoginPageDisplayAlertMsg1+":"+e.Message;
-			DisplayAlert(AppResources.LoginPageDisplayAlertMsg1, error, AppResources.LoginPageDisplayAlertMsg3);
-		}
-
-		private void OnFail(Exception e){
-			var error = AppResources.LoginPageDisplayAlertMsg1+":"+e.Message;
-			DisplayAlert (AppResources.LoginPageDisplayAlertMsg1,error,AppResources.LoginPageDisplayAlertMsg3);
-		}
-
-		public void Login(Action OnSuccess, Action<Exception> OnFail){
-			try{
-				Xamarin.Forms.Device.BeginInvokeOnMainThread( () => { 
-					OnSuccessFullLogin ();
-				});
-		
-			} catch(Exception e){
-				Xamarin.Forms.Device.BeginInvokeOnMainThread (() => { 
-					OnFail (e);
-				});
+				button1.IsEnabled = false;
+				JToken response = await login.PostService(userDetails.UserName,userDetails.UserPassword);
+				bool auth = response.Value<bool>("authenticated");
+				string authMsg = response.Value<string>("authMessage");
+				if (auth == false) {
+					loading.IsRunning = false;
+					loading.IsEnabled = false;
+					loading.IsVisible = false;
+					button1.IsEnabled = true;
+					DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, authMsg, AppResources.LoginPageDisplayAlertMsg3);
+				} else {
+					loading.IsRunning = false;
+					loading.IsEnabled = false;
+					loading.IsVisible = false;
+					userDetails.isUserAuth = auth;
+					layout.Children.Clear ();
+					Navigation.PopModalAsync();
+					App.Current.MainPage = new NavigationPage(new HomeTabbedPage(userDetails));
+				}
+					
 			}
 		}
 	}
