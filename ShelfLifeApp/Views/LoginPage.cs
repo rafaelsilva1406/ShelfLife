@@ -88,6 +88,21 @@ namespace ShelfLifeApp.Views
 			}
 
 			picker1.SetBinding (Picker.SelectedIndexProperty, "CurrentFacility");
+
+			Picker picker2 = new Picker 
+			{
+				Title = AppResources.LoginPagePicker2,
+				VerticalOptions = LayoutOptions.StartAndExpand,
+				HorizontalOptions = LayoutOptions.FillAndExpand
+			};
+
+			foreach(var item in userDetails.GetDomains())
+			{
+				picker2.Items.Add (item);
+			}
+
+			picker2.SetBinding (Picker.SelectedIndexProperty,"Domain");
+
 			button1 = new Button {
 				Text = AppResources.LoginPageButton1,
 				HeightRequest = 60,
@@ -106,6 +121,7 @@ namespace ShelfLifeApp.Views
 			layout.Children.Add (entry1);
 			layout.Children.Add (entry2);
 			layout.Children.Add (picker1);
+			layout.Children.Add (picker2);
 			layout.Children.Add (button1);
 			Content = layout;
 
@@ -121,7 +137,7 @@ namespace ShelfLifeApp.Views
 				loading.IsVisible = true;
 				layout.Children.Add (loading);
 				button1.IsEnabled = false;
-				JToken response = await login.PostService(userDetails.UserName,userDetails.UserPassword);
+				JToken response = await login.PostService(userDetails.UserName,userDetails.UserPassword,userDetails.Domain);
 				bool auth = response.Value<bool>("authenticated");
 				string authMsg = response.Value<string>("authMessage");
 				if (auth == false) {
