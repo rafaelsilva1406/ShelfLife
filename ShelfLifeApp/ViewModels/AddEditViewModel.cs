@@ -66,7 +66,6 @@ namespace ShelfLifeApp.ViewModels
 			set{ 
 				if (value.Equals(_grower, StringComparison.Ordinal))
 				{
-					// Nothing to do - the value hasn't changed;
 					return;
 				}
 				_grower = value;
@@ -104,7 +103,6 @@ namespace ShelfLifeApp.ViewModels
 			set{ 
 				if (value.Equals(_pallet, StringComparison.Ordinal))
 				{
-					// Nothing to do - the value hasn't changed;
 					return;
 				}
 				_pallet = value;
