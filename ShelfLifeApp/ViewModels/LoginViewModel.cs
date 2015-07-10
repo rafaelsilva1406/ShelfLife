@@ -13,6 +13,7 @@ namespace ShelfLifeApp.ViewModels
 		}
 		private static readonly object _PadLock = new object ();
 		private static LoginViewModel _Instance = null;
+		private string[] services = {"http://192.168.1.48:10080/appstack/public/v1/rest-login"};
 
 		public static LoginViewModel Instance
 		{
@@ -32,7 +33,7 @@ namespace ShelfLifeApp.ViewModels
 			}
 		}
 
-		public async Task PostService()
+		public async Task<JToken> PostService(string Username, string Password)
 		{
 			var s = new BaseService();
 			string loginObject = new JObject (
@@ -40,16 +41,17 @@ namespace ShelfLifeApp.ViewModels
 					new JObject(
 						new JProperty("credentials",
 							new JObject(
-								new JProperty("userEmail","rasilv@missionpro.com"),
-								new JProperty("userPassword","chang3m3")
+								new JProperty("userEmail",Username+"@missionpro.com"),
+								new JProperty("userPassword",Password)
 							)
 						)
 					)
 				)
 			).ToString(Newtonsoft.Json.Formatting.None);
-			string sResponse = await s.PostAsync("http://192.168.1.48:10080/appstack/public/v1/rest-login",loginObject);
-			System.Diagnostics.Debug.WriteLine ("{0}",sResponse);
-			//var json = JObject.Parse(sResponse);
+			string sResponse = await s.PostAsync(services[0],loginObject);
+			JObject jObj = JObject.Parse(sResponse);
+			JToken data = jObj["data"];
+			return data;
 		}
 	}
 }
