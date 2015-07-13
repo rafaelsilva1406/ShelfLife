@@ -26,8 +26,9 @@ namespace ShelfLifeApp.Views
 			login = LoginViewModel.Instance;
 			Title = AppResources.LoginPageTitle;
 			layout = new StackLayout {
-				VerticalOptions = LayoutOptions.Center,
-				HorizontalOptions = LayoutOptions.CenterAndExpand,
+				Spacing = 0,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+			//	HorizontalOptions = LayoutOptions.CenterAndExpand,
 				BackgroundColor = Color.Transparent
 			};
 
@@ -50,22 +51,31 @@ namespace ShelfLifeApp.Views
 		private void init()
 		{
 			BindingContext = userDetails;
-			var label1 = new Label {
-				XAlign = TextAlignment.Center,
-				HeightRequest = 60,
-				Text = AppResources.LoginPageLabel1,
-				TextColor = Color.White,
-				FontFamily = Device.OnPlatform (
-					iOS:      "MarkerFelt-Thin",
-					Android:  "Droid Sans Mono",
-					WinPhone: "Comic Sans MS"
-				),
-				FontSize = 40,
+			var header = new StackLayout {
+				Spacing = 0,
+				VerticalOptions = LayoutOptions.CenterAndExpand,
+				HorizontalOptions = LayoutOptions.CenterAndExpand,
+				Children = {
+					new Label {
+						XAlign = TextAlignment.Center,
+						HeightRequest = 60,
+						Text = AppResources.LoginPageLabel1,
+						TextColor = Color.White,
+						FontFamily = Device.OnPlatform (
+							iOS:      "MarkerFelt-Thin",
+							Android:  "Droid Sans Mono",
+							WinPhone: "Comic Sans MS"
+						),
+						FontSize = 40,
+					}
+				}
 			};
+
 			var entry1 = new MyEntry {
 				Placeholder = AppResources.LoginPageEntry1,
 			};
 			entry1.SetBinding (Entry.TextProperty,"UserName");
+
 			var entry2 = new MyEntry{ 
 				Placeholder = AppResources.LoginPageEntry2,
 				IsPassword = true
@@ -75,10 +85,8 @@ namespace ShelfLifeApp.Views
 			Picker picker1 = new MyPicker
 			{
 				Title = AppResources.LoginPagePicker1,
-				VerticalOptions = LayoutOptions.StartAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand
 			};
-					
+
 			foreach(CurrentFacility facility in userDetails.GetDefaultCurrentFacilities ())
 			{
 				picker1.Items.Add (facility.Name);
@@ -89,8 +97,6 @@ namespace ShelfLifeApp.Views
 			Picker picker2 = new MyPicker 
 			{
 				Title = AppResources.LoginPagePicker2,
-				VerticalOptions = LayoutOptions.StartAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand
 			};
 
 			foreach(var item in userDetails.GetDomains())
@@ -100,6 +106,20 @@ namespace ShelfLifeApp.Views
 
 			picker2.SetBinding (Picker.SelectedIndexProperty,"Domain");
 
+			var body = new StackLayout{ 
+				Spacing = 10,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				Padding = new Thickness(20,20),
+				BackgroundColor = Color.Transparent,
+				Children = {
+					entry1,
+					entry2,
+					picker1,
+					picker2
+				}
+			};
+					
 			button1 = new MyDefaultButton {
 				Text = AppResources.LoginPageButton1,
 				FontSize = 40,
@@ -110,11 +130,8 @@ namespace ShelfLifeApp.Views
 				),
 			};
 			button1.Clicked += Button1Submit;
-			layout.Children.Add (label1);
-			layout.Children.Add (entry1);
-			layout.Children.Add (entry2);
-			layout.Children.Add (picker1);
-			layout.Children.Add (picker2);
+			layout.Children.Add (header);
+			layout.Children.Add (body);
 			layout.Children.Add (button1);
 			Content = layout;
 
@@ -142,6 +159,7 @@ namespace ShelfLifeApp.Views
 				} else {
 					bool auth = response.Value<bool>("authenticated");
 					string authMsg = response.Value<string>("authMessage");
+
 					if (auth == false) {
 						loading.IsRunning = false;
 						loading.IsEnabled = false;
