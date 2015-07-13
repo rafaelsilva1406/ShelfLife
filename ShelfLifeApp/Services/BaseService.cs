@@ -25,12 +25,22 @@ namespace ShelfLifeApp.Services
 
 		public async Task<string> PostAsync(string uri, string data)
 		{
+			HttpResponseMessage response = null;
 			var httpClient = new HttpClient ();
+			httpClient.Timeout = TimeSpan.FromSeconds(2);
 			httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
 			httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Language", "en,en-US,es-PE;");
-			var response = await httpClient.PostAsync (uri, new StringContent (data));
+
+			try{
+				response = await httpClient.PostAsync (uri, new StringContent (data));
+			}catch(OperationCanceledException e){
+				return e.Message;
+			}catch(Exception e){
+				return e.Message;
+			}
+
 			//response.EnsureSuccessStatusCode ();
-			var responseStream  = await response.Content.ReadAsStreamAsync ();
+			var responseStream  = response.Content.ReadAsStreamAsync ().Result;
 			var decompressedStream = new GZipStream (responseStream , CompressionMode.Decompress);
 			var streamReader = new StreamReader (decompressedStream);
 			return streamReader.ReadToEnd();
