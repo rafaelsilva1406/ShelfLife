@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using Xamarin.Forms;
 using ShelfLifeApp.Models;
 using ShelfLifeApp.ViewModels;
+using ShelfLifeApp.Custom;
 
 namespace ShelfLifeApp.Views
 {
@@ -61,21 +62,17 @@ namespace ShelfLifeApp.Views
 				),
 				FontSize = 40,
 			};
-			var entry1 = new Entry {
+			var entry1 = new MyEntry {
 				Placeholder = AppResources.LoginPageEntry1,
-				HeightRequest = 60,
-				TextColor = Color.White
 			};
 			entry1.SetBinding (Entry.TextProperty,"UserName");
-			var entry2 = new Entry{ 
+			var entry2 = new MyEntry{ 
 				Placeholder = AppResources.LoginPageEntry2,
-				IsPassword = true,
-				HeightRequest = 60,
-				TextColor = Color.White
+				IsPassword = true
 			};
 			entry2.SetBinding (Entry.TextProperty,"UserPassword");
 
-			Picker picker1 = new Picker
+			Picker picker1 = new MyPicker
 			{
 				Title = AppResources.LoginPagePicker1,
 				VerticalOptions = LayoutOptions.StartAndExpand,
@@ -89,7 +86,7 @@ namespace ShelfLifeApp.Views
 
 			picker1.SetBinding (Picker.SelectedIndexProperty, "CurrentFacility");
 
-			Picker picker2 = new Picker 
+			Picker picker2 = new MyPicker 
 			{
 				Title = AppResources.LoginPagePicker2,
 				VerticalOptions = LayoutOptions.StartAndExpand,
@@ -103,13 +100,9 @@ namespace ShelfLifeApp.Views
 
 			picker2.SetBinding (Picker.SelectedIndexProperty,"Domain");
 
-			button1 = new Button {
+			button1 = new MyDefaultButton {
 				Text = AppResources.LoginPageButton1,
-				HeightRequest = 60,
-				TextColor = Color.White,
-				BackgroundColor = Color.Transparent,
-				BorderColor = Color.Gray,
-				BorderWidth = 4,
+				FontSize = 40,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
@@ -138,24 +131,33 @@ namespace ShelfLifeApp.Views
 				layout.Children.Add (loading);
 				button1.IsEnabled = false;
 				JToken response = await login.PostService(userDetails.UserName,userDetails.UserPassword,userDetails.Domain);
-				bool auth = response.Value<bool>("authenticated");
-				string authMsg = response.Value<string>("authMessage");
-				if (auth == false) {
+			
+				if (response ["error"] != null) {
 					loading.IsRunning = false;
 					loading.IsEnabled = false;
 					loading.IsVisible = false;
 					button1.IsEnabled = true;
-					DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, authMsg, AppResources.LoginPageDisplayAlertMsg3);
+					string errorMsg = response.Value<string> ("error"); 
+					DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, errorMsg, AppResources.LoginPageDisplayAlertMsg3);
 				} else {
-					loading.IsRunning = false;
-					loading.IsEnabled = false;
-					loading.IsVisible = false;
-					userDetails.isUserAuth = auth;
-					layout.Children.Clear ();
-					Navigation.PopModalAsync();
-					App.Current.MainPage = new NavigationPage(new HomeTabbedPage(userDetails));
+					bool auth = response.Value<bool>("authenticated");
+					string authMsg = response.Value<string>("authMessage");
+					if (auth == false) {
+						loading.IsRunning = false;
+						loading.IsEnabled = false;
+						loading.IsVisible = false;
+						button1.IsEnabled = true;
+						DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, authMsg, AppResources.LoginPageDisplayAlertMsg3);
+					} else {
+						loading.IsRunning = false;
+						loading.IsEnabled = false;
+						loading.IsVisible = false;
+						userDetails.isUserAuth = auth;
+						layout.Children.Clear ();
+						Navigation.PopModalAsync();
+						App.Current.MainPage = new NavigationPage(new HomeTabbedPage(userDetails));
+					}	
 				}
-					
 			}
 		}
 	}
