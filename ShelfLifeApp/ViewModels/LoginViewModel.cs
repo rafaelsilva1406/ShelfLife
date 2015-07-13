@@ -27,7 +27,7 @@ namespace ShelfLifeApp.ViewModels
 					{
 						if(_Instance ==  null){
 							_Instance = new LoginViewModel ();
-							typeCheck = new TypeCheck ();
+							TypeCheck typeCheck = new TypeCheck ();
 						}
 					}		
 				}
