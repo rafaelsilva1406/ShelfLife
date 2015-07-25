@@ -11,7 +11,7 @@ namespace ShelfLifeApp.Custom
 
 		public bool isValidJson(string json)
 		{
-			try {
+			try{
 				JToken token = JObject.Parse(json);
 				return true; 
 			}
