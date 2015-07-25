@@ -14,8 +14,7 @@ namespace ShelfLifeApp.ViewModels
 		}
 		private static readonly object _PadLock = new object ();
 		private static LoginViewModel _Instance = null;
-		private string[] _Services = {"http://192.168.1.48:10080/appstack/public/v1/rest-login"};
-		private TypeCheck typeCheck;
+		private string [] _Services = {"http://192.168.1.48:10080/appstack/public/v1/rest-login"};
 
 		public static LoginViewModel Instance
 		{
@@ -27,7 +26,6 @@ namespace ShelfLifeApp.ViewModels
 					{
 						if(_Instance ==  null){
 							_Instance = new LoginViewModel ();
-							TypeCheck typeCheck = new TypeCheck ();
 						}
 					}		
 				}
@@ -39,8 +37,11 @@ namespace ShelfLifeApp.ViewModels
 		public async Task<JToken> PostService(string Username, string Password, int Domain)
 		{
 			var s = new BaseService();
+			var typeCheck = new TypeCheck ();
 			string domain = "";
-
+			JObject jObj = null;
+			JToken data = null;
+			 
 			switch(Domain)
 			{
 				case 0:
@@ -65,8 +66,6 @@ namespace ShelfLifeApp.ViewModels
 			).ToString(Newtonsoft.Json.Formatting.None);
 
 			string sResponse = await s.PostAsync (_Services [0], loginObject);
-			JObject jObj = null;
-			JToken data = null;
 
 			if(typeCheck.isValidJson(sResponse)){
 				jObj = JObject.Parse(sResponse);
