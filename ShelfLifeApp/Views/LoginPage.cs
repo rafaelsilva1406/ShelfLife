@@ -28,7 +28,7 @@ namespace ShelfLifeApp.Views
 			layout = new StackLayout {
 				Spacing = 0,
 				VerticalOptions = LayoutOptions.FillAndExpand,
-			//	HorizontalOptions = LayoutOptions.CenterAndExpand,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
 				BackgroundColor = Color.Transparent
 			};
 
@@ -76,7 +76,7 @@ namespace ShelfLifeApp.Views
 			};
 			entry1.SetBinding (Entry.TextProperty,"UserName");
 
-			var entry2 = new MyEntry{ 
+			var entry2 = new MyEntryPassword{ 
 				Placeholder = AppResources.LoginPageEntry2,
 				IsPassword = true
 			};
@@ -120,14 +120,14 @@ namespace ShelfLifeApp.Views
 				}
 			};
 					
-			button1 = new MyDefaultButton {
+			button1 = new MySuccessButton {
 				Text = AppResources.LoginPageButton1,
 				FontSize = 40,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
-				),
+				)
 			};
 			button1.Clicked += Button1Submit;
 			layout.Children.Add (header);
