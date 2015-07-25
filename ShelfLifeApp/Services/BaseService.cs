@@ -43,6 +43,7 @@ namespace ShelfLifeApp.Services
 			var responseStream  = response.Content.ReadAsStreamAsync ().Result;
 			var decompressedStream = new GZipStream (responseStream , CompressionMode.Decompress);
 			var streamReader = new StreamReader (decompressedStream);
+
 			return streamReader.ReadToEnd();
 		}
 	}
