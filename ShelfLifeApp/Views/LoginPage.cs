@@ -60,7 +60,6 @@ namespace ShelfLifeApp.Views
 						XAlign = TextAlignment.Center,
 						HeightRequest = 60,
 						Text = AppResources.LoginPageLabel1,
-						TextColor = Color.White,
 						FontFamily = Device.OnPlatform (
 							iOS:      "MarkerFelt-Thin",
 							Android:  "Droid Sans Mono",
