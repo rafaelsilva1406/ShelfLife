@@ -56,7 +56,7 @@ namespace ShelfLifeApp.Views
 				VerticalOptions = LayoutOptions.CenterAndExpand,
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
 				Children = {
-					new Label {
+					new MyLabel {
 						XAlign = TextAlignment.Center,
 						HeightRequest = 60,
 						Text = AppResources.LoginPageLabel1,
@@ -120,7 +120,7 @@ namespace ShelfLifeApp.Views
 				}
 			};
 					
-			button1 = new MySuccessButton {
+			button1 = new MyDefaultButton {
 				Text = AppResources.LoginPageButton1,
 				FontSize = 40,
 				FontFamily = Device.OnPlatform (
