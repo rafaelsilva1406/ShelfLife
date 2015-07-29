@@ -3,6 +3,7 @@
 	using System;
 	using Xamarin.Forms;
 	using ShelfLifeApp.ViewModels;
+	using ShelfLifeApp.Custom;
 
 	public class HomePage : ContentPage
 	{
@@ -20,13 +21,12 @@
 			this.loading.IsVisible = true;
 			this.layout = new StackLayout 
 			{
-				VerticalOptions = LayoutOptions.StartAndExpand,
-				HorizontalOptions = LayoutOptions.StartAndExpand,
-				Orientation = StackOrientation.Vertical,
-				Padding = new Thickness(10, 0),
+				Spacing = 0,
+				VerticalOptions = LayoutOptions.FillAndExpand,
 				BackgroundColor = Color.Transparent
 			};
 			this.layout.Children.Add (loading);
+
 			if(this.userDetails.isUserAuth == false){
 				this.Navigation.PopModalAsync();
 				this.Navigation.PushModalAsync (new LoginPage(this.userDetails));
@@ -41,26 +41,50 @@
 		private void init()
 		{
 			this.BindingContext = this.userDetails;
-			Label caliCountLabel = new Label () {
+
+			Label caliCountLabel = new MyLabel () {
+				FontSize = 30,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
 				Text = string.Format( "{0} California Inspections", userDetails.CaliCount),
-				//Scale = 1.5
+				HorizontalOptions = LayoutOptions.Center
 			};
-			Label mexicoCountLabel = new Label () {
+			Label mexicoCountLabel = new MyLabel () {
+				FontSize = 30,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
 				Text = string.Format( "{0} Mexico Inspections ", userDetails.MexCount),
-				//Scale = 1.5
+				HorizontalOptions = LayoutOptions.Center
 			};
-			Label peruCountLabel = new Label () {
+			Label peruCountLabel = new MyLabel () {
+				FontSize = 30,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
 				Text = string.Format( "{0} Peru Inspections", userDetails.PeruCount),
-				//Scale = 1.5
+				HorizontalOptions = LayoutOptions.Center
 			};
 
-			var _button1 = new Button {
+			var header = new StackLayout{ 
+				Spacing = 0,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				Children = {
+					caliCountLabel,
+					mexicoCountLabel,
+					peruCountLabel
+				}
+			};
+
+			var _button1 = new MyDefaultButton{
 				Text = AppResources.HomePageButton1,
-				HeightRequest = 60,
-				TextColor = Color.White,
-				BackgroundColor = Color.Transparent,
-				BorderColor = Color.Gray,
-				BorderWidth = 4,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
@@ -72,9 +96,7 @@
 				Navigation.PushAsync(new AddEditPage(this.userDetails));
 			};
 
-			this.layout.Children.Add (caliCountLabel);
-			this.layout.Children.Add (mexicoCountLabel);
-			this.layout.Children.Add (peruCountLabel);
+			this.layout.Children.Add (header);
 			this.layout.Children.Add (_button1);
 			this.Content = this.layout;
 		}
