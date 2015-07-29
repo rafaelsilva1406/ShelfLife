@@ -1,21 +1,16 @@
 ﻿namespace ShelfLifeApp.Views
 {
 	using System;
-
 	using Xamarin.Forms;
+	using ShelfLifeApp.Custom;
 
 	public class SettingsPage : ContentPage
 	{
 		public StackLayout layout;
 		public SettingsPage ()
 		{
-			var _button1 = new Button {
+			var _button1 = new MyDefaultButton {
 				Text = AppResources.SettingsPageButton1,
-				HeightRequest = 60,
-				TextColor = Color.White,
-				BackgroundColor = Color.Transparent,
-				BorderColor = Color.Gray,
-				BorderWidth = 4,
 				FontFamily = Device.OnPlatform(
 					iOS: "MarkerFelt-Thin",
 					Android: "Droid Sans Mono",
@@ -28,10 +23,8 @@
 			};
 			this.Title = AppResources.SettingsPageTitle;
 			this.layout = new StackLayout {
-				VerticalOptions = LayoutOptions.Center,
-				HorizontalOptions = LayoutOptions.CenterAndExpand,
-				Orientation = StackOrientation.Vertical,
-				Padding = new Thickness(10, Device.OnPlatform(20,0,0),10,5),
+				Spacing = 0,
+				VerticalOptions = LayoutOptions.FillAndExpand,
 				BackgroundColor = Color.Transparent
 			};
 			this.layout.Children.Add (_button1);
