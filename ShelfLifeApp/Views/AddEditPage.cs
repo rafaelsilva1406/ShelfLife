@@ -50,19 +50,23 @@ namespace ShelfLifeApp.Views
 		{
 			BindingContext = addEdit;
 
-			SearchBar _searchBar1 = new MySearchBar 
-			{
-				Placeholder = AppResources.SearchBar1,
-				VerticalOptions = LayoutOptions.Start,
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-				HeightRequest = 80
+			Label _label1 = new MyLabel
+			{ 
+				XAlign = TextAlignment.Center,
+				Text = AppResources.AddEditPageSampleNumber,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				FontSize = 40,
 			};
 
 			var header = new StackLayout {
 				Spacing = 0,
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				Children = {
-					_searchBar1
+					_label1
 				}
 			};
 
