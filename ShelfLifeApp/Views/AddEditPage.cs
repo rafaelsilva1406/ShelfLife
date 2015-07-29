@@ -8,6 +8,7 @@ using System.Globalization;
 using Xamarin.Forms;
 using ShelfLifeApp.Models;
 using ShelfLifeApp.ViewModels;
+using ShelfLifeApp.Custom;
 
 namespace ShelfLifeApp.Views
 {
@@ -29,9 +30,9 @@ namespace ShelfLifeApp.Views
 			loading.IsVisible = true;
 			layout = new StackLayout 
 			{
-				VerticalOptions = LayoutOptions.Center,
-				HorizontalOptions = LayoutOptions.CenterAndExpand,
-				Orientation = StackOrientation.Vertical,
+				Spacing = 0,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
 				BackgroundColor = Color.Transparent
 			};
 			layout.Children.Add(loading);
@@ -48,6 +49,23 @@ namespace ShelfLifeApp.Views
 		private void init()
 		{
 			BindingContext = addEdit;
+
+			SearchBar _searchBar1 = new MySearchBar 
+			{
+				Placeholder = AppResources.SearchBar1,
+				VerticalOptions = LayoutOptions.Start,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				HeightRequest = 80
+			};
+
+			var header = new StackLayout {
+				Spacing = 0,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				Children = {
+					_searchBar1
+				}
+			};
+
 			var _grid1 = new Grid {
 				Padding = 4,
 				VerticalOptions = LayoutOptions.FillAndExpand,
@@ -71,19 +89,10 @@ namespace ShelfLifeApp.Views
 				},
 				BackgroundColor = Color.Transparent
 			};
-			SearchBar _searchBar1 = new SearchBar 
-			{
-				Placeholder = AppResources.SearchBar1,
-				BackgroundColor = Color.Transparent,
-				HeightRequest = 40
-			};
-			Picker _picker1 = new Picker
+					
+			Picker _picker1 = new MyPicker
 			{
 				Title = AppResources.AddEditPagePicker1,
-				HeightRequest = 60,
-				VerticalOptions = LayoutOptions.StartAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-				BackgroundColor = Color.Transparent
 			};
 
 			foreach(Coo coo in addEdit.GetDefaultCoo())
@@ -92,29 +101,25 @@ namespace ShelfLifeApp.Views
 			}
 
 			_picker1.SetBinding (Picker.SelectedIndexProperty, "Coo");
-			Picker _picker2 = new Picker {
+
+			Picker _picker2 = new MyPicker 
+			{
 				Title = AppResources.AddEditPagePicker2,
-				HeightRequest = 60,
-				VerticalOptions = LayoutOptions.StartAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand,
 				IsVisible = false,
-				BackgroundColor = Color.Transparent
 			};
-			var _entry1 = new Entry{ 
+
+			var _entry1 = new MyEntry
+			{ 
 				Placeholder = AppResources.AddEditPageEntry1,
-				HeightRequest = 60,
-				TextColor = Color.White,
 				IsVisible = false,
-				BackgroundColor = Color.Transparent
 			};
+
 			_entry1.SetBinding (Entry.TextProperty, "Grower");
-			Picker _picker3 = new Picker{ 
+
+			Picker _picker3 = new MyPicker
+			{ 
 				Title = AppResources.AddEditPagePicker3,
-				HeightRequest = 60,
-				VerticalOptions = LayoutOptions.StartAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand,
 				IsVisible = false,
-				BackgroundColor = Color.Transparent
 			};
 					
 			foreach(Region region in addEdit.GetDefaultRegion())
@@ -123,14 +128,15 @@ namespace ShelfLifeApp.Views
 			}
 
 			_picker3.SetBinding (Picker.SelectedIndexProperty, "Region");
-			var _entry2 = new Entry{ 
+
+			var _entry2 = new MyEntry
+			{ 
 				Placeholder = AppResources.AddEditPageEntry2,
-				HeightRequest = 60,
-				TextColor = Color.White,
 				IsVisible = false,
-				BackgroundColor = Color.Transparent
 			};
+
 			_entry2.SetBinding (Entry.TextProperty, "Pallet");
+
 			_picker1.SelectedIndexChanged += (sender, e) => {
 				addEdit._PackerList.Clear();
 				_picker2.Items.Clear();
@@ -187,21 +193,19 @@ namespace ShelfLifeApp.Views
 					
 				_picker2.IsVisible = true;
 			};
+
 			_picker2.SetBinding (Picker.SelectedIndexProperty, "Packer");
-			DatePicker _datePicker1 = new DatePicker
+
+			DatePicker _datePicker1 = new MyDatePicker
 			{
 				Format = "D",
-				VerticalOptions = LayoutOptions.CenterAndExpand,
-				HeightRequest = 60,
-				BackgroundColor = Color.Transparent
 			};
+
 			_datePicker1.SetBinding(DatePicker.DateProperty, new Binding("Date"));
-			Picker _picker4 = new Picker{ 
-				Title = AppResources.AddEditPagePicker4,
-				HeightRequest = 60,
-				VerticalOptions = LayoutOptions.StartAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-				BackgroundColor = Color.Transparent
+
+			Picker _picker4 = new MyPicker
+			{ 
+				Title = AppResources.AddEditPagePicker4
 			};
 
 			foreach(Sizes size in addEdit.GetDefaultSize())
@@ -210,13 +214,10 @@ namespace ShelfLifeApp.Views
 			}
 
 			_picker4.SetBinding (Picker.SelectedIndexProperty, "Size");
-			var _button1 = new Button {
+
+			var _button1 = new MySuccessButton
+			{
 				Text = AppResources.AddEditPageButton1,
-				HeightRequest = 80,
-				TextColor = Color.White,
-				BackgroundColor = Color.Black,
-				BorderColor = Color.Gray,
-				BorderWidth = 4,
 				FontSize = 40,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
@@ -224,17 +225,28 @@ namespace ShelfLifeApp.Views
 					WinPhone: "Comic Sans MS"
 				)
 			};
+
+			var body = new StackLayout{ 
+				Spacing = 10,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				Padding = new Thickness(20,20),
+				BackgroundColor = Color.Transparent,
+				Children = {
+					_datePicker1,
+					_picker1,
+					_picker4,
+					_entry1,
+					_picker2,
+					_picker3,
+					_entry2
+				}
+			};
+
 			_button1.Clicked += Button1Submit;
-			_grid1.Children.Add (_searchBar1,0, 3, 0, 1);
-			_grid1.Children.Add (_picker1,0,1);
-			_grid1.Children.Add (_datePicker1,1,1);
-			_grid1.Children.Add (_picker4,0,2);
-			_grid1.Children.Add (_entry1,0,3);
-			_grid1.Children.Add (_picker2,1,2);
-			_grid1.Children.Add (_picker3,1,3);
-			_grid1.Children.Add (_entry2,1,4);
-			_grid1.Children.Add (_button1,0,6,5,6);
-			Content = _grid1;
+			layout.Children.Add (header);
+			layout.Children.Add (body);
+			layout.Children.Add (_button1);
+			Content = layout;
 		}
 
 		public async void Button1Submit(object sender, EventArgs ea)
