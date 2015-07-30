@@ -1,4 +1,5 @@
 ﻿using System;
+using ShelfLifeApp.Models;
 
 namespace ShelfLifeApp
 {
