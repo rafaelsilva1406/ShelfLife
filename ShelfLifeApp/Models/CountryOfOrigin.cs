@@ -1,11 +1,13 @@
 ﻿using System;
 
-namespace ShelfLifeApp
+namespace ShelfLifeApp.Models
 {
 	public class CountryOfOrigin
 	{
-		public CountryOfOrigin ()
+		public CountryOfOrigin (int id, string description)
 		{
+			ID = id;
+			Description = description;
 		}
 
 		public int ID { get; set;}
