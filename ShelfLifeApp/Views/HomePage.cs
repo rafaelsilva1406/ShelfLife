@@ -49,7 +49,7 @@
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
 				),
-				Text = string.Format( "{0} California Inspections", userDetails.CaliCount),
+				Text = string.Format( "{0}", AppResources.HomePageInspected1),
 				HorizontalOptions = LayoutOptions.Center
 			};
 			Label mexicoCountLabel = new MyLabel () {
@@ -59,7 +59,7 @@
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
 				),
-				Text = string.Format( "{0} Mexico Inspections ", userDetails.MexCount),
+				Text = string.Format( "{0}", AppResources.HomePageInspected2),
 				HorizontalOptions = LayoutOptions.Center
 			};
 			Label peruCountLabel = new MyLabel () {
@@ -69,7 +69,7 @@
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
 				),
-				Text = string.Format( "{0} Peru Inspections", userDetails.PeruCount),
+				Text = string.Format( "{0}", AppResources.HomePageInspected3),
 				HorizontalOptions = LayoutOptions.Center
 			};
 
