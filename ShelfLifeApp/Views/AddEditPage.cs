@@ -69,34 +69,11 @@ namespace ShelfLifeApp.Views
 					_label1
 				}
 			};
-
-			var _grid1 = new Grid {
-				Padding = 4,
-				VerticalOptions = LayoutOptions.FillAndExpand,
-				RowDefinitions = 
-				{
-					new RowDefinition { Height = GridLength.Auto },
-					new RowDefinition { Height = GridLength.Auto },
-					new RowDefinition { Height = GridLength.Auto },
-					new RowDefinition { Height = GridLength.Auto },
-					new RowDefinition { Height = GridLength.Auto },
-					new RowDefinition { Height = GridLength.Auto }
-				},
-				ColumnDefinitions = 
-				{
-					new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
-					new ColumnDefinition { Width = GridLength.Auto },
-					new ColumnDefinition { Width = GridLength.Auto },
-					new ColumnDefinition { Width = GridLength.Auto },
-					new ColumnDefinition { Width = GridLength.Auto },
-					new ColumnDefinition { Width = GridLength.Auto }
-				},
-				BackgroundColor = Color.Transparent
-			};
 					
 			Picker _picker1 = new MyPicker
 			{
 				Title = AppResources.AddEditPagePicker1,
+				HorizontalOptions = LayoutOptions.CenterAndExpand
 			};
 
 			foreach(Coo coo in addEdit.GetDefaultCoo())
@@ -255,13 +232,13 @@ namespace ShelfLifeApp.Views
 
 		public async void Button1Submit(object sender, EventArgs ea)
 		{
-			//				System.Diagnostics.Debug.WriteLine("Coo: {0}",addEdit.Coo);
-			//				System.Diagnostics.Debug.WriteLine("Grower: {0}",addEdit.Grower);
-			//				System.Diagnostics.Debug.WriteLine("Region: {0}",addEdit.Region);
-			//				System.Diagnostics.Debug.WriteLine("Packer: {0}",addEdit.Packer);
-			//				System.Diagnostics.Debug.WriteLine("Pallet: {0}",addEdit.Pallet);
-			//				System.Diagnostics.Debug.WriteLine("Date: {0}",addEdit.Date);
-			//				System.Diagnostics.Debug.WriteLine("Size: {0}",addEdit.Size);
+							System.Diagnostics.Debug.WriteLine("Coo: {0}",addEdit.Coo);
+							System.Diagnostics.Debug.WriteLine("Grower: {0}",addEdit.Grower);
+							System.Diagnostics.Debug.WriteLine("Region: {0}",addEdit.Region);
+							System.Diagnostics.Debug.WriteLine("Packer: {0}",addEdit.Packer);
+							System.Diagnostics.Debug.WriteLine("Pallet: {0}",addEdit.Pallet);
+							System.Diagnostics.Debug.WriteLine("Date: {0}",addEdit.Date);
+							System.Diagnostics.Debug.WriteLine("Size: {0}",addEdit.Size);
 			List<Earthquake> items = await addEdit.GetService();
 			Navigation.PopModalAsync();
 			App.Current.MainPage = new NavigationPage(new NewsPage(userDetails,items));
