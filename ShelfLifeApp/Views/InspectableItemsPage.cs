@@ -1,33 +1,33 @@
-﻿using System.Collections.Generic;
-using ShelfLifeApp;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using System.Resources;
+using System.Globalization;
+using Xamarin.Forms;
+using ShelfLifeApp.Models;
+using ShelfLifeApp.ViewModels;
+using ShelfLifeApp.Custom;
 
 namespace ShelfLifeApp.Views
 {
-	using System;
-
-	using Xamarin.Forms;
-	using ShelfLifeApp.ViewModels;
-
 	public class InspectableItemsPage : ContentPage
 	{
-		private string[] userMsg = {};
-		private string[] appMsg = {"Loading..","Inspectable Items","QA Action Page 1."};
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
+		public InspectableItemsViewModel inspectableItems;
 		public ActivityIndicator loading;
-		private ListView _ListView = new ListView();
-		public InspectableItemsPage (UserDetailsViewModel userDetails)
+
+		public InspectableItemsPage (UserDetailsViewModel userdetails)
 		{
-			this.userDetails = userDetails;
-			this.Title = this.appMsg[1];
-			this.loading = new ActivityIndicator();
-			this.loading.IsRunning = true;
-			this.loading.IsEnabled = true;
-			this.loading.IsVisible = true;
-			this.layout = new StackLayout
+			userDetails = userdetails;
+			inspectableItems = InspectableItemsViewModel.Instance;
+			Title = AppResources.InspectableItemsTitle;
+			loading = new ActivityIndicator();
+			loading.IsRunning = true;
+			loading.IsEnabled = true;
+			loading.IsVisible = true;
+			layout = new StackLayout
 			{
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
@@ -36,57 +36,140 @@ namespace ShelfLifeApp.Views
 				BackgroundColor = Color.Transparent
 			};
 
-			this.layout.Children.Add(this.loading);
-			if(this.userDetails.UserAuth == false){
-				this.Navigation.PopModalAsync ();
-				this.Navigation.PushModalAsync (new LoginPage(this.userDetails));
+			layout.Children.Add(loading);
+			if(userDetails.isUserAuth == false){
+				Navigation.PopModalAsync ();
+				Navigation.PushModalAsync (new LoginPage(userDetails));
 			} else {
-				this.layout.Children.Clear ();
+				layout.Children.Clear ();
 				init ();
 			}
 		}
 
 		private void init()
 		{
-			
-			var cooList = new List<String> ();
-			cooList.Add ("Cali");
-			cooList.Add ("Mexico");
-			cooList.Add ("Peru");
-			Label dateLabel = new Label (){ 
+			BindingContext = userDetails;
+
+			Label dateLabel = new  MyLabel()
+			{ 
 				Text = DateTime.Now.ToString("d"),
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.EndAndExpand,
-				XAlign = TextAlignment.End
+				XAlign = TextAlignment.End,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
 			};
-			Picker picker = new Picker
+				
+			Picker picker = new MyPicker
 			{
-				Title = "Country Of Origin",
+				Title = AppResources.InspectableItemsPicker1,
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand
 			};
-
-			foreach (string colorName in cooList)
+					
+			foreach(CountryOfOrigin country in inspectableItems.GetDefaultCoo())
 			{
-				picker.Items.Add(colorName);
+				picker.Items.Add(country.Description);
 			}
 
+			ListView listView = new ListView();
 
 			picker.SelectedIndexChanged += (object sender, EventArgs e) => {
-				this.layout.Children.Remove(_ListView);
-				var originSamples = UserDetailsViewModel.Instance._FruitList.Where( s => s.Origin.ID == picker.SelectedIndex ).ToList();
-				_ListView =	CreateListView (originSamples.OrderBy(c => c.SampleID).ToList());
-				this.layout.Children.Add(_ListView);
+				List<FruitSample> _fruitsample = new List<FruitSample>(); 
+
+				switch(picker.SelectedIndex){
+					case 0:
+					_fruitsample = inspectableItems.GetFruitSample(picker.SelectedIndex);
+					break;
+					case 1:
+					_fruitsample = inspectableItems.GetFruitSample(picker.SelectedIndex);
+					break;
+					case 2:
+					_fruitsample = inspectableItems.GetFruitSample(picker.SelectedIndex);
+					break; 
+					default:
+						//throw exception
+					break;
+				}
+					
+				listView.ItemsSource = _fruitsample;
+
+				listView.ItemTapped += (object sender2, ItemTappedEventArgs e2) => {
+					var fruitSample = e2.Item as FruitSample;
+					if(fruitSample == null)
+						return;
+					Navigation.PushAsync(new InspectionDetailPage(fruitSample));
+					listView.SelectedItem = null;
+					System.Diagnostics.Debug.WriteLine("{0}", fruitSample);
+				};
+
+				listView.ItemTemplate = new DataTemplate(()=>
+				{
+					Label idLabel = new MyLabel{
+						HeightRequest = 20,
+						FontFamily = Device.OnPlatform(
+							iOS:      "MarkerFelt-Thin",
+							Android:  "Droid Sans Mono",
+							WinPhone: "Comic Sans MS"
+						),
+						FontSize = 16,
+					};
+					idLabel.SetBinding(Label.TextProperty, new Binding("ID", stringFormat: "Sample# {0}"));
+					
+						Label startDateLabel = new MyLabel{
+						HeightRequest = 20,
+						FontFamily = Device.OnPlatform(
+							iOS:      "MarkerFelt-Thin",
+							Android:  "Droid Sans Mono",
+							WinPhone: "Comic Sans MS"
+						),
+						FontSize = 16,
+						HorizontalOptions = LayoutOptions.CenterAndExpand
+					};
+					startDateLabel.SetBinding(Label.TextProperty, new Binding("PackDate", stringFormat: "Start Date {0}"));
+					
+						Label endDateLabel = new MyLabel{
+						HeightRequest = 20,
+						FontFamily = Device.OnPlatform(
+							iOS:      "MarkerFelt-Thin",
+							Android:  "Droid Sans Mono",
+							WinPhone: "Comic Sans MS"
+						),
+						FontSize = 16,
+					};
+					endDateLabel.SetBinding(Label.TextProperty, new Binding("InspectionOnOrAfter", stringFormat: "End Date {0}"));
+					
+					return new ViewCell
+					{
+						View = new StackLayout
+						{
+							Spacing = 0,
+							Padding = new Thickness(0, 5, 0, 20),
+							Orientation = StackOrientation.Horizontal,
+							HeightRequest = 50,
+							Children = 
+							{
+								idLabel,
+								startDateLabel,
+								endDateLabel
+							}
+						}
+					};
+				});
 			};
-
-
-
-			this.BindingContext = this.userDetails;
-
-			var label = new Label (){
-				Text = "Samples to Inspect",
+				
+			var label = new MyLabel(){
+				Text = AppResources.InspectableItemsLabel1,
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
 				Scale = 1.5
 					
 			};
@@ -96,92 +179,14 @@ namespace ShelfLifeApp.Views
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.CenterAndExpand
 			};
+
 			hStack.Children.Add(picker);
 			hStack.Children.Add(dateLabel);
 
-			this.layout.Children.Add(hStack);
-			this.layout.Children.Add (label);
-			this.layout.Children.Add (_ListView);
-			this.Content = this.layout;
-			picker.SelectedIndex = 0;
-		}
-
-		private ListView CreateListView(IEnumerable itemSource){
-			// Create the ListView.
-			ListView listView = new ListView
-			{
-				// Source of data items.
-				ItemsSource = itemSource,
-
-				// Define template for displaying each item.
-				// (Argument of DataTemplate constructor is called for 
-				//      each item; it must return a Cell derivative.)
-				ItemTemplate = new DataTemplate(() =>
-					{
-						// Create views with bindings for displaying each property.
-						Label sampleIDLabel = new Label(){ HorizontalOptions = LayoutOptions.Start};
-						sampleIDLabel.SetBinding(Label.TextProperty,
-							new Binding("SampleID", BindingMode.OneWay, 
-								null, null, @" Sample ID: {0}"));
-
-						Label ageLabel = new Label(){HorizontalOptions = LayoutOptions.FillAndExpand, XAlign = TextAlignment.End };
-						ageLabel.SetBinding(Label.TextProperty,
-							new Binding("Age", BindingMode.OneWay, 
-								null, null, @"Age: {0} days"));
-
-						Label packDateLabel = new Label(){ HorizontalOptions = LayoutOptions.Center};
-						packDateLabel.SetBinding(Label.TextProperty,
-							new Binding("PackDate", BindingMode.OneWay, 
-								null, null, @" Packed {0:d}"));
-
-						Label inspectOnOrByDateLabel = new Label(){ HorizontalOptions = LayoutOptions.Center};
-						inspectOnOrByDateLabel.SetBinding(Label.TextProperty,
-							new Binding("InspectionOnOrAfter", BindingMode.OneWay, 
-								null, null, @" Inspect On {0:d}"));
-						
-						// Return an assembled ViewCell.
-						return new ViewCell
-						{
-							View = new StackLayout
-							{
-								Padding = new Thickness(5,0,5,10),
-								Orientation = StackOrientation.Vertical,
-								Spacing = 10,
-
-								Children = 
-								{
-									new StackLayout
-									{
-										VerticalOptions = LayoutOptions.Center,
-										Orientation = StackOrientation.Horizontal,
-										Spacing = 10,
-										Children = 
-										{
-											sampleIDLabel,
-
-											ageLabel
-										}
-										},
-									new StackLayout
-									{
-										VerticalOptions = LayoutOptions.Center,
-										Orientation = StackOrientation.Horizontal,
-										Spacing = 10,
-										Children = 
-										{
-											
-											packDateLabel,
-											inspectOnOrByDateLabel
-										}
-										}
-								}
-								}
-						};
-					})
-			};
-			listView.HasUnevenRows = true;
-		
-			return listView;
+			layout.Children.Add(hStack);
+			layout.Children.Add (label);
+			layout.Children.Add (listView);
+			Content = layout;
 		}
 	}
 }
