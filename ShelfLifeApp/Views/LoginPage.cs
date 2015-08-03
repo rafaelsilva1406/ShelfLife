@@ -175,6 +175,13 @@ namespace ShelfLifeApp.Views
 						App.Current.MainPage = new NavigationPage(new HomeTabbedPage(userDetails));
 					}	
 				}
+//				loading.IsRunning = false;
+//				loading.IsEnabled = false;
+//				loading.IsVisible = false;
+//				userDetails.isUserAuth = true;
+//				layout.Children.Clear ();
+//				Navigation.PopModalAsync();
+//				App.Current.MainPage = new NavigationPage(new HomeTabbedPage(userDetails));
 			}
 		}
 	}
