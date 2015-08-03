@@ -103,7 +103,6 @@ namespace ShelfLifeApp.Views
 						return;
 					Navigation.PushAsync(new InspectionDetailPage(fruitSample));
 					listView.SelectedItem = null;
-					System.Diagnostics.Debug.WriteLine("{0}", fruitSample);
 				};
 
 				listView.ItemTemplate = new DataTemplate(()=>
