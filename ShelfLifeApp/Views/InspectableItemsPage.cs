@@ -96,7 +96,8 @@ namespace ShelfLifeApp.Views
 				}
 					
 				listView.ItemsSource = _fruitsample;
-
+				listView.SeparatorVisibility = Xamarin.Forms.SeparatorVisibility.Default;
+				listView.SeparatorColor = Color.Gray;
 				listView.ItemTapped += (object sender2, ItemTappedEventArgs e2) => {
 					var fruitSample = e2.Item as FruitSample;
 					if(fruitSample == null)
@@ -116,7 +117,7 @@ namespace ShelfLifeApp.Views
 						),
 						FontSize = 16,
 					};
-					idLabel.SetBinding(Label.TextProperty, new Binding("ID", stringFormat: "Sample# {0}"));
+						idLabel.SetBinding(Label.TextProperty, new Binding("ID", stringFormat: AppResources.InspectableItemsIdLabel+" {0}"));
 					
 						Label startDateLabel = new MyLabel{
 						HeightRequest = 20,
@@ -128,7 +129,7 @@ namespace ShelfLifeApp.Views
 						FontSize = 16,
 						HorizontalOptions = LayoutOptions.CenterAndExpand
 					};
-					startDateLabel.SetBinding(Label.TextProperty, new Binding("PackDate", stringFormat: "Start Date {0}"));
+						startDateLabel.SetBinding(Label.TextProperty, new Binding("PackDate", stringFormat: AppResources.InspectableItemsStartDateLabel+" {0}"));
 					
 						Label endDateLabel = new MyLabel{
 						HeightRequest = 20,
@@ -139,7 +140,7 @@ namespace ShelfLifeApp.Views
 						),
 						FontSize = 16,
 					};
-					endDateLabel.SetBinding(Label.TextProperty, new Binding("InspectionOnOrAfter", stringFormat: "End Date {0}"));
+						endDateLabel.SetBinding(Label.TextProperty, new Binding("InspectionOnOrAfter", stringFormat: AppResources.InspectableItemsEndDateLabel+" {0}"));
 					
 					return new ViewCell
 					{
@@ -169,8 +170,7 @@ namespace ShelfLifeApp.Views
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
 				),
-				Scale = 1.5
-					
+				FontSize = 28
 			};
 
 			var hStack = new StackLayout(){
@@ -183,6 +183,7 @@ namespace ShelfLifeApp.Views
 			hStack.Children.Add(dateLabel);
 
 			layout.Children.Add(hStack);
+			layout.Children.Add (new BoxView(){Color = Color.Gray, WidthRequest = 100, HeightRequest = 2});
 			layout.Children.Add (label);
 			layout.Children.Add (listView);
 			Content = layout;
