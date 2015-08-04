@@ -29,7 +29,7 @@ namespace ShelfLifeApp.Views
 				Spacing = 0,
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
-				BackgroundColor = Color.Transparent
+				BackgroundColor = Color.Black
 			};
 
 			loading = new ActivityIndicator ();
@@ -147,7 +147,7 @@ namespace ShelfLifeApp.Views
 				layout.Children.Add (loading);
 				button1.IsEnabled = false;
 				JToken response = await login.PostService(userDetails.UserName,userDetails.UserPassword,userDetails.Domain);
-			
+				System.Diagnostics.Debug.WriteLine ("{0}",response);
 				if (response ["error"] != null) {
 					loading.IsRunning = false;
 					loading.IsEnabled = false;
