@@ -11,36 +11,36 @@
 		public UserDetailsViewModel userDetails;
 		public ActivityIndicator loading;
 
-		public HomePage (UserDetailsViewModel userDetails)
+		public HomePage (UserDetailsViewModel userdetails)
 		{	
-			this.userDetails = userDetails;
-			this.Title = AppResources.HomePageTitle;
-			this.loading = new ActivityIndicator ();
-			this.loading.IsRunning = true;
-			this.loading.IsEnabled = true;
-			this.loading.IsVisible = true;
-			this.layout = new StackLayout 
+			userDetails = userdetails;
+			Title = AppResources.HomePageTitle;
+			loading = new ActivityIndicator ();
+			loading.IsRunning = true;
+			loading.IsEnabled = true;
+			loading.IsVisible = true;
+			layout = new StackLayout 
 			{
 				Spacing = 0,
 				VerticalOptions = LayoutOptions.FillAndExpand,
-				BackgroundColor = Color.Transparent
+				BackgroundColor = Color.Black
 			};
-			this.layout.Children.Add (loading);
+			layout.Children.Add (loading);
 
-			if(this.userDetails.isUserAuth == false){
-				this.Navigation.PopModalAsync();
-				this.Navigation.PushModalAsync (new LoginPage(this.userDetails));
+			if(userDetails.isUserAuth == false){
+				Navigation.PopModalAsync();
+				Navigation.PushModalAsync (new LoginPage(userDetails));
 			}else{
-				this.layout.Children.Clear ();
+				layout.Children.Clear ();
 				init ();	
 			}
 
-			this.Content = this.layout;
+			Content = layout;
 		}
 
 		private void init()
 		{
-			this.BindingContext = this.userDetails;
+			BindingContext = userDetails;
 
 			Label caliCountLabel = new MyLabel () {
 				FontSize = 30,
@@ -93,12 +93,12 @@
 				FontSize = 40
 			};
 			_button1.Clicked += (sender, e) => {
-				Navigation.PushAsync(new AddEditPage(this.userDetails));
+				Navigation.PushAsync(new AddEditPage(userDetails));
 			};
 
-			this.layout.Children.Add (header);
-			this.layout.Children.Add (_button1);
-			this.Content = this.layout;
+			layout.Children.Add (header);
+			layout.Children.Add (_button1);
+			Content = layout;
 		}
 	}
 }
