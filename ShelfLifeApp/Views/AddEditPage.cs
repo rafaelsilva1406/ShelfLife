@@ -73,7 +73,7 @@ namespace ShelfLifeApp.Views
 			Picker _picker1 = new MyPicker
 			{
 				Title = AppResources.AddEditPagePicker1,
-				HorizontalOptions = LayoutOptions.CenterAndExpand
+				HorizontalOptions = LayoutOptions.FillAndExpand
 			};
 
 			foreach(Coo coo in addEdit.GetDefaultCoo())
@@ -213,8 +213,8 @@ namespace ShelfLifeApp.Views
 				Padding = new Thickness(20,20),
 				BackgroundColor = Color.Transparent,
 				Children = {
-					_datePicker1,
 					_picker1,
+					_datePicker1,
 					_picker4,
 					_entry1,
 					_picker2,
