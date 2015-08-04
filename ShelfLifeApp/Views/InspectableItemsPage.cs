@@ -33,7 +33,7 @@ namespace ShelfLifeApp.Views
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
 				Orientation = StackOrientation.Vertical,
 				Padding = new Thickness(10,0),
-				BackgroundColor = Color.Transparent
+				BackgroundColor = Color.Black
 			};
 
 			layout.Children.Add(loading);

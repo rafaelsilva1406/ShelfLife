@@ -33,7 +33,7 @@ namespace ShelfLifeApp.Views
 				Spacing = 0,
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
-				BackgroundColor = Color.Transparent
+				BackgroundColor = Color.Black
 			};
 			layout.Children.Add(loading);
 
