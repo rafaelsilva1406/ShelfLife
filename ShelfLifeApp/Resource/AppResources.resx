@@ -21,6 +21,9 @@
 	<data name="AddEditPageTitle" xml:space="preserve">
     	<value>New Sample</value>
 	</data>
+	<data name="AddEditPageSampleNumber" xml:space="preserve">
+    	<value>Sample#</value>
+	</data>
 	<data name="AddEditPagePicker1" xml:space="preserve">
     	<value>COO</value>
 	</data>
@@ -57,6 +60,9 @@
 	<data name="LoginPagePicker1" xml:space="preserve">
     	<value>Location</value>
 	</data>
+	<data name="LoginPagePicker2" xml:space="preserve">
+    	<value>Domain</value>
+	</data>
 	<data name="LoginPageButton1" xml:space="preserve">
     	<value>Start</value>
 	</data>
@@ -81,6 +87,15 @@
 	<data name="HomePageTitle" xml:space="preserve">
     	<value>Home</value>
 	</data>
+	<data name="HomePageInspected1" xml:space="preserve">
+    	<value>California Inspections</value>
+	</data>
+	<data name="HomePageInspected2" xml:space="preserve">
+    	<value>Mexico Inspections</value>
+	</data>
+	<data name="HomePageInspected3" xml:space="preserve">
+    	<value>Peru Inspections</value>
+	</data>
 	<data name="HomePageButton1" xml:space="preserve">
     	<value>Start New Sample</value>
 	</data>
@@ -92,5 +107,71 @@
 	</data>
 	<data name="SettingsPageButton1" xml:space="preserve">
     	<value>Back Home</value>
+	</data>
+	<data name="InspectableItemsTitle" xml:space="preserve">
+    	<value>Inspectable Items</value>
+	</data>
+	<data name="InspectableItemsLabel1" xml:space="preserve">
+    	<value>Samples to Inspect</value>
+	</data>
+	<data name="InspectableItemsPicker1" xml:space="preserve">
+    	<value>Please Select Country Of Origin</value>
+	</data>
+	<data name="InspectableItemsIdLabel" xml:space="preserve">
+    	<value>Sample#</value>
+	</data>
+	<data name="InspectableItemsStartDateLabel" xml:space="preserve">
+    	<value>Start Date</value>
+	</data>
+	<data name="InspectableItemsEndDateLabel" xml:space="preserve">
+    	<value>End Date</value>
+	</data>
+	<data name="InspectableItemTitle" xml:space="preserve">
+    	<value>Sample#</value>
+	</data>
+	<data name="InspectableItemSummary" xml:space="preserve">
+    	<value>Summary</value>
+	</data>
+	<data name="InspectableItemOrigin" xml:space="preserve">
+    	<value>Origin:</value>
+	</data>
+	<data name="InspectableItemPacker" xml:space="preserve">
+    	<value>Packer:</value>
+	</data>
+	<data name="InspectableItemPackDate" xml:space="preserve">
+    	<value>Pack Date:</value>
+	</data>
+	<data name="InspectableItemEndDate" xml:space="preserve">
+    	<value>End Date:</value>
+	</data>
+	<data name="InspectableItemSize" xml:space="preserve">
+    	<value>Size:</value>
+	</data>
+	<data name="InspectableItemAge" xml:space="preserve">
+    	<value>Age:</value>
+	</data>
+	<data name="InspectableItemInspect" xml:space="preserve">
+    	<value>Inspect</value>
+	</data>
+	<data name="InspectableItemColor" xml:space="preserve">
+    	<value>Color</value>
+	</data>
+	<data name="InspectableItemStage" xml:space="preserve">
+    	<value>Stage</value>
+	</data>
+	<data name="InspectableItemLenticel" xml:space="preserve">
+    	<value>Lenticel</value>
+	</data>
+	<data name="InspectableItemDefects" xml:space="preserve">
+    	<value>Defects</value>
+	</data>
+	<data name="InspectableItemCut" xml:space="preserve">
+    	<value>Cut</value>
+	</data>
+	<data name="InspectableItemComments" xml:space="preserve">
+    	<value>Comments</value>
+	</data>
+	<data name="InspectableItemSave" xml:space="preserve">
+    	<value>Save</value>
 	</data>
 </root>
