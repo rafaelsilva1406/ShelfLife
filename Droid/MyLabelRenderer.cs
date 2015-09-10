@@ -17,7 +17,7 @@ namespace ShelfLifeApp.Droid
 			if (Control != null) {
 				// do whatever you want to the textField here!
 				Control.SetBackgroundColor(global::Android.Graphics.Color.Transparent);
-				Control.SetTextColor(global::Android.Graphics.Color.LightGray);
+				Control.SetTextColor(global::Android.Graphics.Color.DarkGray);
 				Control.SetAllCaps (true);
 			}
 		}

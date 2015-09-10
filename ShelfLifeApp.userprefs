@@ -1,41 +1,14 @@
-﻿<Properties GitUserInfo="UsingGIT" StartupItem="Droid/ShelfLifeApp.Droid.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus 4 (Jelly Bean)" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ShelfLifeApp/Views/QAction1Page.cs">
+﻿<Properties GitUserInfo="UsingGIT" StartupItem="Droid\ShelfLifeApp.Droid.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus 4 (Lollipop)" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ShelfLifeApp\ShelfLifeApp.cs">
     <Files>
-      <File FileName="ShelfLifeApp/ViewModels/BaseViewModel.cs" Line="16" Column="3" />
-      <File FileName="ShelfLifeApp/ViewModels/NewsViewModel.cs" Line="9" Column="3" />
-      <File FileName="ShelfLifeApp/ViewModels/UserDetailsViewModel.cs" Line="8" Column="3" />
-      <File FileName="ShelfLifeApp/Views/QAction1Page.cs" Line="168" Column="5" />
-      <File FileName="ShelfLifeApp/ShelfLifeApp.cs" Line="1" Column="1" />
-      <File FileName="ShelfLifeApp/Views/LoginPage.cs" Line="1" Column="1" />
-      <File FileName="ShelfLifeApp/Models/CountryOfOrigin.cs" Line="1" Column="1" />
-      <File FileName="ShelfLifeApp/Models/FruitSample.cs" Line="29" Column="25" />
-      <File FileName="ShelfLifeApp/Views/HomePage.cs" Line="28" Column="5" />
+      <File FileName="ShelfLifeApp\Views\InspectionDetailPage.cs" Line="1" Column="1" />
+      <File FileName="ShelfLifeApp\ShelfLifeApp.cs" Line="1" Column="1" />
+      <File FileName="ShelfLifeApp\Views\InspectableItemsPage.cs" Line="1" Column="1" />
+      <File FileName="ShelfLifeApp\Views\LoginPage.cs" Line="1" Column="1" />
+      <File FileName="ShelfLifeApp\Resource\AppResources.resx" Line="1" Column="1" />
+      <File FileName="Droid\MainActivity.cs" Line="1" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="ShelfLifeApp" expanded="True">
-            <Node name="ShelfLifeApp" expanded="True">
-              <Node name="Models" expanded="True" />
-              <Node name="ViewModels" expanded="True" />
-              <Node name="Views" expanded="True">
-                <Node name="QAction1Page.cs" selected="True" />
-              </Node>
-            </Node>
-            <Node name="ShelfLifeApp.Droid" expanded="True" />
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
-      <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State name="__root__">
-          <Node name="ShelfLifeApp" expanded="True" selected="True" />
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

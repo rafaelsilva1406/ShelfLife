@@ -49,7 +49,7 @@
     	<value>Login</value>
 	</data>
 	<data name="LoginPageLabel1" xml:space="preserve">
-    	<value>MissionPro Sign In</value>
+    	<value>MissionPro</value>
 	</data>
 	<data name="LoginPageEntry1" xml:space="preserve">
     	<value>UserName</value>
@@ -118,13 +118,13 @@
     	<value>Please Select Country Of Origin</value>
 	</data>
 	<data name="InspectableItemsIdLabel" xml:space="preserve">
-    	<value>Sample#</value>
+    	<value>#</value>
 	</data>
 	<data name="InspectableItemsStartDateLabel" xml:space="preserve">
-    	<value>Start Date</value>
+    	<value>Start</value>
 	</data>
 	<data name="InspectableItemsEndDateLabel" xml:space="preserve">
-    	<value>End Date</value>
+    	<value>End</value>
 	</data>
 	<data name="InspectableItemTitle" xml:space="preserve">
     	<value>Sample#</value>
@@ -150,6 +150,12 @@
 	<data name="InspectableItemAge" xml:space="preserve">
     	<value>Age:</value>
 	</data>
+	<data name="InspectableItemPastInspection" xml:space="preserve">
+    	<value>Past Inspection</value>
+	</data>
+	<data name="InspectableItemPastDate" xml:space="preserve">
+    	<value>Past Date</value>
+	</data>
 	<data name="InspectableItemInspect" xml:space="preserve">
     	<value>Inspect</value>
 	</data>
@@ -173,5 +179,14 @@
 	</data>
 	<data name="InspectableItemSave" xml:space="preserve">
     	<value>Save</value>
+	</data>
+	<data name="InspectableItemAlertMsg1" xml:space="preserve">
+    	<value>Error</value>
+	</data>
+	<data name="InspectableItemAlertMsg2" xml:space="preserve">
+    	<value>Empty values or Dropdowns not selected</value>
+	</data>
+	<data name="InspectableItemAlertMsg3" xml:space="preserve">
+    	<value>OK</value>
 	</data>
 </root>

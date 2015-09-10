@@ -16,11 +16,11 @@ namespace ShelfLifeApp.Droid
 
 			if (Control != null) {
 				// do whatever you want to the textField here!
-				Control.SetBackgroundColor(global::Android.Graphics.Color.White);
+				Control.SetBackgroundColor(global::Android.Graphics.Color.LightGray);
 				Control.SetTextColor(global::Android.Graphics.Color.DarkGray);
 				Control.InputType = Android.Text.InputTypes.TextFlagNoSuggestions;
 				Control.SetPadding (20,5,5,5);
-				Control.SetHeight(120);
+				Control.SetHeight(150);
 			}
 		}
 	}

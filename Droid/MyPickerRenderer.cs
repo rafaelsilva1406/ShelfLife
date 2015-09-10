@@ -14,11 +14,11 @@ namespace ShelfLifeApp.Droid
 			base.OnElementChanged (e);
 
 			if (e.OldElement == null){
-				Control.SetBackgroundColor (global::Android.Graphics.Color.White);
+				Control.SetBackgroundColor (global::Android.Graphics.Color.LightGray);
 				Control.SetTextColor (global::Android.Graphics.Color.DarkGray);
 				Control.InputType = Android.Text.InputTypes.TextFlagNoSuggestions;
 				Control.SetPadding (20,5,5,5);
-				Control.SetHeight (120);
+				Control.SetHeight (150);
 			}
 		}
 	}

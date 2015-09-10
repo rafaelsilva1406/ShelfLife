@@ -4,6 +4,7 @@ using System.Threading;
 using ShelfLifeApp;
 
 [assembly:Dependency(typeof(ShelfLifeApp.Droid.Localize))]
+
 namespace ShelfLifeApp.Droid
 {
 	public class Localize : ILocalize

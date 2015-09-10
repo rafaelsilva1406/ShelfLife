@@ -10,7 +10,7 @@ namespace ShelfLifeApp.Models
 			Description = description;
 		}
 
-		public int ID { get; set;}
+		public int ID {get; set;}
 
 		public String Description {get; set;}
 	}

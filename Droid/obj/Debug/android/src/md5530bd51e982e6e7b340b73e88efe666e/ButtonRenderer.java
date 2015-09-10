@@ -10,7 +10,6 @@ public class ButtonRenderer
 	static final String __md_methods;
 	static {
 		__md_methods = 
-			"n_childDrawableStateChanged:(Landroid/view/View;)V:GetChildDrawableStateChanged_Landroid_view_View_Handler\n" +
 			"n_onViewAttachedToWindow:(Landroid/view/View;)V:GetOnViewAttachedToWindow_Landroid_view_View_Handler:Android.Views.View/IOnAttachStateChangeListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\n" +
 			"n_onViewDetachedFromWindow:(Landroid/view/View;)V:GetOnViewDetachedFromWindow_Landroid_view_View_Handler:Android.Views.View/IOnAttachStateChangeListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\n" +
 			"";
@@ -40,14 +39,6 @@ public class ButtonRenderer
 		if (getClass () == ButtonRenderer.class)
 			mono.android.TypeManager.Activate ("Xamarin.Forms.Platform.Android.ButtonRenderer, Xamarin.Forms.Platform.Android, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null", "Android.Content.Context, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065", this, new java.lang.Object[] { p0 });
 	}
-
-
-	public void childDrawableStateChanged (android.view.View p0)
-	{
-		n_childDrawableStateChanged (p0);
-	}
-
-	private native void n_childDrawableStateChanged (android.view.View p0);
 
 
 	public void onViewAttachedToWindow (android.view.View p0)

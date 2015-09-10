@@ -11,6 +11,7 @@ using Android.OS;
 namespace ShelfLifeApp.Droid
 {
 	[Activity (Label = "ShelfLifeApp.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+
 	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
 	{
 		protected override void OnCreate (Bundle bundle)
@@ -20,7 +21,7 @@ namespace ShelfLifeApp.Droid
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 
 			LoadApplication (new App ());
-
+		
 			ActionBar.SetHomeButtonEnabled (true);
 		}
 
@@ -34,5 +35,6 @@ namespace ShelfLifeApp.Droid
 			return base.OnOptionsItemSelected (item);
 		}
 	}
+
 }
 

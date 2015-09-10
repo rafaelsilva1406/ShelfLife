@@ -47,13 +47,14 @@ namespace ShelfLifeApp.ViewModels
 			var dt = new DateTime(2015, 7, 30, 12, 43, 7, 123);
 			switch(id){
 				case 0:
-				_fruitList.Add (new FruitSample(0, new CountryOfOrigin (0,"Cali"),"Test",dt,"small",2,dt));
+				_fruitList.Add (new FruitSample(0, new CountryOfOrigin (0,"Cali"),"Test1",dt,"small",2,dt));
+				_fruitList.Add (new FruitSample(1, new CountryOfOrigin (1,"Cali"),"Test2",dt,"medium",2,dt));
 				break;
 				case 1:
-				_fruitList.Add (new FruitSample(1, new CountryOfOrigin (1,"Mexico"),"Test",dt,"medium",2,dt));
+				_fruitList.Add (new FruitSample(0, new CountryOfOrigin (0,"Mexico"),"Test",dt,"medium",2,dt));
 				break;
 				case 2:
-				_fruitList.Add (new FruitSample(2, new CountryOfOrigin (0,"Peru"),"Test",dt,"large",2,dt));
+				_fruitList.Add (new FruitSample(0, new CountryOfOrigin (0,"Peru"),"Test",dt,"large",2,dt));
 				break;
 				default:
 					//throw exception

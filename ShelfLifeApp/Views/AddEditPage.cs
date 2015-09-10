@@ -17,25 +17,19 @@ namespace ShelfLifeApp.Views
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
 		public AddEditViewModel addEdit;
-		public ActivityIndicator loading;
 
 		public AddEditPage (UserDetailsViewModel userdetails)
 		{
 			userDetails = userdetails;
 			addEdit = AddEditViewModel.Instance;
 			Title = AppResources.AddEditPageTitle;
-			loading = new ActivityIndicator ();
-			loading.IsRunning = true;
-			loading.IsEnabled = true;
-			loading.IsVisible = true;
 			layout = new StackLayout 
 			{
 				Spacing = 0,
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
-				BackgroundColor = Color.Black
+				BackgroundColor = Color.White
 			};
-			layout.Children.Add(loading);
 
 			if(userDetails.isUserAuth == false){
 				Navigation.PopModalAsync();
@@ -199,7 +193,7 @@ namespace ShelfLifeApp.Views
 			var _button1 = new MySuccessButton
 			{
 				Text = AppResources.AddEditPageButton1,
-				FontSize = 40,
+				FontSize = 30,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
@@ -232,13 +226,13 @@ namespace ShelfLifeApp.Views
 
 		public async void Button1Submit(object sender, EventArgs ea)
 		{
-							System.Diagnostics.Debug.WriteLine("Coo: {0}",addEdit.Coo);
-							System.Diagnostics.Debug.WriteLine("Grower: {0}",addEdit.Grower);
-							System.Diagnostics.Debug.WriteLine("Region: {0}",addEdit.Region);
-							System.Diagnostics.Debug.WriteLine("Packer: {0}",addEdit.Packer);
-							System.Diagnostics.Debug.WriteLine("Pallet: {0}",addEdit.Pallet);
-							System.Diagnostics.Debug.WriteLine("Date: {0}",addEdit.Date);
-							System.Diagnostics.Debug.WriteLine("Size: {0}",addEdit.Size);
+//							System.Diagnostics.Debug.WriteLine("Coo: {0}",addEdit.Coo);
+//							System.Diagnostics.Debug.WriteLine("Grower: {0}",addEdit.Grower);
+//							System.Diagnostics.Debug.WriteLine("Region: {0}",addEdit.Region);
+//							System.Diagnostics.Debug.WriteLine("Packer: {0}",addEdit.Packer);
+//							System.Diagnostics.Debug.WriteLine("Pallet: {0}",addEdit.Pallet);
+//							System.Diagnostics.Debug.WriteLine("Date: {0}",addEdit.Date);
+//							System.Diagnostics.Debug.WriteLine("Size: {0}",addEdit.Size);
 			List<Earthquake> items = await addEdit.GetService();
 			Navigation.PopModalAsync();
 			App.Current.MainPage = new NavigationPage(new NewsPage(userDetails,items));

@@ -14,8 +14,8 @@ namespace ShelfLifeApp.Droid
 			base.OnElementChanged (e);
 
 			if (e.OldElement == null){
-				Control.SetHeight (100);
-				Control.SetTextColor (global::Android.Graphics.Color.White);
+				Control.SetHeight (120);
+				Control.SetTextColor (global::Android.Graphics.Color.DarkGray);
 				var newBtn = (MyDangerButton)e.NewElement;
 				newBtn.SizeChanged += (s, args) => {
 					var radius = (float)System.Math.Min(10,10);	
@@ -24,8 +24,7 @@ namespace ShelfLifeApp.Droid
 					normal.SetCornerRadius(radius);
 					normal.SetStroke(4,global::Android.Graphics.Color.Red);
 					var pressed = new global::Android.Graphics.Drawables.GradientDrawable ();
-					var highlight = Context.ObtainStyledAttributes(new int[] {global::Android.Resource.Attribute.ColorActivatedHighlight}).GetColor(0,global::Android.Graphics.Color.Transparent);
-					pressed.SetColor(highlight);
+					pressed.SetColor(global::Android.Graphics.Color.White);
 					pressed.SetCornerRadius(radius);
 					pressed.SetStroke(4,global::Android.Graphics.Color.Red);
 					var sld = new global::Android.Graphics.Drawables.StateListDrawable();

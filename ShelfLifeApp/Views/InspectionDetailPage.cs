@@ -2,26 +2,52 @@
 using System.Resources;
 using Xamarin.Forms;
 using ShelfLifeApp.Models;
+using ShelfLifeApp.ViewModels;
 using ShelfLifeApp.Custom;
 
 namespace ShelfLifeApp.Views
 {
 	public class InspectionDetailPage:ContentPage
 	{
+		public ScrollView scrollView;
 		public StackLayout layout;
-		public InspectionDetailPage (FruitSample fruitsample)
+		public FruitSample fruitSample;
+		public InspectionDetailViewModel inspectionDetail;
+		public UserDetailsViewModel userdetails;
+		public InspectionDetailPage (FruitSample fruitsample, UserDetailsViewModel userDetails)
 		{
-			Title = AppResources.InspectableItemTitle+" "+fruitsample.ID.ToString();
+			fruitSample = fruitsample;
+			userdetails = userDetails;
+			inspectionDetail = InspectionDetailViewModel.Instance;
+			Title = AppResources.InspectableItemTitle+" "+fruitSample.ID.ToString();
 			layout = new StackLayout
 			{
 				Spacing = 0,
-				VerticalOptions = LayoutOptions.FillAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand,
+				Orientation = StackOrientation.Vertical,
+				VerticalOptions = LayoutOptions.Fill,
 				Padding = new Thickness (0,0,0,0),
-				BackgroundColor = Color.Transparent 
+				BackgroundColor = Color.White 
 			};
 
-			Label summary = new MyLabel()
+			scrollView = new ScrollView () {
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				Orientation = ScrollOrientation.Vertical,
+				Content = layout
+			};
+					
+			if(userdetails.isUserAuth == false){
+				Navigation.PopModalAsync();
+				Navigation.PushModalAsync (new LoginPage(userdetails));
+			}else{
+				layout.Children.Clear ();
+				init ();	
+			}
+		}
+
+		private void init()
+		{
+			BindingContext = inspectionDetail;
+			Label summary = new MyLabel  ()
 			{
 				Text = AppResources.InspectableItemSummary,
 				XAlign = TextAlignment.Center,
@@ -35,41 +61,43 @@ namespace ShelfLifeApp.Views
 
 			Label origin = new MyLabel()
 			{
-				Text = AppResources.InspectableItemOrigin+" "+fruitsample.Origin.Description,
+				Text = AppResources.InspectableItemOrigin+" "+fruitSample.Origin.Description,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
 				),
-				FontSize = 20
+				FontSize = 20,
+				XAlign = TextAlignment.End,
 			};
 
 			Label packer = new MyLabel()
 			{
-				Text = AppResources.InspectableItemPacker+" "+fruitsample.Packer,
+				Text = AppResources.InspectableItemPacker+" "+fruitSample.Packer,
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
 				),
-				FontSize = 20
+				FontSize = 20,
+				XAlign = TextAlignment.Center,
 			};
 
 			Label packDate = new MyLabel()
 			{
-				Text = AppResources.InspectableItemPackDate+" "+fruitsample.PackDate,
+				Text = AppResources.InspectableItemPackDate+" "+fruitSample.PackDate,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
 				),
-				FontSize = 20
+				FontSize = 20,
 			};
 
 			Label endDate = new MyLabel()
 			{
-				Text = AppResources.InspectableItemEndDate+" "+fruitsample.InspectionOnOrAfter,
+				Text = AppResources.InspectableItemEndDate+" "+fruitSample.InspectionOnOrAfter,
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
@@ -81,7 +109,7 @@ namespace ShelfLifeApp.Views
 
 			Label size = new MyLabel()
 			{
-				Text = AppResources.InspectableItemSize+" "+fruitsample.Size,
+				Text = AppResources.InspectableItemSize+" "+fruitSample.Size,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
@@ -92,7 +120,7 @@ namespace ShelfLifeApp.Views
 
 			Label age = new MyLabel()
 			{
-				Text = AppResources.InspectableItemAge+" "+fruitsample.Age,
+				Text = AppResources.InspectableItemAge+" "+fruitSample.Age,
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
@@ -100,58 +128,214 @@ namespace ShelfLifeApp.Views
 					WinPhone: "Comic Sans MS"
 				),
 				FontSize = 20
+			};
+
+			Label inspect = new MyLabel()
+			{
+				Text = AppResources.InspectableItemInspect,
+				XAlign = TextAlignment.Center,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				FontSize = 28
+			};
+
+			Label lbColor = new MyLabel()
+			{
+				Text = AppResources.InspectableItemColor,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				FontSize = 28,
+				XAlign = TextAlignment.End,
 			};
 
 			Picker color = new MyPicker {
-				Title = "Color",
-				HorizontalOptions = LayoutOptions.FillAndExpand
-			};
+				Title = AppResources.InspectableItemColor,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.CenterAndExpand,
 
-			Picker stage = new MyPicker {
-				Title = "Stage",
-				HorizontalOptions = LayoutOptions.FillAndExpand
 			};
+			color.SetBinding (Picker.SelectedIndexProperty, "Colors");
 
-			Picker lenticel = new MyPicker {
-				Title = "Lenticel",
-				HorizontalOptions = LayoutOptions.FillAndExpand
-			};
+			foreach(Colors colors in inspectionDetail.GetColor()){
+				color.Items.Add (colors.Description);
+			}
 
-			Picker defects = new MyPicker {
-				Title = "Defects",
-				HorizontalOptions = LayoutOptions.FillAndExpand
-			};
-
-			Label cutLabel = new MyLabel()
+			Label lbStage = new MyLabel()
 			{
-				Text = "Cut",
-				HorizontalOptions = LayoutOptions.CenterAndExpand,
+				Text = AppResources.InspectableItemStage,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
 				),
-				FontSize = 20
+				FontSize = 28,
+				XAlign = TextAlignment.End,
+			};
+
+			Picker stage = new MyPicker {
+				Title = AppResources.InspectableItemStage,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.CenterAndExpand
+			};
+
+			stage.SetBinding (Picker.SelectedIndexProperty,"Stage");
+
+			foreach(Stage stages in inspectionDetail.GetStage()){
+				stage.Items.Add (stages.Description);
+			}
+
+			Label lbLenticel = new MyLabel()
+			{
+				Text = AppResources.InspectableItemLenticel,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				FontSize = 28,
+				XAlign = TextAlignment.End,
+			};
+
+			Picker lenticel = new MyPicker {
+				Title = AppResources.InspectableItemLenticel,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.CenterAndExpand
+			};
+
+			lenticel.SetBinding (Picker.SelectedIndexProperty, "Lenticel");
+
+			foreach(Lenticel lenticels in inspectionDetail.GetLenticel()){
+				lenticel.Items.Add (lenticels.Description);
+			}
+
+			Label lbDefects = new MyLabel()
+			{
+				Text = AppResources.InspectableItemDefects,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				FontSize = 28,
+				XAlign = TextAlignment.End,
+				IsVisible = false
+			};
+
+			Picker defects = new MyPicker {
+				Title = AppResources.InspectableItemDefects,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.CenterAndExpand,
+				IsVisible = false
+			};
+
+			defects.SetBinding (Picker.SelectedIndexProperty, "Defect");
+
+			foreach(Defect defect in inspectionDetail.GetDefect()){
+				defects.Items.Add (defect.Description);
+			}
+
+			Label cutLabel = new MyLabel()
+			{
+				Text = AppResources.InspectableItemCut,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				FontSize = 28
 			};
 
 			Switch cut = new Switch {
+				HorizontalOptions = LayoutOptions.EndAndExpand,
+				HeightRequest = 60,
+				WidthRequest = 100
+			};
+
+			cut.SetBinding (Switch.IsToggledProperty,"Cut");
+
+			cut.Toggled += (object sender, ToggledEventArgs e) => {
+				System.Diagnostics.Debug.WriteLine("{0}",e.Value);
+				if(e.Value == true){
+					lbDefects.IsVisible = true;
+					defects.IsVisible = true;
+				}else{
+					lbDefects.IsVisible = false;
+					defects.IsVisible = false;
+				}
+			};
+
+			Label commentLabel = new MyLabel()
+			{
+				Text = AppResources.InspectableItemComments,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				FontSize = 28,
+				XAlign = TextAlignment.End,
 			};
 
 			Entry comment = new MyEntry {
-				Placeholder = "Comments",
+				Placeholder = AppResources.InspectableItemComments,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				HeightRequest = 100
 			};
 
+			comment.SetBinding (Entry.TextProperty,"Comment");
+
 			Button save = new MySuccessButton { 
-				Text = "Save",
-				FontSize = 40,
+				Text = AppResources.InspectableItemSave,
+				FontSize = 30,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
 				),
-				VerticalOptions = LayoutOptions.EndAndExpand,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+			};
+
+			save.Clicked += saveBtn;
+
+			Label past = new MyLabel()
+			{
+				Text = AppResources.InspectableItemPastInspection,
+				XAlign = TextAlignment.Center,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				FontSize = 28
+			};
+
+			Label datePickerLabel = new MyLabel()
+			{
+				Text = AppResources.InspectableItemPastDate,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				FontSize = 28,
+				XAlign = TextAlignment.End
+			};
+
+			DatePicker datePicker = new MyDatePicker
+			{
+				Format = "D",
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.CenterAndExpand ,
+			};
+
+			datePicker.DateSelected += (object sender, DateChangedEventArgs e) => {
+				System.Diagnostics.Debug.WriteLine("{0}", e.NewDate);
 			};
 
 			StackLayout row1 = new StackLayout
@@ -197,10 +381,11 @@ namespace ShelfLifeApp.Views
 			{ 
 				Spacing = 5,
 				Orientation = StackOrientation.Horizontal,
-				Padding = new Thickness(5,20,5,0),
+				Padding = new Thickness(5,10,10,0),
 				Children = 
 				{
-					color,
+					lbColor,
+					color
 				}
 			};
 
@@ -208,10 +393,11 @@ namespace ShelfLifeApp.Views
 			{ 
 				Spacing = 5,
 				Orientation = StackOrientation.Horizontal,
-				Padding = new Thickness(5,5,5,0),
+				Padding = new Thickness(5,10,10,0),
 				Children = 
 				{
-					stage,
+					lbStage,
+					stage
 				}
 			};
 
@@ -219,9 +405,10 @@ namespace ShelfLifeApp.Views
 			{ 
 				Spacing = 5,
 				Orientation = StackOrientation.Horizontal,
-				Padding = new Thickness(5,5,5,0),
+				Padding = new Thickness(5,10,10,0),
 				Children = 
 				{
+					lbLenticel,
 					lenticel
 				}
 			};
@@ -230,9 +417,10 @@ namespace ShelfLifeApp.Views
 			{
 				Spacing = 5,
 				Orientation = StackOrientation.Horizontal,
-				Padding = new Thickness(5,5,5,0),
+				Padding = new Thickness(5,10,10,0),
 				Children = 
 				{
+					lbDefects,
 					defects
 				}
 			};
@@ -241,7 +429,7 @@ namespace ShelfLifeApp.Views
 			{
 				Spacing = 5,
 				Orientation = StackOrientation.Horizontal,
-				Padding = new Thickness(5,5,5,0),
+				Padding = new Thickness(5,10,10,0),
 				HeightRequest = 50,
 				Children = 
 				{
@@ -254,17 +442,57 @@ namespace ShelfLifeApp.Views
 			{
 				Spacing = 5,
 				Orientation = StackOrientation.Horizontal,
-				Padding = new Thickness(5,5,5,0),
+				Padding = new Thickness(5,10,10,5),
+				Children = 
+				{
+					commentLabel
+				}
+			};
+
+			StackLayout row10 = new StackLayout
+			{
+				Spacing = 5,
+				Orientation = StackOrientation.Horizontal,
+				Padding = new Thickness(5,5,10,20),
 				Children = 
 				{
 					comment
 				}
 			};
 
+			StackLayout row11 = new StackLayout
+			{
+				Spacing = 5,
+				Orientation = StackOrientation.Horizontal,
+				Padding = new Thickness(5,10,10,10),
+				Children = 
+				{
+					save
+				}
+			};
+
+			StackLayout row12 = new StackLayout
+			{
+				Spacing = 5,
+				Orientation = StackOrientation.Horizontal,
+				Padding = new Thickness(5,10,10,0),
+				Children = 
+				{
+					datePicker
+				}
+			};
+
 			layout.Children.Add (summary);
+			layout.Children.Add (new BoxView(){Color = Color.Gray, WidthRequest = 100, HeightRequest = 2});
 			layout.Children.Add (row1);
 			layout.Children.Add (row2);
 			layout.Children.Add (row3);
+			layout.Children.Add (new BoxView(){Color = Color.Transparent, WidthRequest = 100, HeightRequest = 50});
+			layout.Children.Add (past);
+			layout.Children.Add (new BoxView (){ Color = Color.Gray, WidthRequest = 100, HeightRequest = 2 });
+			layout.Children.Add (row12);
+			layout.Children.Add (new BoxView(){Color = Color.Transparent, WidthRequest = 100, HeightRequest = 50});
+			layout.Children.Add (inspect);
 			layout.Children.Add (new BoxView(){Color = Color.Gray, WidthRequest = 100, HeightRequest = 2});
 			layout.Children.Add (row4);
 			layout.Children.Add (row5);
@@ -272,8 +500,24 @@ namespace ShelfLifeApp.Views
 			layout.Children.Add (row7);
 			layout.Children.Add (row8);
 			layout.Children.Add (row9);
-			layout.Children.Add (save);
-			Content = layout;
+			layout.Children.Add (row10);
+			layout.Children.Add (row11);
+			Content = scrollView;
+		}
+
+		public void saveBtn(object sender, EventArgs ea)
+		{
+			if (inspectionDetail.Colors < 0 || inspectionDetail.Stage < 0 || inspectionDetail.Lenticel < 0 || string.IsNullOrEmpty (inspectionDetail.Comment) || inspectionDetail.Cut && inspectionDetail.Defect < 0) {
+				DisplayAlert (AppResources.InspectableItemAlertMsg1, AppResources.InspectableItemAlertMsg2, AppResources.InspectableItemAlertMsg3);
+			} else {
+				System.Diagnostics.Debug.WriteLine ("clicked save button");
+				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Colors);
+				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Stage);
+				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Lenticel);
+				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Defect);
+				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Cut);
+				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Comment);	
+			}
 		}
 	}
 }

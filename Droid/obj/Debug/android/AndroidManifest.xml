@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.missionpro.shelflifeapp">
-  <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="16" />
-  <application android:label="ShelfLifeApp" android:name="mono.android.app.Application" android:debuggable="true">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.1" package="com.missionpro.shelflifeapp">
+  <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="21" />
+  <application android:label="ShelfLifeApp" android:icon="@drawable/icon" android:name="mono.android.app.Application" android:debuggable="true">
     <activity android:configChanges="orientation|screenSize" android:icon="@drawable/icon" android:label="ShelfLifeApp.Droid" android:name="md513cddbfbec7eae06174e2b1a8728b311.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

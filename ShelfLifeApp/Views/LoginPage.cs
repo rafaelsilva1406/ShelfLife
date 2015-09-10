@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Reflection;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
@@ -17,7 +16,6 @@ namespace ShelfLifeApp.Views
 		private StackLayout layout;
 		public UserDetailsViewModel userDetails;
 		public LoginViewModel login;
-		public ActivityIndicator loading;
 		private Button button1;
 
 		public LoginPage (UserDetailsViewModel userdetails)
@@ -29,21 +27,12 @@ namespace ShelfLifeApp.Views
 				Spacing = 0,
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
-				BackgroundColor = Color.Black
+				BackgroundColor = Color.White
 			};
-
-			loading = new ActivityIndicator ();
-			loading.IsRunning = true;
-			loading.IsEnabled = true;
-			loading.IsVisible = true;
-			layout.Children.Add (loading);
+					
 			Content = layout;
 		
 			if (userDetails.isUserAuth == false) {
-				loading.IsRunning = false;
-				loading.IsEnabled = false;
-				loading.IsVisible = false;
-				layout.Children.Clear ();
 				init ();
 			} 
 		}
@@ -121,7 +110,7 @@ namespace ShelfLifeApp.Views
 					
 			button1 = new MyDefaultButton {
 				Text = AppResources.LoginPageButton1,
-				FontSize = 40,
+				FontSize = 30,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
@@ -141,47 +130,44 @@ namespace ShelfLifeApp.Views
 			if(string.IsNullOrEmpty(userDetails.UserName) || string.IsNullOrEmpty(userDetails.UserPassword) || userDetails.CurrentFacility < 0){
 				DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, AppResources.LoginPageDisplayAlertMsg2, AppResources.LoginPageDisplayAlertMsg3);
 			}else{
-				loading.IsRunning = true;
-				loading.IsEnabled = true;
-				loading.IsVisible = true;
-				layout.Children.Add (loading);
-				button1.IsEnabled = false;
-				JToken response = await login.PostService(userDetails.UserName,userDetails.UserPassword,userDetails.Domain);
-				System.Diagnostics.Debug.WriteLine ("{0}",response);
-				if (response ["error"] != null) {
-					loading.IsRunning = false;
-					loading.IsEnabled = false;
-					loading.IsVisible = false;
-					button1.IsEnabled = true;
-					string errorMsg = response.Value<string> ("error"); 
-					DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, errorMsg, AppResources.LoginPageDisplayAlertMsg3);
-				} else {
-					bool auth = response.Value<bool>("authenticated");
-					string authMsg = response.Value<string>("authMessage");
-
-					if (auth == false) {
-						loading.IsRunning = false;
-						loading.IsEnabled = false;
-						loading.IsVisible = false;
-						button1.IsEnabled = true;
-						DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, authMsg, AppResources.LoginPageDisplayAlertMsg3);
-					} else {
-						loading.IsRunning = false;
-						loading.IsEnabled = false;
-						loading.IsVisible = false;
-						userDetails.isUserAuth = auth;
-						layout.Children.Clear ();
-						Navigation.PopModalAsync();
-						App.Current.MainPage = new NavigationPage(new HomeTabbedPage(userDetails));
-					}	
-				}
-//				loading.IsRunning = false;
-//				loading.IsEnabled = false;
-//				loading.IsVisible = false;
-//				userDetails.isUserAuth = true;
-//				layout.Children.Clear ();
-//				Navigation.PopModalAsync();
-//				App.Current.MainPage = new NavigationPage(new HomeTabbedPage(userDetails));
+//				loading.IsRunning = true;
+//				loading.IsEnabled = true;
+//				loading.IsVisible = true;
+//				layout.Children.Add (loading);
+//				button1.IsEnabled = false;
+//				JToken response = await login.PostService(userDetails.UserName,userDetails.UserPassword,userDetails.Domain);
+//				System.Diagnostics.Debug.WriteLine ("{0}",response);
+//				if (response ["error"] != null) {
+//					loading.IsRunning = false;
+//					loading.IsEnabled = false;
+//					loading.IsVisible = false;
+//					button1.IsEnabled = true;
+//					string errorMsg = response.Value<string> ("error"); 
+//					DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, errorMsg, AppResources.LoginPageDisplayAlertMsg3);
+//				} else {
+//					bool auth = response.Value<bool>("authenticated");
+//					string authMsg = response.Value<string>("authMessage");
+//
+//					if (auth == false) {
+//						loading.IsRunning = false;
+//						loading.IsEnabled = false;
+//						loading.IsVisible = false;
+//						button1.IsEnabled = true;
+//						DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, authMsg, AppResources.LoginPageDisplayAlertMsg3);
+//					} else {
+//						loading.IsRunning = false;
+//						loading.IsEnabled = false;
+//						loading.IsVisible = false;
+//						userDetails.isUserAuth = auth;
+//						layout.Children.Clear ();
+//						Navigation.PopModalAsync();
+//						App.Current.MainPage = new NavigationPage(new HomeTabbedPage(userDetails));
+//					}	
+//				}
+				userDetails.isUserAuth = true;
+				layout.Children.Clear ();
+				Navigation.PopModalAsync();
+				App.Current.MainPage = new NavigationPage(new HomeTabbedPage(userDetails));
 			}
 		}
 	}

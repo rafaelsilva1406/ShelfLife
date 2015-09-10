@@ -125,6 +125,15 @@ namespace ShelfLifeApp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sample#.
+        /// </summary>
+        internal static string AddEditPageSampleNumber {
+            get {
+                return ResourceManager.GetString("AddEditPageSampleNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Sample.
         /// </summary>
         internal static string AddEditPageTitle {
@@ -139,6 +148,33 @@ namespace ShelfLifeApp {
         internal static string HomePageButton1 {
             get {
                 return ResourceManager.GetString("HomePageButton1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to California Inspections.
+        /// </summary>
+        internal static string HomePageInspected1 {
+            get {
+                return ResourceManager.GetString("HomePageInspected1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mexico Inspections.
+        /// </summary>
+        internal static string HomePageInspected2 {
+            get {
+                return ResourceManager.GetString("HomePageInspected2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peru Inspections.
+        /// </summary>
+        internal static string HomePageInspected3 {
+            get {
+                return ResourceManager.GetString("HomePageInspected3", resourceCulture);
             }
         }
         
@@ -175,6 +211,249 @@ namespace ShelfLifeApp {
         internal static string HomeTabbedPageToolbarItem2 {
             get {
                 return ResourceManager.GetString("HomeTabbedPageToolbarItem2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Age:.
+        /// </summary>
+        internal static string InspectableItemAge {
+            get {
+                return ResourceManager.GetString("InspectableItemAge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string InspectableItemAlertMsg1 {
+            get {
+                return ResourceManager.GetString("InspectableItemAlertMsg1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty values or Dropdowns not selected.
+        /// </summary>
+        internal static string InspectableItemAlertMsg2 {
+            get {
+                return ResourceManager.GetString("InspectableItemAlertMsg2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        internal static string InspectableItemAlertMsg3 {
+            get {
+                return ResourceManager.GetString("InspectableItemAlertMsg3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color.
+        /// </summary>
+        internal static string InspectableItemColor {
+            get {
+                return ResourceManager.GetString("InspectableItemColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comments.
+        /// </summary>
+        internal static string InspectableItemComments {
+            get {
+                return ResourceManager.GetString("InspectableItemComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cut.
+        /// </summary>
+        internal static string InspectableItemCut {
+            get {
+                return ResourceManager.GetString("InspectableItemCut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defects.
+        /// </summary>
+        internal static string InspectableItemDefects {
+            get {
+                return ResourceManager.GetString("InspectableItemDefects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End Date:.
+        /// </summary>
+        internal static string InspectableItemEndDate {
+            get {
+                return ResourceManager.GetString("InspectableItemEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inspect.
+        /// </summary>
+        internal static string InspectableItemInspect {
+            get {
+                return ResourceManager.GetString("InspectableItemInspect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lenticel.
+        /// </summary>
+        internal static string InspectableItemLenticel {
+            get {
+                return ResourceManager.GetString("InspectableItemLenticel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Origin:.
+        /// </summary>
+        internal static string InspectableItemOrigin {
+            get {
+                return ResourceManager.GetString("InspectableItemOrigin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pack Date:.
+        /// </summary>
+        internal static string InspectableItemPackDate {
+            get {
+                return ResourceManager.GetString("InspectableItemPackDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packer:.
+        /// </summary>
+        internal static string InspectableItemPacker {
+            get {
+                return ResourceManager.GetString("InspectableItemPacker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Past Date.
+        /// </summary>
+        internal static string InspectableItemPastDate {
+            get {
+                return ResourceManager.GetString("InspectableItemPastDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Past Inspection.
+        /// </summary>
+        internal static string InspectableItemPastInspection {
+            get {
+                return ResourceManager.GetString("InspectableItemPastInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string InspectableItemSave {
+            get {
+                return ResourceManager.GetString("InspectableItemSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End.
+        /// </summary>
+        internal static string InspectableItemsEndDateLabel {
+            get {
+                return ResourceManager.GetString("InspectableItemsEndDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #.
+        /// </summary>
+        internal static string InspectableItemsIdLabel {
+            get {
+                return ResourceManager.GetString("InspectableItemsIdLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size:.
+        /// </summary>
+        internal static string InspectableItemSize {
+            get {
+                return ResourceManager.GetString("InspectableItemSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Samples to Inspect.
+        /// </summary>
+        internal static string InspectableItemsLabel1 {
+            get {
+                return ResourceManager.GetString("InspectableItemsLabel1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please Select Country Of Origin.
+        /// </summary>
+        internal static string InspectableItemsPicker1 {
+            get {
+                return ResourceManager.GetString("InspectableItemsPicker1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        internal static string InspectableItemsStartDateLabel {
+            get {
+                return ResourceManager.GetString("InspectableItemsStartDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stage.
+        /// </summary>
+        internal static string InspectableItemStage {
+            get {
+                return ResourceManager.GetString("InspectableItemStage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inspectable Items.
+        /// </summary>
+        internal static string InspectableItemsTitle {
+            get {
+                return ResourceManager.GetString("InspectableItemsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Summary.
+        /// </summary>
+        internal static string InspectableItemSummary {
+            get {
+                return ResourceManager.GetString("InspectableItemSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sample#.
+        /// </summary>
+        internal static string InspectableItemTitle {
+            get {
+                return ResourceManager.GetString("InspectableItemTitle", resourceCulture);
             }
         }
         
@@ -242,7 +521,7 @@ namespace ShelfLifeApp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MissionPro Sign In.
+        ///   Looks up a localized string similar to MissionPro.
         /// </summary>
         internal static string LoginPageLabel1 {
             get {
@@ -256,6 +535,15 @@ namespace ShelfLifeApp {
         internal static string LoginPagePicker1 {
             get {
                 return ResourceManager.GetString("LoginPagePicker1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Domain.
+        /// </summary>
+        internal static string LoginPagePicker2 {
+            get {
+                return ResourceManager.GetString("LoginPagePicker2", resourceCulture);
             }
         }
         

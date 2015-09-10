@@ -16,27 +16,20 @@ namespace ShelfLifeApp.Views
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
 		public InspectableItemsViewModel inspectableItems;
-		public ActivityIndicator loading;
-
 		public InspectableItemsPage (UserDetailsViewModel userdetails)
 		{
 			userDetails = userdetails;
 			inspectableItems = InspectableItemsViewModel.Instance;
 			Title = AppResources.InspectableItemsTitle;
-			loading = new ActivityIndicator();
-			loading.IsRunning = true;
-			loading.IsEnabled = true;
-			loading.IsVisible = true;
 			layout = new StackLayout
 			{
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
 				Orientation = StackOrientation.Vertical,
 				Padding = new Thickness(10,0),
-				BackgroundColor = Color.Black
+				BackgroundColor = Color.White
 			};
-
-			layout.Children.Add(loading);
+					
 			if(userDetails.isUserAuth == false){
 				Navigation.PopModalAsync ();
 				Navigation.PushModalAsync (new LoginPage(userDetails));
@@ -69,6 +62,19 @@ namespace ShelfLifeApp.Views
 				VerticalOptions = LayoutOptions.StartAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand
 			};
+
+			var label = new MyLabel(){
+				Text = AppResources.InspectableItemsLabel1,
+				VerticalOptions = LayoutOptions.StartAndExpand,
+				HorizontalOptions = LayoutOptions.CenterAndExpand,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				FontSize = 28,
+			
+			};
 					
 			foreach(CountryOfOrigin country in inspectableItems.GetDefaultCoo())
 			{
@@ -79,7 +85,7 @@ namespace ShelfLifeApp.Views
 
 			picker.SelectedIndexChanged += (object sender, EventArgs e) => {
 				List<FruitSample> _fruitsample = new List<FruitSample>(); 
-
+				//label.IsVisible = true;
 				switch(picker.SelectedIndex){
 					case 0:
 					_fruitsample = inspectableItems.GetFruitSample(picker.SelectedIndex);
@@ -94,16 +100,23 @@ namespace ShelfLifeApp.Views
 						//throw exception
 					break;
 				}
-					
+			
 				listView.ItemsSource = _fruitsample;
 				listView.SeparatorVisibility = Xamarin.Forms.SeparatorVisibility.Default;
 				listView.SeparatorColor = Color.Gray;
-				listView.ItemTapped += (object sender2, ItemTappedEventArgs e2) => {
-					var fruitSample = e2.Item as FruitSample;
-					if(fruitSample == null)
-						return;
-					Navigation.PushAsync(new InspectionDetailPage(fruitSample));
-					listView.SelectedItem = null;
+				listView.ItemSelected += (object sender2, SelectedItemChangedEventArgs eI) => {
+					var fruitSample = eI.SelectedItem as FruitSample;
+
+					listView.IsEnabled = false;
+
+					if(fruitSample == null){
+						return;	
+					}
+
+					Navigation.PushAsync(new InspectionDetailPage(fruitSample,userDetails));
+
+					fruitSample = null;
+					listView.IsEnabled = false;
 				};
 
 				listView.ItemTemplate = new DataTemplate(()=>
@@ -115,32 +128,32 @@ namespace ShelfLifeApp.Views
 							Android:  "Droid Sans Mono",
 							WinPhone: "Comic Sans MS"
 						),
-						FontSize = 16,
+						FontSize = 12,
 					};
-						idLabel.SetBinding(Label.TextProperty, new Binding("ID", stringFormat: AppResources.InspectableItemsIdLabel+" {0}"));
+					idLabel.SetBinding(Label.TextProperty, new Binding("ID", stringFormat: AppResources.InspectableItemsIdLabel+":{0}"));
 					
-						Label startDateLabel = new MyLabel{
+					Label startDateLabel = new MyLabel{
 						HeightRequest = 20,
 						FontFamily = Device.OnPlatform(
 							iOS:      "MarkerFelt-Thin",
 							Android:  "Droid Sans Mono",
 							WinPhone: "Comic Sans MS"
 						),
-						FontSize = 16,
+						FontSize = 12,
 						HorizontalOptions = LayoutOptions.CenterAndExpand
 					};
-						startDateLabel.SetBinding(Label.TextProperty, new Binding("PackDate", stringFormat: AppResources.InspectableItemsStartDateLabel+" {0}"));
+						startDateLabel.SetBinding(Label.TextProperty, new Binding("PackDate", stringFormat: AppResources.InspectableItemsStartDateLabel+":{0}"));
 					
-						Label endDateLabel = new MyLabel{
+					Label endDateLabel = new MyLabel{
 						HeightRequest = 20,
 						FontFamily = Device.OnPlatform(
 							iOS:      "MarkerFelt-Thin",
 							Android:  "Droid Sans Mono",
 							WinPhone: "Comic Sans MS"
 						),
-						FontSize = 16,
+						FontSize = 12,
 					};
-						endDateLabel.SetBinding(Label.TextProperty, new Binding("InspectionOnOrAfter", stringFormat: AppResources.InspectableItemsEndDateLabel+" {0}"));
+					endDateLabel.SetBinding(Label.TextProperty, new Binding("InspectionOnOrAfter", stringFormat: AppResources.InspectableItemsEndDateLabel+":{0}"));
 					
 					return new ViewCell
 					{
@@ -161,18 +174,6 @@ namespace ShelfLifeApp.Views
 				});
 			};
 				
-			var label = new MyLabel(){
-				Text = AppResources.InspectableItemsLabel1,
-				VerticalOptions = LayoutOptions.StartAndExpand,
-				HorizontalOptions = LayoutOptions.CenterAndExpand,
-				FontFamily = Device.OnPlatform (
-					iOS:      "MarkerFelt-Thin",
-					Android:  "Droid Sans Mono",
-					WinPhone: "Comic Sans MS"
-				),
-				FontSize = 28
-			};
-
 			var hStack = new StackLayout(){
 				Orientation = StackOrientation.Horizontal,
 				VerticalOptions = LayoutOptions.StartAndExpand,

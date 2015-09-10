@@ -4,7 +4,7 @@ namespace ShelfLifeApp.Models
 {
 	public class FruitInspect
 	{
-		public FruitInspect (string color,string stage,string lenticel,string defects,string cut,string comment)
+		public FruitInspect (string color,string stage,string lenticel,string defects,bool cut,string comment)
 		{
 			Color = color;
 			Stage = stage;
@@ -22,7 +22,7 @@ namespace ShelfLifeApp.Models
 
 		public string Defects { get; set;}
 
-		public string Cut { get; set;}
+		public bool Cut { get; set;}
 
 		public string Comment{ get; set;}
 	}

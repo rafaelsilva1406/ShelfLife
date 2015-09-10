@@ -11,15 +11,10 @@
 		private string[] appMsg = {"Loading..","Inspecting Sample"};
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
-		public ActivityIndicator loading;
 		public InspectPage (UserDetailsViewModel userDetails)
 		{
 			this.userDetails = userDetails;
 			this.Title = appMsg [1];
-			this.loading = new ActivityIndicator ();
-			this.loading.IsRunning = true;
-			this.loading.IsEnabled = true;
-			this.loading.IsVisible = true;
 			this.layout = new StackLayout 
 			{
 				VerticalOptions = LayoutOptions.Center,
@@ -28,7 +23,6 @@
 				Padding = new Thickness(10, 0),
 				BackgroundColor = Color.Transparent
 			};
-			this.layout.Children.Add (loading);
 			if(this.userDetails.isUserAuth == false){
 				this.Navigation.PopModalAsync();
 				this.Navigation.PushModalAsync (new LoginPage(this.userDetails));

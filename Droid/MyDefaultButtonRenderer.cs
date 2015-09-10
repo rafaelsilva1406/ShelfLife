@@ -14,20 +14,19 @@ namespace ShelfLifeApp.Droid
 			base.OnElementChanged (e);
 
 			if (e.OldElement == null){
-				Control.SetHeight (100);
+				Control.SetHeight (150);
 				Control.SetTextColor (global::Android.Graphics.Color.DarkGray);
 				var newBtn = (MyDefaultButton)e.NewElement;
 				newBtn.SizeChanged += (s, args) => {
 					var radius = (float)System.Math.Min(10,10);	
 					var normal = new global::Android.Graphics.Drawables.GradientDrawable ();
-					normal.SetColor(global::Android.Graphics.Color.White);
+					normal.SetColor(global::Android.Graphics.Color.LightGray);
 					normal.SetCornerRadius(radius);
-					normal.SetStroke(4,global::Android.Graphics.Color.White);
+					normal.SetStroke(4,global::Android.Graphics.Color.LightGray);
 					var pressed = new global::Android.Graphics.Drawables.GradientDrawable ();
-					var highlight = Context.ObtainStyledAttributes(new int[] {global::Android.Resource.Attribute.ColorActivatedHighlight}).GetColor(0,global::Android.Graphics.Color.Transparent);
-					pressed.SetColor(highlight);
+					pressed.SetColor(global::Android.Graphics.Color.White);
 					pressed.SetCornerRadius(radius);
-					pressed.SetStroke(4,global::Android.Graphics.Color.White);
+					pressed.SetStroke(4,global::Android.Graphics.Color.LightGray);
 					var sld = new global::Android.Graphics.Drawables.StateListDrawable();
 					sld.AddState(new int[]{global::Android.Resource.Attribute.StatePressed},pressed);
 					sld.AddState(new int[]{},normal);

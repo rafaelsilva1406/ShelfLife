@@ -9,23 +9,17 @@
 	{
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
-		public ActivityIndicator loading;
 
 		public HomePage (UserDetailsViewModel userdetails)
 		{	
 			userDetails = userdetails;
 			Title = AppResources.HomePageTitle;
-			loading = new ActivityIndicator ();
-			loading.IsRunning = true;
-			loading.IsEnabled = true;
-			loading.IsVisible = true;
 			layout = new StackLayout 
 			{
 				Spacing = 0,
 				VerticalOptions = LayoutOptions.FillAndExpand,
-				BackgroundColor = Color.Black
+				BackgroundColor = Color.White
 			};
-			layout.Children.Add (loading);
 
 			if(userDetails.isUserAuth == false){
 				Navigation.PopModalAsync();
@@ -90,7 +84,7 @@
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
 				),
-				FontSize = 40
+				FontSize = 30
 			};
 			_button1.Clicked += (sender, e) => {
 				Navigation.PushAsync(new AddEditPage(userDetails));

@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Reflection;
 using Xamarin.Forms;
+using ShelfLifeApp;
 using ShelfLifeApp.ViewModels;
 using ShelfLifeApp.Views;
-using System.Reflection;
-using ShelfLifeApp;
 
 namespace ShelfLifeApp
 {
@@ -21,7 +21,7 @@ namespace ShelfLifeApp
 			userDetails = UserDetailsViewModel.Instance;
 
 			if(userDetails.isUserAuth == false){
-				MainPage = new LoginPage(userDetails);
+				MainPage  = new LoginPage(userDetails);
 			}else{
 				MainPage = getMainPage();	
 			}
@@ -31,7 +31,8 @@ namespace ShelfLifeApp
 		{
 			// Replace the ExamplePage with whatever page is appropriate to start off your app
 			//  - Like your login page, or home screen, or whatever
-			return new NavigationPage(new HomeTabbedPage (userDetails));
+			var navPage = new NavigationPage(new HomeTabbedPage (userDetails));
+			return navPage;
 		}
 
 		protected override void OnStart ()
