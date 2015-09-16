@@ -157,6 +157,20 @@ namespace ShelfLifeApp.ViewModels
 			_defectList.Add (new Defect(0,"Defect 1"));
 			return _defectList;
 		}
+
+		public void destroyInspectionDetail()
+		{
+			_colorList.Clear();
+			_stageList.Clear();
+			_lenticelList.Clear();
+			_defectList.Clear();
+			_color = -1;
+			_stage = -1;
+			_lenticel = -1;
+			_defect = -1;
+			_cut = false;
+			_comment = "";
+		}
 			
 	}
 }

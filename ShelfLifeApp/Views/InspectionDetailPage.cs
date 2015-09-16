@@ -290,18 +290,29 @@ namespace ShelfLifeApp.Views
 
 			comment.SetBinding (Entry.TextProperty,"Comment");
 
-			Button save = new MySuccessButton { 
+			Button save = new MyDefaultButton { 
 				Text = AppResources.InspectableItemSave,
 				FontSize = 30,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
-				),
-				HorizontalOptions = LayoutOptions.FillAndExpand,
+				)
 			};
 
 			save.Clicked += saveBtn;
+
+			Button _button2 = new MyDefaultButton
+			{
+				Text = "Cancel",
+				FontSize = 30,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				)
+			};
+			_button2.Clicked += Button2Submit;
 
 			Label past = new MyLabel()
 			{
@@ -334,9 +345,7 @@ namespace ShelfLifeApp.Views
 				VerticalOptions = LayoutOptions.CenterAndExpand ,
 			};
 
-			datePicker.DateSelected += (object sender, DateChangedEventArgs e) => {
-				System.Diagnostics.Debug.WriteLine("{0}", e.NewDate);
-			};
+			datePicker.DateSelected += (object sender, DateChangedEventArgs e) => DisplayAlert ("Fetching data","A list will populate below with a Sample matching selected date.","OK");
 
 			StackLayout row1 = new StackLayout
 			{ 
@@ -462,11 +471,13 @@ namespace ShelfLifeApp.Views
 
 			StackLayout row11 = new StackLayout
 			{
-				Spacing = 5,
-				Orientation = StackOrientation.Horizontal,
-				Padding = new Thickness(5,10,10,10),
+				Spacing = 20,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				Padding = new Thickness(10,10),
+				BackgroundColor = Color.FromHex("001A4C"),
 				Children = 
 				{
+					_button2,
 					save
 				}
 			};
@@ -510,14 +521,23 @@ namespace ShelfLifeApp.Views
 			if (inspectionDetail.Colors < 0 || inspectionDetail.Stage < 0 || inspectionDetail.Lenticel < 0 || string.IsNullOrEmpty (inspectionDetail.Comment) || inspectionDetail.Cut && inspectionDetail.Defect < 0) {
 				DisplayAlert (AppResources.InspectableItemAlertMsg1, AppResources.InspectableItemAlertMsg2, AppResources.InspectableItemAlertMsg3);
 			} else {
-				System.Diagnostics.Debug.WriteLine ("clicked save button");
-				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Colors);
-				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Stage);
-				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Lenticel);
-				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Defect);
-				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Cut);
-				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Comment);	
+				DisplayAlert ("Saving","This data will be sent to table and you will be redirected to Sample to Inspect.","OK");
+				inspectionDetail.destroyInspectionDetail ();
+				Navigation.PopAsync();
+//				System.Diagnostics.Debug.WriteLine ("clicked save button");
+//				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Colors);
+//				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Stage);
+//				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Lenticel);
+//				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Defect);
+//				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Cut);
+//				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Comment);	
 			}
+		}
+
+		public async void Button2Submit(object sender, EventArgs e2)
+		{
+			inspectionDetail.destroyInspectionDetail ();
+			await Navigation.PopAsync();
 		}
 	}
 }

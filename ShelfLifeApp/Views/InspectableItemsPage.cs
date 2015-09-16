@@ -16,6 +16,7 @@ namespace ShelfLifeApp.Views
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
 		public InspectableItemsViewModel inspectableItems;
+		private ListView listView;
 		public InspectableItemsPage (UserDetailsViewModel userdetails)
 		{
 			userDetails = userdetails;
@@ -81,11 +82,11 @@ namespace ShelfLifeApp.Views
 				picker.Items.Add(country.Description);
 			}
 
-			ListView listView = new ListView();
+			listView = new ListView();
 
 			picker.SelectedIndexChanged += (object sender, EventArgs e) => {
 				List<FruitSample> _fruitsample = new List<FruitSample>(); 
-				//label.IsVisible = true;
+
 				switch(picker.SelectedIndex){
 					case 0:
 					_fruitsample = inspectableItems.GetFruitSample(picker.SelectedIndex);
@@ -96,27 +97,21 @@ namespace ShelfLifeApp.Views
 					case 2:
 					_fruitsample = inspectableItems.GetFruitSample(picker.SelectedIndex);
 					break; 
-					default:
-						//throw exception
-					break;
+
 				}
 			
 				listView.ItemsSource = _fruitsample;
 				listView.SeparatorVisibility = Xamarin.Forms.SeparatorVisibility.Default;
 				listView.SeparatorColor = Color.Gray;
-				listView.ItemSelected += (object sender2, SelectedItemChangedEventArgs eI) => {
-					var fruitSample = eI.SelectedItem as FruitSample;
 
-					listView.IsEnabled = false;
+				listView.ItemTapped += (senderrr, eeee) => {
+					var fruitSample = eeee.Item as FruitSample;
 
-					if(fruitSample == null){
-						return;	
-					}
-
-					Navigation.PushAsync(new InspectionDetailPage(fruitSample,userDetails));
-
-					fruitSample = null;
-					listView.IsEnabled = false;
+					if(Navigation.NavigationStack.Count < 2)
+						Navigation.PushAsync(new InspectionDetailPage(fruitSample,userDetails)).ContinueWith( _ =>{
+							fruitSample = null;
+							listView.SelectedItem = null;
+						});
 				};
 
 				listView.ItemTemplate = new DataTemplate(()=>
@@ -181,7 +176,7 @@ namespace ShelfLifeApp.Views
 			};
 
 			hStack.Children.Add(picker);
-			hStack.Children.Add(dateLabel);
+			//hStack.Children.Add(dateLabel);
 
 			layout.Children.Add(hStack);
 			layout.Children.Add (new BoxView(){Color = Color.Gray, WidthRequest = 100, HeightRequest = 2});

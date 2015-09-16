@@ -14,6 +14,7 @@ namespace ShelfLifeApp.Views
 {
 	public class AddEditPage : ContentPage
 	{
+		private ScrollView scrollview;
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
 		public AddEditViewModel addEdit;
@@ -29,6 +30,12 @@ namespace ShelfLifeApp.Views
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				BackgroundColor = Color.White
+			};
+
+			scrollview = new ScrollView () {
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				Orientation = ScrollOrientation.Vertical,
+				Content = layout
 			};
 
 			if(userDetails.isUserAuth == false){
@@ -190,7 +197,7 @@ namespace ShelfLifeApp.Views
 
 			_picker4.SetBinding (Picker.SelectedIndexProperty, "Size");
 
-			var _button1 = new MySuccessButton
+			var _button1 = new MyDefaultButton
 			{
 				Text = AppResources.AddEditPageButton1,
 				FontSize = 30,
@@ -200,6 +207,19 @@ namespace ShelfLifeApp.Views
 					WinPhone: "Comic Sans MS"
 				)
 			};
+			_button1.Clicked += Button1Submit;
+
+			var _button2 = new MyDefaultButton
+			{
+				Text = "Cancel",
+				FontSize = 30,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				)
+			};
+			_button2.Clicked += Button2Submit;
 
 			var body = new StackLayout{ 
 				Spacing = 10,
@@ -217,11 +237,22 @@ namespace ShelfLifeApp.Views
 				}
 			};
 
-			_button1.Clicked += Button1Submit;
+			var footer = new StackLayout{ 
+				Spacing = 20,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				Padding = new Thickness(10,10),
+				BackgroundColor = Color.FromHex("001A4C"),
+				Children = {
+					_button2,
+					_button1
+				}
+			};
+				
 			layout.Children.Add (header);
 			layout.Children.Add (body);
-			layout.Children.Add (_button1);
-			Content = layout;
+			layout.Children.Add (new BoxView(){Color = Color.Red, WidthRequest = 100, HeightRequest = 4});
+			layout.Children.Add (footer);
+			Content = scrollview;
 		}
 
 		public async void Button1Submit(object sender, EventArgs ea)
@@ -233,9 +264,17 @@ namespace ShelfLifeApp.Views
 //							System.Diagnostics.Debug.WriteLine("Pallet: {0}",addEdit.Pallet);
 //							System.Diagnostics.Debug.WriteLine("Date: {0}",addEdit.Date);
 //							System.Diagnostics.Debug.WriteLine("Size: {0}",addEdit.Size);
-			List<Earthquake> items = await addEdit.GetService();
-			Navigation.PopModalAsync();
-			App.Current.MainPage = new NavigationPage(new NewsPage(userDetails,items));
+
+//			List<Earthquake> items = await addEdit.GetService();
+//			Navigation.PopModalAsync();
+//			App.Current.MainPage = new NavigationPage(new NewsPage(userDetails,items));
+			await DisplayAlert("Saving","This data will be sent to table and you will be redirected to home screen.","OK");
+			addEdit.destroyAddEdit ();
+		}
+
+		public async void Button2Submit(object sender, EventArgs e2)
+		{
+			await Navigation.PopAsync();
 			addEdit.destroyAddEdit ();
 		}
 	}

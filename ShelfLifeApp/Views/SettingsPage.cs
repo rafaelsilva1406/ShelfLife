@@ -16,7 +16,7 @@
 					Android: "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
 				),
-				FontSize = 40
+				FontSize = 30
 			};
 			_button1.Clicked += (sender, e) => {
 				this.Navigation.PopModalAsync();
@@ -25,7 +25,7 @@
 			this.layout = new StackLayout {
 				Spacing = 0,
 				VerticalOptions = LayoutOptions.FillAndExpand,
-				BackgroundColor = Color.Transparent
+				BackgroundColor = Color.White
 			};
 			this.layout.Children.Add (_button1);
 			this.Content = this.layout;

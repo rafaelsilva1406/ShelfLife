@@ -9,6 +9,7 @@
 	{
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
+		private Button _button1;
 
 		public HomePage (UserDetailsViewModel userdetails)
 		{	
@@ -18,7 +19,7 @@
 			{
 				Spacing = 0,
 				VerticalOptions = LayoutOptions.FillAndExpand,
-				BackgroundColor = Color.White
+				BackgroundColor = Color.FromHex("001A4C")
 			};
 
 			if(userDetails.isUserAuth == false){
@@ -67,17 +68,31 @@
 				HorizontalOptions = LayoutOptions.Center
 			};
 
+			Label msg = new MyLabel (){ 
+				FontSize = 22,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				Text ="A list of sample data by origin count will be listed below. You will be able to select a row and be redirect to the list to which it pertains."
+			};
+
 			var header = new StackLayout{ 
-				Spacing = 0,
+				Spacing = 10,
+				Padding = new Thickness(20,20),
+				BackgroundColor = Color.White,
 				VerticalOptions = LayoutOptions.FillAndExpand,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
 				Children = {
-					caliCountLabel,
-					mexicoCountLabel,
-					peruCountLabel
+//					caliCountLabel,
+//					mexicoCountLabel,
+//					peruCountLabel
+					msg
 				}
 			};
 
-			var _button1 = new MyDefaultButton{
+			_button1 = new MyDefaultButton{
 				Text = AppResources.HomePageButton1,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
@@ -86,13 +101,30 @@
 				),
 				FontSize = 30
 			};
-			_button1.Clicked += (sender, e) => {
-				Navigation.PushAsync(new AddEditPage(userDetails));
-			};
+			_button1.Clicked += btn1HandleClick;
 
+			var footer = new StackLayout{ 
+				Spacing = 10,
+				Padding = new Thickness(10,10),
+				BackgroundColor = Color.FromHex("001A4C"),
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				Children = {
+					_button1
+				}
+			};
+					
 			layout.Children.Add (header);
-			layout.Children.Add (_button1);
+			layout.Children.Add (new BoxView(){Color = Color.Red, WidthRequest = 100, HeightRequest = 4});
+			layout.Children.Add (footer);
 			Content = layout;
+		}
+
+		private async void btn1HandleClick(object sender, EventArgs e)
+		{
+			_button1.IsEnabled = false;
+			await Navigation.PushAsync(new AddEditPage(userDetails));
+			_button1.IsEnabled = true;
 		}
 	}
 }

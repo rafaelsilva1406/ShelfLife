@@ -13,6 +13,7 @@ namespace ShelfLifeApp.Views
 {
 	public partial class LoginPage : ContentPage
 	{
+		private ScrollView scrollview;
 		private StackLayout layout;
 		public UserDetailsViewModel userDetails;
 		public LoginViewModel login;
@@ -28,6 +29,12 @@ namespace ShelfLifeApp.Views
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				BackgroundColor = Color.White
+			};
+
+			scrollview = new ScrollView () {
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				Orientation = ScrollOrientation.Vertical,
+				Content = layout
 			};
 					
 			Content = layout;
@@ -107,7 +114,7 @@ namespace ShelfLifeApp.Views
 					picker2
 				}
 			};
-					
+
 			button1 = new MyDefaultButton {
 				Text = AppResources.LoginPageButton1,
 				FontSize = 30,
@@ -118,17 +125,30 @@ namespace ShelfLifeApp.Views
 				)
 			};
 			button1.Clicked += Button1Submit;
+
+			var footer = new StackLayout{ 
+				Spacing = 10,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				Padding = new Thickness(10,10),
+				BackgroundColor = Color.FromHex("001A4C"),
+				Children = {
+					button1
+				}
+			};
+					
 			layout.Children.Add (header);
 			layout.Children.Add (body);
-			layout.Children.Add (button1);
-			Content = layout;
+			layout.Children.Add (new BoxView(){Color = Color.Red, WidthRequest = 100, HeightRequest = 4});
+			layout.Children.Add (footer);
+			Content = scrollview;
 
 		}
 
 		public async void Button1Submit(object sender, EventArgs ea)
 		{
 			if(string.IsNullOrEmpty(userDetails.UserName) || string.IsNullOrEmpty(userDetails.UserPassword) || userDetails.CurrentFacility < 0){
-				DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, AppResources.LoginPageDisplayAlertMsg2, AppResources.LoginPageDisplayAlertMsg3);
+				await DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, AppResources.LoginPageDisplayAlertMsg2, AppResources.LoginPageDisplayAlertMsg3);
 			}else{
 //				loading.IsRunning = true;
 //				loading.IsEnabled = true;
