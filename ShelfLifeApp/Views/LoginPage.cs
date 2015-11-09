@@ -147,8 +147,12 @@ namespace ShelfLifeApp.Views
 
 		public async void Button1Submit(object sender, EventArgs ea)
 		{
+			await button1.ScaleTo(2);
+			await button1.ScaleTo(1);
+			button1.IsEnabled = false;
 			if(string.IsNullOrEmpty(userDetails.UserName) || string.IsNullOrEmpty(userDetails.UserPassword) || userDetails.CurrentFacility < 0){
 				await DisplayAlert (AppResources.LoginPageDisplayAlertMsg1, AppResources.LoginPageDisplayAlertMsg2, AppResources.LoginPageDisplayAlertMsg3);
+				button1.IsEnabled = true;
 			}else{
 //				loading.IsRunning = true;
 //				loading.IsEnabled = true;
@@ -188,6 +192,7 @@ namespace ShelfLifeApp.Views
 				layout.Children.Clear ();
 				Navigation.PopModalAsync();
 				App.Current.MainPage = new NavigationPage(new HomeTabbedPage(userDetails));
+				button1.IsEnabled = true;
 			}
 		}
 	}

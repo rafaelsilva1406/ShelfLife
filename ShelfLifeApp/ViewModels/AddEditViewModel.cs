@@ -157,6 +157,10 @@ namespace ShelfLifeApp.ViewModels
 		public List<Packer> GetDefaultPacker1()
 		{
 			_PackerList.Add (new Packer(0,"CD"));
+			_PackerList.Add (new Packer(1,"MDM"));
+			_PackerList.Add (new Packer(2,"AP"));
+			_PackerList.Add (new Packer(3,"CHILE"));
+			_PackerList.Add (new Packer(4,"CD"));
 			return _PackerList;
 		}
 

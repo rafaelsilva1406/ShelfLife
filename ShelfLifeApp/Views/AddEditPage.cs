@@ -15,6 +15,8 @@ namespace ShelfLifeApp.Views
 	public class AddEditPage : ContentPage
 	{
 		private ScrollView scrollview;
+		private Button _button1;
+		private Button _button2;
 		public StackLayout layout;
 		public UserDetailsViewModel userDetails;
 		public AddEditViewModel addEdit;
@@ -125,7 +127,7 @@ namespace ShelfLifeApp.Views
 				_entry1.IsVisible = false; 
 				_picker3.IsVisible = false;
 				_entry2.IsVisible = false;
-
+				System.Diagnostics.Debug.WriteLine("facility selected {0}", userDetails.CurrentFacility);
 				switch(_picker1.SelectedIndex)
 				{
 					case 0:
@@ -197,7 +199,7 @@ namespace ShelfLifeApp.Views
 
 			_picker4.SetBinding (Picker.SelectedIndexProperty, "Size");
 
-			var _button1 = new MyDefaultButton
+			_button1 = new MyDefaultButton
 			{
 				Text = AppResources.AddEditPageButton1,
 				FontSize = 30,
@@ -209,7 +211,7 @@ namespace ShelfLifeApp.Views
 			};
 			_button1.Clicked += Button1Submit;
 
-			var _button2 = new MyDefaultButton
+			_button2 = new MyDefaultButton
 			{
 				Text = "Cancel",
 				FontSize = 30,
@@ -257,6 +259,9 @@ namespace ShelfLifeApp.Views
 
 		public async void Button1Submit(object sender, EventArgs ea)
 		{
+			await _button1.ScaleTo(2);
+			await _button1.ScaleTo(1);
+			_button1.IsEnabled = false;
 //							System.Diagnostics.Debug.WriteLine("Coo: {0}",addEdit.Coo);
 //							System.Diagnostics.Debug.WriteLine("Grower: {0}",addEdit.Grower);
 //							System.Diagnostics.Debug.WriteLine("Region: {0}",addEdit.Region);
@@ -270,12 +275,17 @@ namespace ShelfLifeApp.Views
 //			App.Current.MainPage = new NavigationPage(new NewsPage(userDetails,items));
 			await DisplayAlert("Saving","This data will be sent to table and you will be redirected to home screen.","OK");
 			addEdit.destroyAddEdit ();
+			_button1.IsEnabled = true;
 		}
 
 		public async void Button2Submit(object sender, EventArgs e2)
 		{
+			await _button2.ScaleTo(2);
+			await _button2.ScaleTo(1);
+			_button2.IsEnabled = false;
 			await Navigation.PopAsync();
 			addEdit.destroyAddEdit ();
+			_button2.IsEnabled = true;
 		}
 	}
 }

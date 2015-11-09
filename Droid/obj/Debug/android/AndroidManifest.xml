@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.1" package="com.missionpro.shelflifeapp">
-  <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="21" />
+  <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="23" />
   <application android:label="ShelfLifeApp" android:icon="@drawable/icon" android:name="mono.android.app.Application" android:debuggable="true">
-    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/icon" android:label="ShelfLifeApp.Droid" android:name="md513cddbfbec7eae06174e2b1a8728b311.MainActivity">
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/icon" android:label="ShelfLifeApp.Droid" android:theme="@style/MyTheme" android:name="md513cddbfbec7eae06174e2b1a8728b311.MainActivity" />
+    <activity android:noHistory="true" android:theme="@style/Theme.Splash" android:name="md5458ff59ea873fda4e849cefe0e6f394a.SplashActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

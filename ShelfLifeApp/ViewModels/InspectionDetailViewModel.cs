@@ -23,6 +23,8 @@ namespace ShelfLifeApp.ViewModels
 		private int _defect = -1;
 		private bool _cut;
 		private string _comment;
+		private DateTime _dateYesterday = DateTime.Now.AddDays(-1);
+		private DateTime _dateMax = DateTime.Now.AddDays(-7);
 		public static InspectionDetailViewModel Instance
 		{
 			get{
@@ -117,6 +119,29 @@ namespace ShelfLifeApp.ViewModels
 			}
 		}
 
+		public DateTime DateYesterday
+		{
+			get{ return _dateYesterday;}
+			set{ 
+				if (value.Equals(_dateYesterday)) {
+					return;
+				}
+				_dateYesterday = value;
+				OnPropertyChanged ();
+			}
+		}
+
+		public DateTime DateMax		{
+			get{ return _dateMax;}
+			set{ 
+				if (value.Equals (_dateMax)) {
+					return;
+				}
+				_dateMax = value;
+				OnPropertyChanged ();
+			}
+		}
+
 		public List<Colors> GetColor()
 		{
 			_colorList.Add(new Colors(0,"Green 1"));
@@ -129,11 +154,15 @@ namespace ShelfLifeApp.ViewModels
 
 		public List<Stage> GetStage()
 		{
-			_stageList.Add (new Stage(0,"1, 1"));
-			_stageList.Add (new Stage(1,"2, 2, 2"));
-			_stageList.Add (new Stage(2,"3, 3, 3"));
-			_stageList.Add (new Stage(3,"4, 4, 4"));
-			_stageList.Add (new Stage(4,"5, 5"));
+			_stageList.Add (new Stage(0,"1"));
+			_stageList.Add (new Stage(0,"1&2"));
+			_stageList.Add (new Stage(1,"2"));
+			_stageList.Add (new Stage(1,"2&3"));
+			_stageList.Add (new Stage(2,"3"));
+			_stageList.Add (new Stage(1,"3&4"));
+			_stageList.Add (new Stage(3,"4"));
+			_stageList.Add (new Stage(3,"4&5"));
+			_stageList.Add (new Stage(4,"5"));
 			return _stageList;
 		}
 

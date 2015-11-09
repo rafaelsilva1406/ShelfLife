@@ -20,7 +20,7 @@ namespace ShelfLifeApp.ViewModels
 		public List<CurrentFacility> _CurrentFacilityList = new List<CurrentFacility>();
 		private string _userName;
 		private string _userPassword;
-		private int _currentFacility = -1;
+		private int _currentFacility = 0;
 		private bool _isUserAuth = false;
 		private int _domain = 0;
 		public List<string> _Domains = new List<string>();
@@ -110,7 +110,7 @@ namespace ShelfLifeApp.ViewModels
 		{
 			_userName = "";
 			_userPassword = "";
-			_currentFacility = -1;
+			_currentFacility = 0;
 			_isUserAuth = false;
 			_domain = 0;
 			//_Domains.Clear ();

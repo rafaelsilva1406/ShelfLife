@@ -2,6 +2,7 @@
 {
 	using System;
 	using Xamarin.Forms;
+	using ShelfLifeApp.Models;
 	using ShelfLifeApp.ViewModels;
 	using ShelfLifeApp.Custom;
 
@@ -35,48 +36,22 @@
 
 		private void init()
 		{
-			BindingContext = userDetails;
-
-			Label caliCountLabel = new MyLabel () {
-				FontSize = 30,
-				FontFamily = Device.OnPlatform (
-					iOS:      "MarkerFelt-Thin",
-					Android:  "Droid Sans Mono",
-					WinPhone: "Comic Sans MS"
-				),
-				Text = string.Format( "{0}", AppResources.HomePageInspected1),
-				HorizontalOptions = LayoutOptions.Center
-			};
-			Label mexicoCountLabel = new MyLabel () {
-				FontSize = 30,
-				FontFamily = Device.OnPlatform (
-					iOS:      "MarkerFelt-Thin",
-					Android:  "Droid Sans Mono",
-					WinPhone: "Comic Sans MS"
-				),
-				Text = string.Format( "{0}", AppResources.HomePageInspected2),
-				HorizontalOptions = LayoutOptions.Center
-			};
-			Label peruCountLabel = new MyLabel () {
-				FontSize = 30,
-				FontFamily = Device.OnPlatform (
-					iOS:      "MarkerFelt-Thin",
-					Android:  "Droid Sans Mono",
-					WinPhone: "Comic Sans MS"
-				),
-				Text = string.Format( "{0}", AppResources.HomePageInspected3),
-				HorizontalOptions = LayoutOptions.Center
-			};
-
 			Label msg = new MyLabel (){ 
 				FontSize = 22,
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
 					WinPhone: "Comic Sans MS"
-				),
-				Text ="A list of sample data by origin count will be listed below. You will be able to select a row and be redirect to the list to which it pertains."
+				)
 			};
+
+			foreach(CurrentFacility facility in userDetails.GetDefaultCurrentFacilities ())
+			{
+				if(facility.ID == userDetails.CurrentFacility){
+					msg.Text =  "Inspection waiting in " + facility.Name + " 7";
+					break;
+				}
+			}
 
 			var header = new StackLayout{ 
 				Spacing = 10,
@@ -85,9 +60,6 @@
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				Children = {
-//					caliCountLabel,
-//					mexicoCountLabel,
-//					peruCountLabel
 					msg
 				}
 			};
@@ -122,6 +94,8 @@
 
 		private async void btn1HandleClick(object sender, EventArgs e)
 		{
+			await _button1.ScaleTo(2);
+			await _button1.ScaleTo(1);
 			_button1.IsEnabled = false;
 			await Navigation.PushAsync(new AddEditPage(userDetails));
 			_button1.IsEnabled = true;

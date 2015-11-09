@@ -10,7 +10,7 @@ using Android.OS;
 
 namespace ShelfLifeApp.Droid
 {
-	[Activity (Label = "ShelfLifeApp.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+	[Activity (Label = "ShelfLifeApp.Droid", Icon = "@drawable/icon", MainLauncher = false, Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 
 	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
 	{

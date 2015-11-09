@@ -9,6 +9,8 @@ namespace ShelfLifeApp.Views
 {
 	public class InspectionDetailPage:ContentPage
 	{
+		private Button save;
+		private Button _button2;
 		public ScrollView scrollView;
 		public StackLayout layout;
 		public FruitSample fruitSample;
@@ -47,6 +49,7 @@ namespace ShelfLifeApp.Views
 		private void init()
 		{
 			BindingContext = inspectionDetail;
+	
 			Label summary = new MyLabel  ()
 			{
 				Text = AppResources.InspectableItemSummary,
@@ -290,7 +293,7 @@ namespace ShelfLifeApp.Views
 
 			comment.SetBinding (Entry.TextProperty,"Comment");
 
-			Button save = new MyDefaultButton { 
+			save = new MyDefaultButton { 
 				Text = AppResources.InspectableItemSave,
 				FontSize = 30,
 				FontFamily = Device.OnPlatform (
@@ -302,7 +305,7 @@ namespace ShelfLifeApp.Views
 
 			save.Clicked += saveBtn;
 
-			Button _button2 = new MyDefaultButton
+			_button2 = new MyDefaultButton
 			{
 				Text = "Cancel",
 				FontSize = 30,
@@ -340,12 +343,16 @@ namespace ShelfLifeApp.Views
 
 			DatePicker datePicker = new MyDatePicker
 			{
-				Format = "D",
+				Format = inspectionDetail.DateYesterday.ToString("D"),
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				VerticalOptions = LayoutOptions.CenterAndExpand ,
+				MinimumDate = inspectionDetail.DateMax,
+				MaximumDate = inspectionDetail.DateYesterday
 			};
-
-			datePicker.DateSelected += (object sender, DateChangedEventArgs e) => DisplayAlert ("Fetching data","A list will populate below with a Sample matching selected date.","OK");
+			datePicker.SetBinding (DatePicker.DateProperty,new Binding("DateYesterday",BindingMode.TwoWay));
+			datePicker.DateSelected += (object sender, DateChangedEventArgs e) => {
+				DisplayAlert ("Fetching data","A list will populate below with a Sample matching selected date.","OK");
+			};
 
 			StackLayout row1 = new StackLayout
 			{ 
@@ -512,14 +519,19 @@ namespace ShelfLifeApp.Views
 			layout.Children.Add (row8);
 			layout.Children.Add (row9);
 			layout.Children.Add (row10);
+			layout.Children.Add (new BoxView(){Color = Color.Red, WidthRequest = 100, HeightRequest = 4});
 			layout.Children.Add (row11);
 			Content = scrollView;
 		}
 
-		public void saveBtn(object sender, EventArgs ea)
+		public async void saveBtn(object sender, EventArgs ea)
 		{
+			await save.ScaleTo(2);
+			await save.ScaleTo(1);
+			save.IsEnabled = false;
 			if (inspectionDetail.Colors < 0 || inspectionDetail.Stage < 0 || inspectionDetail.Lenticel < 0 || string.IsNullOrEmpty (inspectionDetail.Comment) || inspectionDetail.Cut && inspectionDetail.Defect < 0) {
 				DisplayAlert (AppResources.InspectableItemAlertMsg1, AppResources.InspectableItemAlertMsg2, AppResources.InspectableItemAlertMsg3);
+				save.IsEnabled = true;
 			} else {
 				DisplayAlert ("Saving","This data will be sent to table and you will be redirected to Sample to Inspect.","OK");
 				inspectionDetail.destroyInspectionDetail ();
@@ -530,14 +542,19 @@ namespace ShelfLifeApp.Views
 //				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Lenticel);
 //				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Defect);
 //				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Cut);
-//				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Comment);	
+//				System.Diagnostics.Debug.WriteLine ("{0}", inspectionDetail.Comment);
+				save.IsEnabled = true;
 			}
 		}
 
 		public async void Button2Submit(object sender, EventArgs e2)
 		{
+			await _button2.ScaleTo(2);
+			await _button2.ScaleTo(1);
+			_button2.IsEnabled = false;
 			inspectionDetail.destroyInspectionDetail ();
 			await Navigation.PopAsync();
+			_button2.IsEnabled = true;
 		}
 	}
 }

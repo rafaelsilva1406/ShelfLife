@@ -1,17 +1,18 @@
-﻿<Properties GitUserInfo="UsingGIT" StartupItem="Droid\ShelfLifeApp.Droid.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus 4 (Lollipop)" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ShelfLifeApp\ShelfLifeApp.cs">
+﻿<Properties GitUserInfo="UsingGIT" StartupItem="Droid\ShelfLifeApp.Droid.csproj" RefactoringSettings.EnableRefactorings="True">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.05157df5b9c73f30" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ShelfLifeApp\Views\LoginPage.cs">
     <Files>
-      <File FileName="ShelfLifeApp\Views\InspectionDetailPage.cs" Line="1" Column="1" />
-      <File FileName="ShelfLifeApp\ShelfLifeApp.cs" Line="1" Column="1" />
-      <File FileName="ShelfLifeApp\Views\InspectableItemsPage.cs" Line="1" Column="1" />
-      <File FileName="ShelfLifeApp\Views\LoginPage.cs" Line="1" Column="1" />
-      <File FileName="ShelfLifeApp\Resource\AppResources.resx" Line="1" Column="1" />
-      <File FileName="Droid\MainActivity.cs" Line="1" Column="1" />
+      <File FileName="Droid\MainActivity.cs" Line="32" Column="20" />
+      <File FileName="ShelfLifeApp\Views\LoginPage.cs" Line="193" Column="5" />
+      <File FileName="ShelfLifeApp\ViewModels\LoginViewModel.cs" Line="1" Column="1" />
+      <File FileName="ShelfLifeApp\ViewModels\UserDetailsViewModel.cs" Line="1" Column="1" />
+      <File FileName="ShelfLifeApp\ViewModels\InspectionDetailViewModel.cs" Line="1" Column="1" />
+      <File FileName="ShelfLifeApp\Views\InspectionDetailPage.cs" Line="353" Column="75" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.ShelfLifeApp.Droid AndroidDesignerPreferredDevice="Nexus 4" />
 </Properties>
