@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using ShelfLifeApp.Models;
 using ShelfLifeApp.ViewModels;
 using ShelfLifeApp.Custom;
+using System.Threading.Tasks;
 
 namespace ShelfLifeApp.Views
 {
@@ -273,6 +274,31 @@ namespace ShelfLifeApp.Views
 				}
 			};
 
+			Label imageLabel = new MyLabel()
+			{
+				Text = AppResources.InspectableItemImage,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				FontSize = 28,
+				XAlign = TextAlignment.End,
+			};
+
+			Button imageBtn = new Button {
+				Text = AppResources.InspectableItemImageBTN,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				HeightRequest = 50
+			};
+
+			imageBtn.Clicked += async (sender, e) => {
+				var buttonsArray = new string[] {"Take Photo","Upload Photo"};
+				var action = await DisplayActionSheet ("ActionSheet: Save Photo?", "Cancel",null,buttonsArray);
+				System.Diagnostics.Debug.WriteLine("Action: " + action); // writes the selected button label to the console
+				await doPhotoAction(action);
+			};
+
 			Label commentLabel = new MyLabel()
 			{
 				Text = AppResources.InspectableItemComments,
@@ -458,6 +484,18 @@ namespace ShelfLifeApp.Views
 			{
 				Spacing = 5,
 				Orientation = StackOrientation.Horizontal,
+				Padding = new Thickness(5,10,10,0),
+				Children = 
+				{
+					imageLabel,
+					imageBtn
+				}
+			};
+
+			StackLayout row10 = new StackLayout
+			{
+				Spacing = 5,
+				Orientation = StackOrientation.Horizontal,
 				Padding = new Thickness(5,10,10,5),
 				Children = 
 				{
@@ -465,7 +503,7 @@ namespace ShelfLifeApp.Views
 				}
 			};
 
-			StackLayout row10 = new StackLayout
+			StackLayout row11 = new StackLayout
 			{
 				Spacing = 5,
 				Orientation = StackOrientation.Horizontal,
@@ -476,7 +514,7 @@ namespace ShelfLifeApp.Views
 				}
 			};
 
-			StackLayout row11 = new StackLayout
+			StackLayout row12 = new StackLayout
 			{
 				Spacing = 20,
 				VerticalOptions = LayoutOptions.FillAndExpand,
@@ -489,7 +527,7 @@ namespace ShelfLifeApp.Views
 				}
 			};
 
-			StackLayout row12 = new StackLayout
+			StackLayout row13 = new StackLayout
 			{
 				Spacing = 5,
 				Orientation = StackOrientation.Horizontal,
@@ -508,7 +546,7 @@ namespace ShelfLifeApp.Views
 			layout.Children.Add (new BoxView(){Color = Color.Transparent, WidthRequest = 100, HeightRequest = 50});
 			layout.Children.Add (past);
 			layout.Children.Add (new BoxView (){ Color = Color.Gray, WidthRequest = 100, HeightRequest = 2 });
-			layout.Children.Add (row12);
+			layout.Children.Add (row13);
 			layout.Children.Add (new BoxView(){Color = Color.Transparent, WidthRequest = 100, HeightRequest = 50});
 			layout.Children.Add (inspect);
 			layout.Children.Add (new BoxView(){Color = Color.Gray, WidthRequest = 100, HeightRequest = 2});
@@ -519,9 +557,30 @@ namespace ShelfLifeApp.Views
 			layout.Children.Add (row8);
 			layout.Children.Add (row9);
 			layout.Children.Add (row10);
-			layout.Children.Add (new BoxView(){Color = Color.Red, WidthRequest = 100, HeightRequest = 4});
 			layout.Children.Add (row11);
+			layout.Children.Add (new BoxView(){Color = Color.Red, WidthRequest = 100, HeightRequest = 4});
+			layout.Children.Add (row12);
 			Content = scrollView;
+		}
+
+		private async Task doPhotoAction(string str)
+		{
+			if (str == "Take Photo")
+			{
+				doCameraPhoto();
+			}
+			else if (str == "Upload Photo")
+			{
+				doPhotoLibrary();
+			}
+		}
+
+		async void doCameraPhoto()
+		{
+		}
+
+		async void doPhotoLibrary()
+		{
 		}
 
 		public async void saveBtn(object sender, EventArgs ea)
