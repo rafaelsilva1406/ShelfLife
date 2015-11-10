@@ -22,6 +22,7 @@ namespace ShelfLifeApp.ViewModels
 		private int _lenticel = -1;
 		private int _defect = -1;
 		private bool _cut;
+		private byte[] _image;
 		private string _comment;
 		private DateTime _dateYesterday = DateTime.Now.AddDays(-1);
 		private DateTime _dateMax = DateTime.Now.AddDays(-7);
@@ -102,6 +103,15 @@ namespace ShelfLifeApp.ViewModels
 					return;
 				}
 				_cut = value;
+				OnPropertyChanged ();
+			}
+		}
+
+		public byte[] ImageSource
+		{
+			get{ return _image; }
+			set{ 
+				_image = value;
 				OnPropertyChanged ();
 			}
 		}
@@ -198,6 +208,7 @@ namespace ShelfLifeApp.ViewModels
 			_lenticel = -1;
 			_defect = -1;
 			_cut = false;
+			_image = new byte[0];
 			_comment = "";
 		}
 			
