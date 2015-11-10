@@ -1,17 +1,24 @@
 ﻿using System;
 using System.Resources;
 using Xamarin.Forms;
+using XLabs.Platform.Services.Media;
 using ShelfLifeApp.Models;
 using ShelfLifeApp.ViewModels;
 using ShelfLifeApp.Custom;
 using System.Threading.Tasks;
+using XLabs.Ioc;
+using XLabs.Platform.Device;
 
 namespace ShelfLifeApp.Views
 {
 	public class InspectionDetailPage:ContentPage
 	{
+		private readonly TaskScheduler _scheduler = TaskScheduler.FromCurrentSynchronizationContext();
 		private Button save;
 		private Button _button2;
+		private ImageSource _imageSource;
+		private IMediaPicker _iMediaPicker;
+		private Image _img;
 		public ScrollView scrollView;
 		public StackLayout layout;
 		public FruitSample fruitSample;
@@ -286,18 +293,59 @@ namespace ShelfLifeApp.Views
 				XAlign = TextAlignment.End,
 			};
 
-			Button imageBtn = new Button {
+			Button imageUploadBtn = new MyDefaultButton {
 				Text = AppResources.InspectableItemImageBTN,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				HeightRequest = 50
 			};
 
-			imageBtn.Clicked += async (sender, e) => {
+			Label imageDeleteLabel = new MyLabel()
+			{
+				Text = AppResources.InspectableItemImageDelete,
+				FontFamily = Device.OnPlatform (
+					iOS:      "MarkerFelt-Thin",
+					Android:  "Droid Sans Mono",
+					WinPhone: "Comic Sans MS"
+				),
+				FontSize = 28,
+				XAlign = TextAlignment.End,
+				IsVisible = false
+			};
+
+			Button imageDeleteBtn = new MyDangerButton {
+				Text = AppResources.InspectableItemImageDeleteBTN,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				HeightRequest = 50,
+				IsVisible = false
+			};
+
+			imageUploadBtn.Clicked += async (sender, e) => {
 				var buttonsArray = new string[] {"Take Photo","Upload Photo"};
 				var action = await DisplayActionSheet ("ActionSheet: Save Photo?", "Cancel",null,buttonsArray);
-				System.Diagnostics.Debug.WriteLine("Action: " + action); // writes the selected button label to the console
-				await doPhotoAction(action);
+				doPhotoAction(action);
+				imageLabel.IsVisible = false;
+				imageUploadBtn.IsVisible = false;
+				imageDeleteLabel.IsVisible = true;
+				imageDeleteBtn.IsVisible = true;
 			};
+				
+			imageDeleteBtn.Clicked += (sender, e) => {
+				_imageSource = null;
+				_img.Source = ImageSource.FromUri(new Uri("https://placehold.it/350x150"));
+				imageDeleteLabel.IsVisible  = false;
+				imageDeleteBtn.IsVisible = false;
+				imageUploadBtn.IsVisible = true;
+				imageLabel.IsVisible = true;
+			};
+
+			_img = new Image(){
+				HeightRequest = 300, 
+				WidthRequest = 300, 
+				BackgroundColor = Color.FromHex("#D6D6D2"),
+				Aspect = Aspect.AspectFit,
+				IsVisible = false
+			};
+
 
 			Label commentLabel = new MyLabel()
 			{
@@ -488,11 +536,24 @@ namespace ShelfLifeApp.Views
 				Children = 
 				{
 					imageLabel,
-					imageBtn
+					imageUploadBtn,
+					imageDeleteLabel,
+					imageDeleteBtn
 				}
 			};
 
 			StackLayout row10 = new StackLayout
+			{
+				Spacing = 5,
+				Orientation = StackOrientation.Horizontal,
+				Padding = new Thickness(5,10,10,0),
+				Children = 
+				{
+					_img
+				}
+				};
+
+			StackLayout row11 = new StackLayout
 			{
 				Spacing = 5,
 				Orientation = StackOrientation.Horizontal,
@@ -503,7 +564,7 @@ namespace ShelfLifeApp.Views
 				}
 			};
 
-			StackLayout row11 = new StackLayout
+			StackLayout row12 = new StackLayout
 			{
 				Spacing = 5,
 				Orientation = StackOrientation.Horizontal,
@@ -514,7 +575,7 @@ namespace ShelfLifeApp.Views
 				}
 			};
 
-			StackLayout row12 = new StackLayout
+			StackLayout row13 = new StackLayout
 			{
 				Spacing = 20,
 				VerticalOptions = LayoutOptions.FillAndExpand,
@@ -527,7 +588,7 @@ namespace ShelfLifeApp.Views
 				}
 			};
 
-			StackLayout row13 = new StackLayout
+			StackLayout row14 = new StackLayout
 			{
 				Spacing = 5,
 				Orientation = StackOrientation.Horizontal,
@@ -546,7 +607,7 @@ namespace ShelfLifeApp.Views
 			layout.Children.Add (new BoxView(){Color = Color.Transparent, WidthRequest = 100, HeightRequest = 50});
 			layout.Children.Add (past);
 			layout.Children.Add (new BoxView (){ Color = Color.Gray, WidthRequest = 100, HeightRequest = 2 });
-			layout.Children.Add (row13);
+			layout.Children.Add (row14);
 			layout.Children.Add (new BoxView(){Color = Color.Transparent, WidthRequest = 100, HeightRequest = 50});
 			layout.Children.Add (inspect);
 			layout.Children.Add (new BoxView(){Color = Color.Gray, WidthRequest = 100, HeightRequest = 2});
@@ -558,16 +619,17 @@ namespace ShelfLifeApp.Views
 			layout.Children.Add (row9);
 			layout.Children.Add (row10);
 			layout.Children.Add (row11);
-			layout.Children.Add (new BoxView(){Color = Color.Red, WidthRequest = 100, HeightRequest = 4});
 			layout.Children.Add (row12);
+			layout.Children.Add (new BoxView(){Color = Color.Red, WidthRequest = 100, HeightRequest = 4});
+			layout.Children.Add (row13);
 			Content = scrollView;
 		}
 
-		private async Task doPhotoAction(string str)
+		private async void doPhotoAction(string str)
 		{
 			if (str == "Take Photo")
 			{
-				doCameraPhoto();
+				await doCameraPhoto();
 			}
 			else if (str == "Upload Photo")
 			{
@@ -575,8 +637,60 @@ namespace ShelfLifeApp.Views
 			}
 		}
 
-		async void doCameraPhoto()
+		private void Setup()
 		{
+			if (_iMediaPicker != null)
+			{
+				return;
+			}
+
+			var device = Resolver.Resolve<IDevice>();
+
+			////RM: hack for working on windows phone? 
+			_iMediaPicker = DependencyService.Get<IMediaPicker>() ?? device.MediaPicker;
+		}
+			
+		private async Task doCameraPhoto()
+		{
+			Setup ();
+//			var device = Resolver.Resolve<IDevice>();
+//			_iMediaPicker = DependencyService.Get<IMediaPicker>() ?? device.MediaPicker;
+
+			_imageSource = null;
+
+			try{
+
+				if (_iMediaPicker.IsCameraAvailable)
+				{
+					var options = new CameraMediaStorageOptions() {
+						DefaultCamera = CameraDevice.Front,
+						SaveMediaOnCapture = true,
+						Directory = "ShelfLifeApp",
+						Name = string.Format("ShelfLifeApp_{0}", DateTime.Now.ToString("yyMMddhhmmss")),
+						MaxPixelDimension = 400,
+						//PercentQuality = 85
+					};
+
+					var mediaFile = await _iMediaPicker.TakePhotoAsync(options);
+
+					if (mediaFile != null && mediaFile.Source != null)
+					{
+						_imageSource = ImageSource.FromStream(() => mediaFile.Source);
+						_img.Source = _imageSource;
+						_img.IsVisible = true;
+					}
+				}
+				else
+				{
+					System.Diagnostics.Debug.WriteLine ("Camera not available");
+				}
+			}
+			catch(TaskCanceledException){
+				System.Diagnostics.Debug.WriteLine ("Take Photo cancelled");
+			}
+			catch(System.Exception ex){
+				System.Diagnostics.Debug.WriteLine (ex.Message);
+			}
 		}
 
 		async void doPhotoLibrary()
