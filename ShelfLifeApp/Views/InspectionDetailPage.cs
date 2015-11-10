@@ -331,7 +331,7 @@ namespace ShelfLifeApp.Views
 				
 			imageDeleteBtn.Clicked += (sender, e) => {
 				_imageSource = null;
-				_img.Source = ImageSource.FromUri(new Uri("https://placehold.it/350x150"));
+				_img.Source = "";
 				imageDeleteLabel.IsVisible  = false;
 				imageDeleteBtn.IsVisible = false;
 				imageUploadBtn.IsVisible = true;
@@ -345,7 +345,7 @@ namespace ShelfLifeApp.Views
 				Aspect = Aspect.AspectFit,
 				IsVisible = false
 			};
-
+			_img.SetBinding (Image.SourceProperty,"ImageSource");
 
 			Label commentLabel = new MyLabel()
 			{
@@ -633,7 +633,7 @@ namespace ShelfLifeApp.Views
 			}
 			else if (str == "Upload Photo")
 			{
-				doPhotoLibrary();
+				await doPhotoLibrary();
 			}
 		}
 
@@ -653,8 +653,6 @@ namespace ShelfLifeApp.Views
 		private async Task doCameraPhoto()
 		{
 			Setup ();
-//			var device = Resolver.Resolve<IDevice>();
-//			_iMediaPicker = DependencyService.Get<IMediaPicker>() ?? device.MediaPicker;
 
 			_imageSource = null;
 
@@ -668,13 +666,14 @@ namespace ShelfLifeApp.Views
 						Directory = "ShelfLifeApp",
 						Name = string.Format("ShelfLifeApp_{0}", DateTime.Now.ToString("yyMMddhhmmss")),
 						MaxPixelDimension = 400,
-						//PercentQuality = 85
+						PercentQuality = 85
 					};
 
 					var mediaFile = await _iMediaPicker.TakePhotoAsync(options);
 
 					if (mediaFile != null && mediaFile.Source != null)
 					{
+						System.Diagnostics.Debug.WriteLine("{0}",mediaFile.Source);
 						_imageSource = ImageSource.FromStream(() => mediaFile.Source);
 						_img.Source = _imageSource;
 						_img.IsVisible = true;
@@ -693,8 +692,44 @@ namespace ShelfLifeApp.Views
 			}
 		}
 
-		async void doPhotoLibrary()
+		private async Task doPhotoLibrary()
 		{
+			Setup ();
+
+			_imageSource = null;
+			try {
+				
+				if (_iMediaPicker.IsCameraAvailable)
+				{
+					var options = new CameraMediaStorageOptions() {
+						DefaultCamera = CameraDevice.Front,
+						SaveMediaOnCapture = true,
+						Directory = "ShelfLifeApp",
+						Name = string.Format("ShelfLifeApp_{0}", DateTime.Now.ToString("yyMMddhhmmss")),
+						MaxPixelDimension = 400,
+						PercentQuality = 85
+					};
+
+					var mediaFile = await _iMediaPicker.SelectPhotoAsync(options);
+
+					if (mediaFile != null && mediaFile.Source != null)
+					{
+						_imageSource = ImageSource.FromStream(() => mediaFile.Source);
+						_img.Source = _imageSource;
+						_img.IsVisible = true;
+					}
+				}
+				else
+				{
+					System.Diagnostics.Debug.WriteLine ("Camera not available");
+				}
+			} 
+			catch(TaskCanceledException){
+				System.Diagnostics.Debug.WriteLine ("Select image cancelled");
+			}
+			catch (System.Exception ex) {
+
+			}
 		}
 
 		public async void saveBtn(object sender, EventArgs ea)
