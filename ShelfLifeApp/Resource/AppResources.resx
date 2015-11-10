@@ -180,6 +180,12 @@
 	<data name="InspectableItemImageBTN" xml:space="preserve">
     	<value>Image</value>
 	</data>
+	<data name="InspectableItemImageDelete" xml:space="preserve">
+    	<value>Want to</value>
+	</data>
+	<data name="InspectableItemImageDeleteBTN" xml:space="preserve">
+    	<value>Delete</value>
+	</data>
 	<data name="InspectableItemComments" xml:space="preserve">
     	<value>Comments</value>
 	</data>
