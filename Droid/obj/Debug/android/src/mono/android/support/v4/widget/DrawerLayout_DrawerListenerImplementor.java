@@ -7,7 +7,8 @@ public class DrawerLayout_DrawerListenerImplementor
 		mono.android.IGCUserPeer,
 		android.support.v4.widget.DrawerLayout.DrawerListener
 {
-	static final String __md_methods;
+/** @hide */
+	public static final String __md_methods;
 	static {
 		__md_methods = 
 			"n_onDrawerClosed:(Landroid/view/View;)V:GetOnDrawerClosed_Landroid_view_View_Handler:Android.Support.V4.Widget.DrawerLayout/IDrawerListenerInvoker, Xamarin.Android.Support.v4\n" +
@@ -15,15 +16,15 @@ public class DrawerLayout_DrawerListenerImplementor
 			"n_onDrawerSlide:(Landroid/view/View;F)V:GetOnDrawerSlide_Landroid_view_View_FHandler:Android.Support.V4.Widget.DrawerLayout/IDrawerListenerInvoker, Xamarin.Android.Support.v4\n" +
 			"n_onDrawerStateChanged:(I)V:GetOnDrawerStateChanged_IHandler:Android.Support.V4.Widget.DrawerLayout/IDrawerListenerInvoker, Xamarin.Android.Support.v4\n" +
 			"";
-		mono.android.Runtime.register ("Android.Support.V4.Widget.DrawerLayout/IDrawerListenerImplementor, Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", DrawerLayout_DrawerListenerImplementor.class, __md_methods);
+		mono.android.Runtime.register ("Android.Support.V4.Widget.DrawerLayout+IDrawerListenerImplementor, Xamarin.Android.Support.v4", DrawerLayout_DrawerListenerImplementor.class, __md_methods);
 	}
 
 
-	public DrawerLayout_DrawerListenerImplementor () throws java.lang.Throwable
+	public DrawerLayout_DrawerListenerImplementor ()
 	{
 		super ();
 		if (getClass () == DrawerLayout_DrawerListenerImplementor.class)
-			mono.android.TypeManager.Activate ("Android.Support.V4.Widget.DrawerLayout/IDrawerListenerImplementor, Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "", this, new java.lang.Object[] {  });
+			mono.android.TypeManager.Activate ("Android.Support.V4.Widget.DrawerLayout+IDrawerListenerImplementor, Xamarin.Android.Support.v4", "", this, new java.lang.Object[] {  });
 	}
 
 
@@ -58,7 +59,7 @@ public class DrawerLayout_DrawerListenerImplementor
 
 	private native void n_onDrawerStateChanged (int p0);
 
-	java.util.ArrayList refList;
+	private java.util.ArrayList refList;
 	public void monodroidAddReference (java.lang.Object obj)
 	{
 		if (refList == null)

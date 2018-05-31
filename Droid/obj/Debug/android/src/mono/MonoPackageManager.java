@@ -17,10 +17,20 @@ public class MonoPackageManager {
 	static Object lock = new Object ();
 	static boolean initialized;
 
+	static android.content.Context Context;
+
 	public static void LoadApplication (Context context, ApplicationInfo runtimePackage, String[] apks)
 	{
 		synchronized (lock) {
+			if (context instanceof android.app.Application) {
+				Context = context;
+			}
 			if (!initialized) {
+				android.content.IntentFilter timezoneChangedFilter  = new android.content.IntentFilter (
+						android.content.Intent.ACTION_TIMEZONE_CHANGED
+				);
+				context.registerReceiver (new mono.android.app.NotifyTimeZoneChanges (), timezoneChangedFilter);
+				
 				System.loadLibrary("monodroid");
 				Locale locale       = Locale.getDefault ();
 				String language     = locale.getLanguage () + "-" + locale.getCountry ();
@@ -28,6 +38,13 @@ public class MonoPackageManager {
 				String cacheDir     = context.getCacheDir ().getAbsolutePath ();
 				String dataDir      = getNativeLibraryPath (context);
 				ClassLoader loader  = context.getClassLoader ();
+				java.io.File external0 = android.os.Environment.getExternalStorageDirectory ();
+				String externalDir = new java.io.File (
+							external0,
+							"Android/data/" + context.getPackageName () + "/files/.__override__").getAbsolutePath ();
+				String externalLegacyDir = new java.io.File (
+							external0,
+							"../legacy/Android/data/" + context.getPackageName () + "/files/.__override__").getAbsolutePath ();
 
 				Runtime.init (
 						language,
@@ -39,14 +56,23 @@ public class MonoPackageManager {
 							dataDir,
 						},
 						loader,
-						new java.io.File (
-							android.os.Environment.getExternalStorageDirectory (),
-							"Android/data/" + context.getPackageName () + "/files/.__override__").getAbsolutePath (),
+						new String[] {
+							externalDir,
+							externalLegacyDir
+						},
 						MonoPackageManager_Resources.Assemblies,
 						context.getPackageName ());
+				
+				mono.android.app.ApplicationRegistration.registerApplications ();
+				
 				initialized = true;
 			}
 		}
+	}
+
+	public static void setContext (Context context)
+	{
+		// Ignore; vestigial
 	}
 
 	static String getNativeLibraryPath (Context context)
@@ -79,8 +105,11 @@ public class MonoPackageManager {
 
 class MonoPackageManager_Resources {
 	public static final String[] Assemblies = new String[]{
+		/* We need to ensure that "ShelfLifeApp.Droid.dll" comes first in this list. */
 		"ShelfLifeApp.Droid.dll",
+		"ExifLib.dll",
 		"FormsViewGroup.dll",
+		"Newtonsoft.Json.dll",
 		"ShelfLifeApp.dll",
 		"System.Net.Http.Extensions.dll",
 		"System.Net.Http.Primitives.dll",
@@ -93,15 +122,15 @@ class MonoPackageManager_Resources {
 		"Xamarin.Forms.Platform.Android.dll",
 		"Xamarin.Forms.Platform.dll",
 		"Xamarin.Forms.Xaml.dll",
-		"System.Diagnostics.Tracing.dll",
-		"System.Reflection.Emit.dll",
-		"System.Reflection.Emit.ILGeneration.dll",
-		"System.Reflection.Emit.Lightweight.dll",
-		"System.ServiceModel.Security.dll",
-		"System.Threading.Timer.dll",
-		"Newtonsoft.Json.dll",
+		"XLabs.Core.dll",
+		"XLabs.Forms.dll",
+		"XLabs.Forms.Droid.dll",
+		"XLabs.Ioc.dll",
+		"XLabs.Platform.dll",
+		"XLabs.Platform.Droid.dll",
+		"XLabs.Serialization.dll",
 	};
 	public static final String[] Dependencies = new String[]{
 	};
-	public static final String ApiPackageName = "Mono.Android.Platform.ApiLevel_23";
+	public static final String ApiPackageName = "Mono.Android.Platform.ApiLevel_27";
 }
