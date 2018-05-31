@@ -63,9 +63,9 @@ C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\Syst
 C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\System.Xml.Linq.dll
 C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\System.Xml.XPath.XDocument.dll
 C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\System.Globalization.dll
+C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\System.Diagnostics.Tools.dll
 C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\System.Resources.ResourceManager.dll
 C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\System.Threading.Tasks.dll
-C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\System.Diagnostics.Tools.dll
 C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\System.IO.dll
 C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\Mono.Security.dll
 C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\System.Net.Primitives.dll
@@ -73,3 +73,4 @@ C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\Syst
 C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\System.Xml.ReaderWriter.dll
 C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\System.Text.RegularExpressions.dll
 C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\android\assets\System.Text.Encoding.dll
+C:\Users\rafael.silva\Source\Repos\ShelfLife\Droid\obj\Debug\linksrc\es\ShelfLifeApp.resources.dll
