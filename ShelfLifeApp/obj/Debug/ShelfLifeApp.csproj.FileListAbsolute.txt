@@ -1,0 +1,6 @@
+C:\Users\rafael.silva\Source\Repos\ShelfLife\ShelfLifeApp\obj\Debug\ShelfLifeApp.csproj.App.config
+C:\Users\rafael.silva\Source\Repos\ShelfLife\ShelfLifeApp\obj\Debug\ShelfLifeApp.csprojAssemblyReference.cache
+C:\Users\rafael.silva\Source\Repos\ShelfLife\ShelfLifeApp\obj\Debug\ShelfLifeApp.Resource.AppResources.resources
+C:\Users\rafael.silva\Source\Repos\ShelfLife\ShelfLifeApp\obj\Debug\ShelfLifeApp.Resource.AppResource.es.resources
+C:\Users\rafael.silva\Source\Repos\ShelfLife\ShelfLifeApp\obj\Debug\ShelfLifeApp.csproj.GenerateResource.cache
+C:\Users\rafael.silva\Source\Repos\ShelfLife\ShelfLifeApp\obj\Debug\ShelfLifeApp.csproj.CoreCompileInputs.cache
