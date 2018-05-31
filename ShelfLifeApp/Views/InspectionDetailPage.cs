@@ -301,7 +301,8 @@ namespace ShelfLifeApp.Views
 
 			Label imageDeleteLabel = new MyLabel()
 			{
-				Text = AppResources.InspectableItemImageDelete,
+                //temp fix AppResources.InspectableItemImageDelete not working
+				Text = "Want to",
 				FontFamily = Device.OnPlatform (
 					iOS:      "MarkerFelt-Thin",
 					Android:  "Droid Sans Mono",
@@ -313,7 +314,8 @@ namespace ShelfLifeApp.Views
 			};
 
 			Button imageDeleteBtn = new MyDangerButton {
-				Text = AppResources.InspectableItemImageDeleteBTN,
+                //temp fix AppResources.InspectableItemImageDeleteBTN not working
+                Text = "Delete",
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				HeightRequest = 50,
 				IsVisible = false
