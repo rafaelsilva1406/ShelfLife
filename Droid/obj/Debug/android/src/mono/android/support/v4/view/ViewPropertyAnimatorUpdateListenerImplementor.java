@@ -7,20 +7,21 @@ public class ViewPropertyAnimatorUpdateListenerImplementor
 		mono.android.IGCUserPeer,
 		android.support.v4.view.ViewPropertyAnimatorUpdateListener
 {
-	static final String __md_methods;
+/** @hide */
+	public static final String __md_methods;
 	static {
 		__md_methods = 
 			"n_onAnimationUpdate:(Landroid/view/View;)V:GetOnAnimationUpdate_Landroid_view_View_Handler:Android.Support.V4.View.IViewPropertyAnimatorUpdateListenerInvoker, Xamarin.Android.Support.v4\n" +
 			"";
-		mono.android.Runtime.register ("Android.Support.V4.View.IViewPropertyAnimatorUpdateListenerImplementor, Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", ViewPropertyAnimatorUpdateListenerImplementor.class, __md_methods);
+		mono.android.Runtime.register ("Android.Support.V4.View.IViewPropertyAnimatorUpdateListenerImplementor, Xamarin.Android.Support.v4", ViewPropertyAnimatorUpdateListenerImplementor.class, __md_methods);
 	}
 
 
-	public ViewPropertyAnimatorUpdateListenerImplementor () throws java.lang.Throwable
+	public ViewPropertyAnimatorUpdateListenerImplementor ()
 	{
 		super ();
 		if (getClass () == ViewPropertyAnimatorUpdateListenerImplementor.class)
-			mono.android.TypeManager.Activate ("Android.Support.V4.View.IViewPropertyAnimatorUpdateListenerImplementor, Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "", this, new java.lang.Object[] {  });
+			mono.android.TypeManager.Activate ("Android.Support.V4.View.IViewPropertyAnimatorUpdateListenerImplementor, Xamarin.Android.Support.v4", "", this, new java.lang.Object[] {  });
 	}
 
 
@@ -31,7 +32,7 @@ public class ViewPropertyAnimatorUpdateListenerImplementor
 
 	private native void n_onAnimationUpdate (android.view.View p0);
 
-	java.util.ArrayList refList;
+	private java.util.ArrayList refList;
 	public void monodroidAddReference (java.lang.Object obj)
 	{
 		if (refList == null)
